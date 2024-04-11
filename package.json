@@ -1,9 +1,9 @@
 {
   "name": "moonkittjs",
   "version": "0.0.1",
-  "description": " ",
+  "description": "",
   "author": "arlai <arlai@moonkitt.com>",
-  "homepage": "https://github.com/arlai-mk/moonkittjs#readme",
+  "homepage": "https://github.com/moonkitt-lab/moonkittjs#readme",
   "license": "SEE LICENSE IN LICENSE",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -35,11 +35,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/arlai-mk/moonkittjs"
+    "url": "https://github.com/moonkitt-lab/moonkittjs"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/arlai-mk/moonkittjs/issues"
+    "url": "https://github.com/moonkitt-lab/moonkittjs/issues"
   },
   "devDependencies": {
     "@cosmology/telescope": "^1.0.1",
