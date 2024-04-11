@@ -3,7 +3,10 @@ const telescope = require('@cosmology/telescope').default;
 const rimraf = require('rimraf').rimrafSync;
 const { AMINO_MAP } = require('./aminos');
 
-const protoDirs = [join(__dirname, '/../proto'), join(__dirname, '/../cosmos/proto')];
+const protoDirs = [
+  join(__dirname, '/../proto'),
+  join(__dirname, '/../cosmos/proto')
+];
 const outPath = join(__dirname, '../src/codegen');
 rimraf(outPath);
 
@@ -18,14 +21,19 @@ telescope({
       ],
       patterns: ['**/*amino.ts', '**/*registry.ts']
     },
+    interfaces: {
+      enabled: true,
+      useGlobalDecoderRegistry: true,
+      useUnionTypes: true
+    },
     prototypes: {
       includePackageVar: false,
       removeUnusedImports: true,
       experimentalGlobalProtoNamespace: true,
-      interfaces: {
-        enabled: true,
-        useUnionTypes: false
-      },
+      addTypeUrlToObjects: true,
+      addTypeUrlToDecoders: true,
+      addAminoTypeToObjects: true,
+
       excluded: {
         packages: [
           'ibc.applications.fee.v1', // issue with parsing protos (LCD routes with nested objects in params)
