@@ -1,12 +1,12 @@
 {
   "name": "moonkittjs",
-  "version": "0.0.2",
-  "description": "",
+  "version": "0.0.3",
+  "description": "MoonkittJS",
   "author": "arlai <arlai@moonkitt.com>",
   "homepage": "https://github.com/moonkitt-lab/moonkittjs#readme",
   "license": "SEE LICENSE IN LICENSE",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/cjs/index.js",
+  "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "directories": {
     "lib": "src"
