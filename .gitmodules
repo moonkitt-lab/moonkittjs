@@ -1,4 +1,4 @@
 [submodule "cosmos-sdk"]
 	path = cosmos
 	url = git@github.com:cosmos/cosmos-sdk.git
-	branch = v0.47.11-ics-lsm
+	branch = v0.50.9-lsm
