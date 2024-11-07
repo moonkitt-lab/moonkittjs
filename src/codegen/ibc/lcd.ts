@@ -8,32 +8,6 @@ export const createLCDClient = async ({
     restEndpoint
   });
   return {
-    ibc: {
-      applications: {
-        transfer: {
-          v1: new (await import("./applications/transfer/v1/query.lcd")).LCDQueryClient({
-            requestClient
-          })
-        }
-      },
-      core: {
-        channel: {
-          v1: new (await import("./core/channel/v1/query.lcd")).LCDQueryClient({
-            requestClient
-          })
-        },
-        client: {
-          v1: new (await import("./core/client/v1/query.lcd")).LCDQueryClient({
-            requestClient
-          })
-        },
-        connection: {
-          v1: new (await import("./core/connection/v1/query.lcd")).LCDQueryClient({
-            requestClient
-          })
-        }
-      }
-    },
     cosmos: {
       auth: {
         v1beta1: new (await import("../cosmos/auth/v1beta1/query.lcd")).LCDQueryClient({
@@ -56,6 +30,11 @@ export const createLCDClient = async ({
             requestClient
           })
         }
+      },
+      circuit: {
+        v1: new (await import("../cosmos/circuit/v1/query.lcd")).LCDQueryClient({
+          requestClient
+        })
       },
       consensus: {
         v1: new (await import("../cosmos/consensus/v1/query.lcd")).LCDQueryClient({
@@ -109,6 +88,51 @@ export const createLCDClient = async ({
         v1beta1: new (await import("../cosmos/upgrade/v1beta1/query.lcd")).LCDQueryClient({
           requestClient
         })
+      }
+    },
+    ibc: {
+      applications: {
+        interchain_accounts: {
+          controller: {
+            v1: new (await import("./applications/interchain_accounts/controller/v1/query.lcd")).LCDQueryClient({
+              requestClient
+            })
+          },
+          host: {
+            v1: new (await import("./applications/interchain_accounts/host/v1/query.lcd")).LCDQueryClient({
+              requestClient
+            })
+          }
+        },
+        transfer: {
+          v1: new (await import("./applications/transfer/v1/query.lcd")).LCDQueryClient({
+            requestClient
+          })
+        }
+      },
+      core: {
+        channel: {
+          v1: new (await import("./core/channel/v1/query.lcd")).LCDQueryClient({
+            requestClient
+          })
+        },
+        client: {
+          v1: new (await import("./core/client/v1/query.lcd")).LCDQueryClient({
+            requestClient
+          })
+        },
+        connection: {
+          v1: new (await import("./core/connection/v1/query.lcd")).LCDQueryClient({
+            requestClient
+          })
+        }
+      },
+      lightclients: {
+        wasm: {
+          v1: new (await import("./lightclients/wasm/v1/query.lcd")).LCDQueryClient({
+            requestClient
+          })
+        }
       }
     }
   };

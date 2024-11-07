@@ -1,4 +1,4 @@
-import { BlockParams, BlockParamsAmino, BlockParamsSDKType, EvidenceParams, EvidenceParamsAmino, EvidenceParamsSDKType, ValidatorParams, ValidatorParamsAmino, ValidatorParamsSDKType } from "../../../tendermint/types/params";
+import { BlockParams, BlockParamsAmino, BlockParamsSDKType, EvidenceParams, EvidenceParamsAmino, EvidenceParamsSDKType, ValidatorParams, ValidatorParamsAmino, ValidatorParamsSDKType, ABCIParams, ABCIParamsAmino, ABCIParamsSDKType } from "../../../tendermint/types/params";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { GlobalDecoderRegistry } from "../../../registry";
 /** MsgUpdateParams is the Msg/UpdateParams request type. */
@@ -15,6 +15,8 @@ export interface MsgUpdateParams {
   block?: BlockParams;
   evidence?: EvidenceParams;
   validator?: ValidatorParams;
+  /** Since: cosmos-sdk 0.50 */
+  abci?: ABCIParams;
 }
 export interface MsgUpdateParamsProtoMsg {
   typeUrl: "/cosmos.consensus.v1.MsgUpdateParams";
@@ -34,9 +36,11 @@ export interface MsgUpdateParamsAmino {
   block?: BlockParamsAmino;
   evidence?: EvidenceParamsAmino;
   validator?: ValidatorParamsAmino;
+  /** Since: cosmos-sdk 0.50 */
+  abci?: ABCIParamsAmino;
 }
 export interface MsgUpdateParamsAminoMsg {
-  type: "cosmos-sdk/MsgUpdateParams";
+  type: "cosmos-sdk/x/consensus/MsgUpdateParams";
   value: MsgUpdateParamsAmino;
 }
 /** MsgUpdateParams is the Msg/UpdateParams request type. */
@@ -45,6 +49,7 @@ export interface MsgUpdateParamsSDKType {
   block?: BlockParamsSDKType;
   evidence?: EvidenceParamsSDKType;
   validator?: ValidatorParamsSDKType;
+  abci?: ABCIParamsSDKType;
 }
 /**
  * MsgUpdateParamsResponse defines the response structure for executing a
@@ -74,12 +79,13 @@ function createBaseMsgUpdateParams(): MsgUpdateParams {
     authority: "",
     block: undefined,
     evidence: undefined,
-    validator: undefined
+    validator: undefined,
+    abci: undefined
   };
 }
 export const MsgUpdateParams = {
   typeUrl: "/cosmos.consensus.v1.MsgUpdateParams",
-  aminoType: "cosmos-sdk/MsgUpdateParams",
+  aminoType: "cosmos-sdk/x/consensus/MsgUpdateParams",
   is(o: any): o is MsgUpdateParams {
     return o && (o.$typeUrl === MsgUpdateParams.typeUrl || typeof o.authority === "string");
   },
@@ -102,6 +108,9 @@ export const MsgUpdateParams = {
     if (message.validator !== undefined) {
       ValidatorParams.encode(message.validator, writer.uint32(34).fork()).ldelim();
     }
+    if (message.abci !== undefined) {
+      ABCIParams.encode(message.abci, writer.uint32(42).fork()).ldelim();
+    }
     return writer;
   },
   decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParams {
@@ -123,6 +132,9 @@ export const MsgUpdateParams = {
         case 4:
           message.validator = ValidatorParams.decode(reader, reader.uint32());
           break;
+        case 5:
+          message.abci = ABCIParams.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -136,6 +148,7 @@ export const MsgUpdateParams = {
     message.block = object.block !== undefined && object.block !== null ? BlockParams.fromPartial(object.block) : undefined;
     message.evidence = object.evidence !== undefined && object.evidence !== null ? EvidenceParams.fromPartial(object.evidence) : undefined;
     message.validator = object.validator !== undefined && object.validator !== null ? ValidatorParams.fromPartial(object.validator) : undefined;
+    message.abci = object.abci !== undefined && object.abci !== null ? ABCIParams.fromPartial(object.abci) : undefined;
     return message;
   },
   fromAmino(object: MsgUpdateParamsAmino): MsgUpdateParams {
@@ -152,6 +165,9 @@ export const MsgUpdateParams = {
     if (object.validator !== undefined && object.validator !== null) {
       message.validator = ValidatorParams.fromAmino(object.validator);
     }
+    if (object.abci !== undefined && object.abci !== null) {
+      message.abci = ABCIParams.fromAmino(object.abci);
+    }
     return message;
   },
   toAmino(message: MsgUpdateParams): MsgUpdateParamsAmino {
@@ -160,6 +176,7 @@ export const MsgUpdateParams = {
     obj.block = message.block ? BlockParams.toAmino(message.block) : undefined;
     obj.evidence = message.evidence ? EvidenceParams.toAmino(message.evidence) : undefined;
     obj.validator = message.validator ? ValidatorParams.toAmino(message.validator) : undefined;
+    obj.abci = message.abci ? ABCIParams.toAmino(message.abci) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgUpdateParamsAminoMsg): MsgUpdateParams {
@@ -167,7 +184,7 @@ export const MsgUpdateParams = {
   },
   toAminoMsg(message: MsgUpdateParams): MsgUpdateParamsAminoMsg {
     return {
-      type: "cosmos-sdk/MsgUpdateParams",
+      type: "cosmos-sdk/x/consensus/MsgUpdateParams",
       value: MsgUpdateParams.toAmino(message)
     };
   },

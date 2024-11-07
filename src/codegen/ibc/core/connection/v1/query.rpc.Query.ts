@@ -1,7 +1,7 @@
 import { Rpc } from "../../../../helpers";
 import { BinaryReader } from "../../../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryConnectionRequest, QueryConnectionResponse, QueryConnectionsRequest, QueryConnectionsResponse, QueryClientConnectionsRequest, QueryClientConnectionsResponse, QueryConnectionClientStateRequest, QueryConnectionClientStateResponse, QueryConnectionConsensusStateRequest, QueryConnectionConsensusStateResponse } from "./query";
+import { QueryConnectionRequest, QueryConnectionResponse, QueryConnectionsRequest, QueryConnectionsResponse, QueryClientConnectionsRequest, QueryClientConnectionsResponse, QueryConnectionClientStateRequest, QueryConnectionClientStateResponse, QueryConnectionConsensusStateRequest, QueryConnectionConsensusStateResponse, QueryConnectionParamsRequest, QueryConnectionParamsResponse } from "./query";
 /** Query provides defines the gRPC querier service */
 export interface Query {
   /** Connection queries an IBC connection end. */
@@ -23,6 +23,8 @@ export interface Query {
    * connection.
    */
   connectionConsensusState(request: QueryConnectionConsensusStateRequest): Promise<QueryConnectionConsensusStateResponse>;
+  /** ConnectionParams queries all parameters of the ibc connection submodule. */
+  connectionParams(request?: QueryConnectionParamsRequest): Promise<QueryConnectionParamsResponse>;
 }
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
@@ -33,6 +35,7 @@ export class QueryClientImpl implements Query {
     this.clientConnections = this.clientConnections.bind(this);
     this.connectionClientState = this.connectionClientState.bind(this);
     this.connectionConsensusState = this.connectionConsensusState.bind(this);
+    this.connectionParams = this.connectionParams.bind(this);
   }
   connection(request: QueryConnectionRequest): Promise<QueryConnectionResponse> {
     const data = QueryConnectionRequest.encode(request).finish();
@@ -61,6 +64,11 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("ibc.core.connection.v1.Query", "ConnectionConsensusState", data);
     return promise.then(data => QueryConnectionConsensusStateResponse.decode(new BinaryReader(data)));
   }
+  connectionParams(request: QueryConnectionParamsRequest = {}): Promise<QueryConnectionParamsResponse> {
+    const data = QueryConnectionParamsRequest.encode(request).finish();
+    const promise = this.rpc.request("ibc.core.connection.v1.Query", "ConnectionParams", data);
+    return promise.then(data => QueryConnectionParamsResponse.decode(new BinaryReader(data)));
+  }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {
   const rpc = createProtobufRpcClient(base);
@@ -80,6 +88,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
     },
     connectionConsensusState(request: QueryConnectionConsensusStateRequest): Promise<QueryConnectionConsensusStateResponse> {
       return queryService.connectionConsensusState(request);
+    },
+    connectionParams(request?: QueryConnectionParamsRequest): Promise<QueryConnectionParamsResponse> {
+      return queryService.connectionParams(request);
     }
   };
 };

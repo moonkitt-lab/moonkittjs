@@ -5,7 +5,9 @@ const { AMINO_MAP } = require('./aminos');
 
 const protoDirs = [
   join(__dirname, '/../proto'),
-  join(__dirname, '/../cosmos/proto')
+  join(__dirname, '/../cosmos/proto'),
+  join(__dirname, '/../ics23/proto'),
+  join(__dirname, '/../ibc-go/proto'),
 ];
 const outPath = join(__dirname, '../src/codegen');
 rimraf(outPath);

@@ -11,11 +11,11 @@ export interface GenesisState {
   votes: Vote[];
   /** proposals defines all the proposals present at genesis. */
   proposals: Proposal[];
-  /** params defines all the parameters of related to deposit. */
+  /** deposit_params defines all the parameters related to deposit. */
   depositParams: DepositParams;
-  /** params defines all the parameters of related to voting. */
+  /** voting_params defines all the parameters related to voting. */
   votingParams: VotingParams;
-  /** params defines all the parameters of related to tally. */
+  /** tally_params defines all the parameters related to tally. */
   tallyParams: TallyParams;
 }
 export interface GenesisStateProtoMsg {
@@ -32,11 +32,11 @@ export interface GenesisStateAmino {
   votes: VoteAmino[];
   /** proposals defines all the proposals present at genesis. */
   proposals: ProposalAmino[];
-  /** params defines all the parameters of related to deposit. */
+  /** deposit_params defines all the parameters related to deposit. */
   deposit_params: DepositParamsAmino;
-  /** params defines all the parameters of related to voting. */
+  /** voting_params defines all the parameters related to voting. */
   voting_params: VotingParamsAmino;
-  /** params defines all the parameters of related to tally. */
+  /** tally_params defines all the parameters related to tally. */
   tally_params: TallyParamsAmino;
 }
 export interface GenesisStateAminoMsg {
@@ -167,7 +167,7 @@ export const GenesisState = {
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
-    obj.starting_proposal_id = message.startingProposalId !== BigInt(0) ? message.startingProposalId.toString() : undefined;
+    obj.starting_proposal_id = message.startingProposalId !== BigInt(0) ? (message.startingProposalId?.toString)() : undefined;
     if (message.deposits) {
       obj.deposits = message.deposits.map(e => e ? Deposit.toAmino(e) : undefined);
     } else {

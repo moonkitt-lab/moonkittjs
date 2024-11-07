@@ -8,24 +8,6 @@ export const createRPCQueryClient = async ({
   const tmClient = await Tendermint34Client.connect(rpcEndpoint);
   const client = new QueryClient(tmClient);
   return {
-    ibc: {
-      applications: {
-        transfer: {
-          v1: (await import("./applications/transfer/v1/query.rpc.Query")).createRpcQueryExtension(client)
-        }
-      },
-      core: {
-        channel: {
-          v1: (await import("./core/channel/v1/query.rpc.Query")).createRpcQueryExtension(client)
-        },
-        client: {
-          v1: (await import("./core/client/v1/query.rpc.Query")).createRpcQueryExtension(client)
-        },
-        connection: {
-          v1: (await import("./core/connection/v1/query.rpc.Query")).createRpcQueryExtension(client)
-        }
-      }
-    },
     cosmos: {
       auth: {
         v1beta1: (await import("../cosmos/auth/v1beta1/query.rpc.Query")).createRpcQueryExtension(client)
@@ -40,6 +22,9 @@ export const createRPCQueryClient = async ({
         node: {
           v1beta1: (await import("../cosmos/base/node/v1beta1/query.rpc.Service")).createRpcQueryExtension(client)
         }
+      },
+      circuit: {
+        v1: (await import("../cosmos/circuit/v1/query.rpc.Query")).createRpcQueryExtension(client)
       },
       consensus: {
         v1: (await import("../cosmos/consensus/v1/query.rpc.Query")).createRpcQueryExtension(client)
@@ -76,6 +61,37 @@ export const createRPCQueryClient = async ({
       },
       upgrade: {
         v1beta1: (await import("../cosmos/upgrade/v1beta1/query.rpc.Query")).createRpcQueryExtension(client)
+      }
+    },
+    ibc: {
+      applications: {
+        interchain_accounts: {
+          controller: {
+            v1: (await import("./applications/interchain_accounts/controller/v1/query.rpc.Query")).createRpcQueryExtension(client)
+          },
+          host: {
+            v1: (await import("./applications/interchain_accounts/host/v1/query.rpc.Query")).createRpcQueryExtension(client)
+          }
+        },
+        transfer: {
+          v1: (await import("./applications/transfer/v1/query.rpc.Query")).createRpcQueryExtension(client)
+        }
+      },
+      core: {
+        channel: {
+          v1: (await import("./core/channel/v1/query.rpc.Query")).createRpcQueryExtension(client)
+        },
+        client: {
+          v1: (await import("./core/client/v1/query.rpc.Query")).createRpcQueryExtension(client)
+        },
+        connection: {
+          v1: (await import("./core/connection/v1/query.rpc.Query")).createRpcQueryExtension(client)
+        }
+      },
+      lightclients: {
+        wasm: {
+          v1: (await import("./lightclients/wasm/v1/query.rpc.Query")).createRpcQueryExtension(client)
+        }
       }
     }
   };

@@ -1,6 +1,6 @@
 import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../../cosmos/base/query/v1beta1/pagination";
 import { ConnectionEnd, ConnectionEndAmino, ConnectionEndSDKType, IdentifiedConnection, IdentifiedConnectionAmino, IdentifiedConnectionSDKType } from "./connection";
-import { Height, HeightAmino, HeightSDKType, IdentifiedClientState, IdentifiedClientStateAmino, IdentifiedClientStateSDKType } from "../../client/v1/client";
+import { Height, HeightAmino, HeightSDKType, IdentifiedClientState, IdentifiedClientStateAmino, IdentifiedClientStateSDKType, Params, ParamsAmino, ParamsSDKType } from "../../client/v1/client";
 import { Any, AnyAmino, AnySDKType } from "../../../../google/protobuf/any";
 import { BinaryReader, BinaryWriter } from "../../../../binary";
 import { GlobalDecoderRegistry } from "../../../../registry";
@@ -376,6 +376,42 @@ export interface QueryConnectionConsensusStateResponseSDKType {
   client_id: string;
   proof: Uint8Array;
   proof_height: HeightSDKType;
+}
+/** QueryConnectionParamsRequest is the request type for the Query/ConnectionParams RPC method. */
+export interface QueryConnectionParamsRequest {}
+export interface QueryConnectionParamsRequestProtoMsg {
+  typeUrl: "/ibc.core.connection.v1.QueryConnectionParamsRequest";
+  value: Uint8Array;
+}
+/** QueryConnectionParamsRequest is the request type for the Query/ConnectionParams RPC method. */
+export interface QueryConnectionParamsRequestAmino {}
+export interface QueryConnectionParamsRequestAminoMsg {
+  type: "cosmos-sdk/QueryConnectionParamsRequest";
+  value: QueryConnectionParamsRequestAmino;
+}
+/** QueryConnectionParamsRequest is the request type for the Query/ConnectionParams RPC method. */
+export interface QueryConnectionParamsRequestSDKType {}
+/** QueryConnectionParamsResponse is the response type for the Query/ConnectionParams RPC method. */
+export interface QueryConnectionParamsResponse {
+  /** params defines the parameters of the module. */
+  params?: Params;
+}
+export interface QueryConnectionParamsResponseProtoMsg {
+  typeUrl: "/ibc.core.connection.v1.QueryConnectionParamsResponse";
+  value: Uint8Array;
+}
+/** QueryConnectionParamsResponse is the response type for the Query/ConnectionParams RPC method. */
+export interface QueryConnectionParamsResponseAmino {
+  /** params defines the parameters of the module. */
+  params?: ParamsAmino;
+}
+export interface QueryConnectionParamsResponseAminoMsg {
+  type: "cosmos-sdk/QueryConnectionParamsResponse";
+  value: QueryConnectionParamsResponseAmino;
+}
+/** QueryConnectionParamsResponse is the response type for the Query/ConnectionParams RPC method. */
+export interface QueryConnectionParamsResponseSDKType {
+  params?: ParamsSDKType;
 }
 function createBaseQueryConnectionRequest(): QueryConnectionRequest {
   return {
@@ -1202,8 +1238,8 @@ export const QueryConnectionConsensusStateRequest = {
   toAmino(message: QueryConnectionConsensusStateRequest): QueryConnectionConsensusStateRequestAmino {
     const obj: any = {};
     obj.connection_id = message.connectionId === "" ? undefined : message.connectionId;
-    obj.revision_number = message.revisionNumber !== BigInt(0) ? message.revisionNumber.toString() : undefined;
-    obj.revision_height = message.revisionHeight !== BigInt(0) ? message.revisionHeight.toString() : undefined;
+    obj.revision_number = message.revisionNumber !== BigInt(0) ? (message.revisionNumber?.toString)() : undefined;
+    obj.revision_height = message.revisionHeight !== BigInt(0) ? (message.revisionHeight?.toString)() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryConnectionConsensusStateRequestAminoMsg): QueryConnectionConsensusStateRequest {
@@ -1347,3 +1383,152 @@ export const QueryConnectionConsensusStateResponse = {
 };
 GlobalDecoderRegistry.register(QueryConnectionConsensusStateResponse.typeUrl, QueryConnectionConsensusStateResponse);
 GlobalDecoderRegistry.registerAminoProtoMapping(QueryConnectionConsensusStateResponse.aminoType, QueryConnectionConsensusStateResponse.typeUrl);
+function createBaseQueryConnectionParamsRequest(): QueryConnectionParamsRequest {
+  return {};
+}
+export const QueryConnectionParamsRequest = {
+  typeUrl: "/ibc.core.connection.v1.QueryConnectionParamsRequest",
+  aminoType: "cosmos-sdk/QueryConnectionParamsRequest",
+  is(o: any): o is QueryConnectionParamsRequest {
+    return o && o.$typeUrl === QueryConnectionParamsRequest.typeUrl;
+  },
+  isSDK(o: any): o is QueryConnectionParamsRequestSDKType {
+    return o && o.$typeUrl === QueryConnectionParamsRequest.typeUrl;
+  },
+  isAmino(o: any): o is QueryConnectionParamsRequestAmino {
+    return o && o.$typeUrl === QueryConnectionParamsRequest.typeUrl;
+  },
+  encode(_: QueryConnectionParamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryConnectionParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryConnectionParamsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(_: Partial<QueryConnectionParamsRequest>): QueryConnectionParamsRequest {
+    const message = createBaseQueryConnectionParamsRequest();
+    return message;
+  },
+  fromAmino(_: QueryConnectionParamsRequestAmino): QueryConnectionParamsRequest {
+    const message = createBaseQueryConnectionParamsRequest();
+    return message;
+  },
+  toAmino(_: QueryConnectionParamsRequest): QueryConnectionParamsRequestAmino {
+    const obj: any = {};
+    return obj;
+  },
+  fromAminoMsg(object: QueryConnectionParamsRequestAminoMsg): QueryConnectionParamsRequest {
+    return QueryConnectionParamsRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryConnectionParamsRequest): QueryConnectionParamsRequestAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryConnectionParamsRequest",
+      value: QueryConnectionParamsRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryConnectionParamsRequestProtoMsg): QueryConnectionParamsRequest {
+    return QueryConnectionParamsRequest.decode(message.value);
+  },
+  toProto(message: QueryConnectionParamsRequest): Uint8Array {
+    return QueryConnectionParamsRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryConnectionParamsRequest): QueryConnectionParamsRequestProtoMsg {
+    return {
+      typeUrl: "/ibc.core.connection.v1.QueryConnectionParamsRequest",
+      value: QueryConnectionParamsRequest.encode(message).finish()
+    };
+  }
+};
+GlobalDecoderRegistry.register(QueryConnectionParamsRequest.typeUrl, QueryConnectionParamsRequest);
+GlobalDecoderRegistry.registerAminoProtoMapping(QueryConnectionParamsRequest.aminoType, QueryConnectionParamsRequest.typeUrl);
+function createBaseQueryConnectionParamsResponse(): QueryConnectionParamsResponse {
+  return {
+    params: undefined
+  };
+}
+export const QueryConnectionParamsResponse = {
+  typeUrl: "/ibc.core.connection.v1.QueryConnectionParamsResponse",
+  aminoType: "cosmos-sdk/QueryConnectionParamsResponse",
+  is(o: any): o is QueryConnectionParamsResponse {
+    return o && o.$typeUrl === QueryConnectionParamsResponse.typeUrl;
+  },
+  isSDK(o: any): o is QueryConnectionParamsResponseSDKType {
+    return o && o.$typeUrl === QueryConnectionParamsResponse.typeUrl;
+  },
+  isAmino(o: any): o is QueryConnectionParamsResponseAmino {
+    return o && o.$typeUrl === QueryConnectionParamsResponse.typeUrl;
+  },
+  encode(message: QueryConnectionParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.params !== undefined) {
+      Params.encode(message.params, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryConnectionParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryConnectionParamsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.params = Params.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryConnectionParamsResponse>): QueryConnectionParamsResponse {
+    const message = createBaseQueryConnectionParamsResponse();
+    message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
+    return message;
+  },
+  fromAmino(object: QueryConnectionParamsResponseAmino): QueryConnectionParamsResponse {
+    const message = createBaseQueryConnectionParamsResponse();
+    if (object.params !== undefined && object.params !== null) {
+      message.params = Params.fromAmino(object.params);
+    }
+    return message;
+  },
+  toAmino(message: QueryConnectionParamsResponse): QueryConnectionParamsResponseAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QueryConnectionParamsResponseAminoMsg): QueryConnectionParamsResponse {
+    return QueryConnectionParamsResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryConnectionParamsResponse): QueryConnectionParamsResponseAminoMsg {
+    return {
+      type: "cosmos-sdk/QueryConnectionParamsResponse",
+      value: QueryConnectionParamsResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryConnectionParamsResponseProtoMsg): QueryConnectionParamsResponse {
+    return QueryConnectionParamsResponse.decode(message.value);
+  },
+  toProto(message: QueryConnectionParamsResponse): Uint8Array {
+    return QueryConnectionParamsResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryConnectionParamsResponse): QueryConnectionParamsResponseProtoMsg {
+    return {
+      typeUrl: "/ibc.core.connection.v1.QueryConnectionParamsResponse",
+      value: QueryConnectionParamsResponse.encode(message).finish()
+    };
+  }
+};
+GlobalDecoderRegistry.register(QueryConnectionParamsResponse.typeUrl, QueryConnectionParamsResponse);
+GlobalDecoderRegistry.registerAminoProtoMapping(QueryConnectionParamsResponse.aminoType, QueryConnectionParamsResponse.typeUrl);

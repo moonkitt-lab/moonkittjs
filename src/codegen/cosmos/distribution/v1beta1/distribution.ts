@@ -25,19 +25,19 @@ export interface ParamsProtoMsg {
 }
 /** Params defines the set of params for the distribution module. */
 export interface ParamsAmino {
-  community_tax?: string;
+  community_tax: string;
   /**
    * Deprecated: The base_proposer_reward field is deprecated and is no longer used
    * in the x/distribution module's reward mechanism.
    */
   /** @deprecated */
-  base_proposer_reward?: string;
+  base_proposer_reward: string;
   /**
    * Deprecated: The bonus_proposer_reward field is deprecated and is no longer used
    * in the x/distribution module's reward mechanism.
    */
   /** @deprecated */
-  bonus_proposer_reward?: string;
+  bonus_proposer_reward: string;
   withdraw_addr_enabled?: boolean;
 }
 export interface ParamsAminoMsg {
@@ -397,7 +397,7 @@ export interface DelegatorStartingInfoProtoMsg {
  */
 export interface DelegatorStartingInfoAmino {
   previous_period?: string;
-  stake?: string;
+  stake: string;
   height: string;
 }
 export interface DelegatorStartingInfoAminoMsg {
@@ -579,9 +579,9 @@ export const Params = {
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};
-    obj.community_tax = message.communityTax === "" ? undefined : message.communityTax;
-    obj.base_proposer_reward = message.baseProposerReward === "" ? undefined : message.baseProposerReward;
-    obj.bonus_proposer_reward = message.bonusProposerReward === "" ? undefined : message.bonusProposerReward;
+    obj.community_tax = message.communityTax ?? "";
+    obj.base_proposer_reward = message.baseProposerReward ?? "";
+    obj.bonus_proposer_reward = message.bonusProposerReward ?? "";
     obj.withdraw_addr_enabled = message.withdrawAddrEnabled === false ? undefined : message.withdrawAddrEnabled;
     return obj;
   },
@@ -772,7 +772,7 @@ export const ValidatorCurrentRewards = {
     } else {
       obj.rewards = message.rewards;
     }
-    obj.period = message.period !== BigInt(0) ? message.period.toString() : undefined;
+    obj.period = message.period !== BigInt(0) ? (message.period?.toString)() : undefined;
     return obj;
   },
   fromAminoMsg(object: ValidatorCurrentRewardsAminoMsg): ValidatorCurrentRewards {
@@ -1030,7 +1030,7 @@ export const ValidatorSlashEvent = {
   },
   toAmino(message: ValidatorSlashEvent): ValidatorSlashEventAmino {
     const obj: any = {};
-    obj.validator_period = message.validatorPeriod !== BigInt(0) ? message.validatorPeriod.toString() : undefined;
+    obj.validator_period = message.validatorPeriod !== BigInt(0) ? (message.validatorPeriod?.toString)() : undefined;
     obj.fraction = message.fraction === "" ? undefined : message.fraction;
     return obj;
   },
@@ -1287,7 +1287,7 @@ export const TokenizeShareRecordReward = {
   },
   toAmino(message: TokenizeShareRecordReward): TokenizeShareRecordRewardAmino {
     const obj: any = {};
-    obj.record_id = message.recordId !== BigInt(0) ? message.recordId.toString() : undefined;
+    obj.record_id = message.recordId !== BigInt(0) ? (message.recordId?.toString)() : undefined;
     if (message.reward) {
       obj.reward = message.reward.map(e => e ? DecCoin.toAmino(e) : undefined);
     } else {
@@ -1515,9 +1515,9 @@ export const DelegatorStartingInfo = {
   },
   toAmino(message: DelegatorStartingInfo): DelegatorStartingInfoAmino {
     const obj: any = {};
-    obj.previous_period = message.previousPeriod !== BigInt(0) ? message.previousPeriod.toString() : undefined;
-    obj.stake = message.stake === "" ? undefined : message.stake;
-    obj.height = message.height ? message.height.toString() : "0";
+    obj.previous_period = message.previousPeriod !== BigInt(0) ? (message.previousPeriod?.toString)() : undefined;
+    obj.stake = message.stake ?? "";
+    obj.height = message.height ? (message.height?.toString)() : "0";
     return obj;
   },
   fromAminoMsg(object: DelegatorStartingInfoAminoMsg): DelegatorStartingInfo {

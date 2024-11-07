@@ -2,3 +2,11 @@
 	path = cosmos
 	url = git@github.com:cosmos/cosmos-sdk.git
 	branch = v0.50.9-lsm
+[submodule "ibc-go"]
+	path = ibc-go
+	url = git@github.com:cosmos/ibc-go.git
+	branch = v8.5.1
+[submodule "ics23"]
+	path = ics23
+	url = git@github.com:cosmos/ics23.git
+	branch = go/v0.11.0

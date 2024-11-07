@@ -1,7 +1,7 @@
 import { Rpc } from "../../../../helpers";
 import { BinaryReader } from "../../../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryClientStateRequest, QueryClientStateResponse, QueryClientStatesRequest, QueryClientStatesResponse, QueryConsensusStateRequest, QueryConsensusStateResponse, QueryConsensusStatesRequest, QueryConsensusStatesResponse, QueryClientStatusRequest, QueryClientStatusResponse, QueryClientParamsRequest, QueryClientParamsResponse, QueryUpgradedClientStateRequest, QueryUpgradedClientStateResponse, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponse } from "./query";
+import { QueryClientStateRequest, QueryClientStateResponse, QueryClientStatesRequest, QueryClientStatesResponse, QueryConsensusStateRequest, QueryConsensusStateResponse, QueryConsensusStatesRequest, QueryConsensusStatesResponse, QueryConsensusStateHeightsRequest, QueryConsensusStateHeightsResponse, QueryClientStatusRequest, QueryClientStatusResponse, QueryClientParamsRequest, QueryClientParamsResponse, QueryUpgradedClientStateRequest, QueryUpgradedClientStateResponse, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponse, QueryVerifyMembershipRequest, QueryVerifyMembershipResponse } from "./query";
 /** Query provides defines the gRPC querier service */
 export interface Query {
   /** ClientState queries an IBC light client. */
@@ -18,14 +18,18 @@ export interface Query {
    * client.
    */
   consensusStates(request: QueryConsensusStatesRequest): Promise<QueryConsensusStatesResponse>;
+  /** ConsensusStateHeights queries the height of every consensus states associated with a given client. */
+  consensusStateHeights(request: QueryConsensusStateHeightsRequest): Promise<QueryConsensusStateHeightsResponse>;
   /** Status queries the status of an IBC client. */
   clientStatus(request: QueryClientStatusRequest): Promise<QueryClientStatusResponse>;
-  /** ClientParams queries all parameters of the ibc client. */
+  /** ClientParams queries all parameters of the ibc client submodule. */
   clientParams(request?: QueryClientParamsRequest): Promise<QueryClientParamsResponse>;
   /** UpgradedClientState queries an Upgraded IBC light client. */
   upgradedClientState(request?: QueryUpgradedClientStateRequest): Promise<QueryUpgradedClientStateResponse>;
   /** UpgradedConsensusState queries an Upgraded IBC consensus state. */
   upgradedConsensusState(request?: QueryUpgradedConsensusStateRequest): Promise<QueryUpgradedConsensusStateResponse>;
+  /** VerifyMembership queries an IBC light client for proof verification of a value at a given key path. */
+  verifyMembership(request: QueryVerifyMembershipRequest): Promise<QueryVerifyMembershipResponse>;
 }
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
@@ -35,10 +39,12 @@ export class QueryClientImpl implements Query {
     this.clientStates = this.clientStates.bind(this);
     this.consensusState = this.consensusState.bind(this);
     this.consensusStates = this.consensusStates.bind(this);
+    this.consensusStateHeights = this.consensusStateHeights.bind(this);
     this.clientStatus = this.clientStatus.bind(this);
     this.clientParams = this.clientParams.bind(this);
     this.upgradedClientState = this.upgradedClientState.bind(this);
     this.upgradedConsensusState = this.upgradedConsensusState.bind(this);
+    this.verifyMembership = this.verifyMembership.bind(this);
   }
   clientState(request: QueryClientStateRequest): Promise<QueryClientStateResponse> {
     const data = QueryClientStateRequest.encode(request).finish();
@@ -62,6 +68,11 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("ibc.core.client.v1.Query", "ConsensusStates", data);
     return promise.then(data => QueryConsensusStatesResponse.decode(new BinaryReader(data)));
   }
+  consensusStateHeights(request: QueryConsensusStateHeightsRequest): Promise<QueryConsensusStateHeightsResponse> {
+    const data = QueryConsensusStateHeightsRequest.encode(request).finish();
+    const promise = this.rpc.request("ibc.core.client.v1.Query", "ConsensusStateHeights", data);
+    return promise.then(data => QueryConsensusStateHeightsResponse.decode(new BinaryReader(data)));
+  }
   clientStatus(request: QueryClientStatusRequest): Promise<QueryClientStatusResponse> {
     const data = QueryClientStatusRequest.encode(request).finish();
     const promise = this.rpc.request("ibc.core.client.v1.Query", "ClientStatus", data);
@@ -82,6 +93,11 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("ibc.core.client.v1.Query", "UpgradedConsensusState", data);
     return promise.then(data => QueryUpgradedConsensusStateResponse.decode(new BinaryReader(data)));
   }
+  verifyMembership(request: QueryVerifyMembershipRequest): Promise<QueryVerifyMembershipResponse> {
+    const data = QueryVerifyMembershipRequest.encode(request).finish();
+    const promise = this.rpc.request("ibc.core.client.v1.Query", "VerifyMembership", data);
+    return promise.then(data => QueryVerifyMembershipResponse.decode(new BinaryReader(data)));
+  }
 }
 export const createRpcQueryExtension = (base: QueryClient) => {
   const rpc = createProtobufRpcClient(base);
@@ -99,6 +115,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
     consensusStates(request: QueryConsensusStatesRequest): Promise<QueryConsensusStatesResponse> {
       return queryService.consensusStates(request);
     },
+    consensusStateHeights(request: QueryConsensusStateHeightsRequest): Promise<QueryConsensusStateHeightsResponse> {
+      return queryService.consensusStateHeights(request);
+    },
     clientStatus(request: QueryClientStatusRequest): Promise<QueryClientStatusResponse> {
       return queryService.clientStatus(request);
     },
@@ -110,6 +129,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
     },
     upgradedConsensusState(request?: QueryUpgradedConsensusStateRequest): Promise<QueryUpgradedConsensusStateResponse> {
       return queryService.upgradedConsensusState(request);
+    },
+    verifyMembership(request: QueryVerifyMembershipRequest): Promise<QueryVerifyMembershipResponse> {
+      return queryService.verifyMembership(request);
     }
   };
 };

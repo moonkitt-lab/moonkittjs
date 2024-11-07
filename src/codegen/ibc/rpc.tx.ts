@@ -4,24 +4,6 @@ export const createRPCMsgClient = async ({
 }: {
   rpc: Rpc;
 }) => ({
-  ibc: {
-    applications: {
-      transfer: {
-        v1: new (await import("./applications/transfer/v1/tx.rpc.msg")).MsgClientImpl(rpc)
-      }
-    },
-    core: {
-      channel: {
-        v1: new (await import("./core/channel/v1/tx.rpc.msg")).MsgClientImpl(rpc)
-      },
-      client: {
-        v1: new (await import("./core/client/v1/tx.rpc.msg")).MsgClientImpl(rpc)
-      },
-      connection: {
-        v1: new (await import("./core/connection/v1/tx.rpc.msg")).MsgClientImpl(rpc)
-      }
-    }
-  },
   cosmos: {
     auth: {
       v1beta1: new (await import("../cosmos/auth/v1beta1/tx.rpc.msg")).MsgClientImpl(rpc)
@@ -31,6 +13,9 @@ export const createRPCMsgClient = async ({
     },
     bank: {
       v1beta1: new (await import("../cosmos/bank/v1beta1/tx.rpc.msg")).MsgClientImpl(rpc)
+    },
+    circuit: {
+      v1: new (await import("../cosmos/circuit/v1/tx.rpc.msg")).MsgClientImpl(rpc)
     },
     consensus: {
       v1: new (await import("../cosmos/consensus/v1/tx.rpc.msg")).MsgClientImpl(rpc)
@@ -59,6 +44,37 @@ export const createRPCMsgClient = async ({
     },
     vesting: {
       v1beta1: new (await import("../cosmos/vesting/v1beta1/tx.rpc.msg")).MsgClientImpl(rpc)
+    }
+  },
+  ibc: {
+    applications: {
+      interchain_accounts: {
+        controller: {
+          v1: new (await import("./applications/interchain_accounts/controller/v1/tx.rpc.msg")).MsgClientImpl(rpc)
+        },
+        host: {
+          v1: new (await import("./applications/interchain_accounts/host/v1/tx.rpc.msg")).MsgClientImpl(rpc)
+        }
+      },
+      transfer: {
+        v1: new (await import("./applications/transfer/v1/tx.rpc.msg")).MsgClientImpl(rpc)
+      }
+    },
+    core: {
+      channel: {
+        v1: new (await import("./core/channel/v1/tx.rpc.msg")).MsgClientImpl(rpc)
+      },
+      client: {
+        v1: new (await import("./core/client/v1/tx.rpc.msg")).MsgClientImpl(rpc)
+      },
+      connection: {
+        v1: new (await import("./core/connection/v1/tx.rpc.msg")).MsgClientImpl(rpc)
+      }
+    },
+    lightclients: {
+      wasm: {
+        v1: new (await import("./lightclients/wasm/v1/tx.rpc.msg")).MsgClientImpl(rpc)
+      }
     }
   }
 });

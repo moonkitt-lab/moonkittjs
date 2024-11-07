@@ -17,7 +17,7 @@ export interface GenesisState {
    * of the last-block's bonded validators.
    */
   lastValidatorPowers: LastValidatorPower[];
-  /** delegations defines the validator set at genesis. */
+  /** validators defines the validator set at genesis. */
   validators: Validator[];
   /** delegations defines the delegations active at genesis. */
   delegations: Delegation[];
@@ -25,6 +25,7 @@ export interface GenesisState {
   unbondingDelegations: UnbondingDelegation[];
   /** redelegations defines the redelegations active at genesis. */
   redelegations: Redelegation[];
+  /** exported defines a bool to identify whether the chain dealing with exported or initialized genesis. */
   exported: boolean;
   /** store tokenize share records to provide reward to record owners */
   tokenizeShareRecords: TokenizeShareRecord[];
@@ -53,7 +54,7 @@ export interface GenesisStateAmino {
    * of the last-block's bonded validators.
    */
   last_validator_powers: LastValidatorPowerAmino[];
-  /** delegations defines the validator set at genesis. */
+  /** validators defines the validator set at genesis. */
   validators: ValidatorAmino[];
   /** delegations defines the delegations active at genesis. */
   delegations: DelegationAmino[];
@@ -61,6 +62,7 @@ export interface GenesisStateAmino {
   unbonding_delegations: UnbondingDelegationAmino[];
   /** redelegations defines the redelegations active at genesis. */
   redelegations: RedelegationAmino[];
+  /** exported defines a bool to identify whether the chain dealing with exported or initialized genesis. */
   exported?: boolean;
   /** store tokenize share records to provide reward to record owners */
   tokenize_share_records?: TokenizeShareRecordAmino[];
@@ -343,7 +345,7 @@ export const GenesisState = {
     } else {
       obj.tokenize_share_records = message.tokenizeShareRecords;
     }
-    obj.last_tokenize_share_record_id = message.lastTokenizeShareRecordId !== BigInt(0) ? message.lastTokenizeShareRecordId.toString() : undefined;
+    obj.last_tokenize_share_record_id = message.lastTokenizeShareRecordId !== BigInt(0) ? (message.lastTokenizeShareRecordId?.toString)() : undefined;
     obj.total_liquid_staked_tokens = message.totalLiquidStakedTokens ? base64FromBytes(message.totalLiquidStakedTokens) : undefined;
     if (message.tokenizeShareLocks) {
       obj.tokenize_share_locks = message.tokenizeShareLocks.map(e => e ? TokenizeShareLock.toAmino(e) : undefined);
@@ -547,7 +549,7 @@ export const LastValidatorPower = {
   toAmino(message: LastValidatorPower): LastValidatorPowerAmino {
     const obj: any = {};
     obj.address = message.address === "" ? undefined : message.address;
-    obj.power = message.power !== BigInt(0) ? message.power.toString() : undefined;
+    obj.power = message.power !== BigInt(0) ? (message.power?.toString)() : undefined;
     return obj;
   },
   fromAminoMsg(object: LastValidatorPowerAminoMsg): LastValidatorPower {

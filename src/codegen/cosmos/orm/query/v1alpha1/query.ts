@@ -1021,8 +1021,8 @@ export const IndexValue = {
   },
   toAmino(message: IndexValue): IndexValueAmino {
     const obj: any = {};
-    obj.uint = message.uint !== BigInt(0) ? message.uint.toString() : undefined;
-    obj.int = message.int !== BigInt(0) ? message.int.toString() : undefined;
+    obj.uint = message.uint !== BigInt(0) ? (message.uint?.toString)() : undefined;
+    obj.int = message.int !== BigInt(0) ? (message.int?.toString)() : undefined;
     obj.str = message.str === null ? undefined : message.str;
     obj.bytes = message.bytes ? base64FromBytes(message.bytes) : undefined;
     obj.enum = message.enum === null ? undefined : message.enum;

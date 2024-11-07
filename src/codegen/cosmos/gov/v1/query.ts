@@ -3,6 +3,40 @@ import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageRe
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { GlobalDecoderRegistry } from "../../../registry";
 import { isSet } from "../../../helpers";
+/** QueryConstitutionRequest is the request type for the Query/Constitution RPC method */
+export interface QueryConstitutionRequest {}
+export interface QueryConstitutionRequestProtoMsg {
+  typeUrl: "/cosmos.gov.v1.QueryConstitutionRequest";
+  value: Uint8Array;
+}
+/** QueryConstitutionRequest is the request type for the Query/Constitution RPC method */
+export interface QueryConstitutionRequestAmino {}
+export interface QueryConstitutionRequestAminoMsg {
+  type: "cosmos-sdk/v1/QueryConstitutionRequest";
+  value: QueryConstitutionRequestAmino;
+}
+/** QueryConstitutionRequest is the request type for the Query/Constitution RPC method */
+export interface QueryConstitutionRequestSDKType {}
+/** QueryConstitutionResponse is the response type for the Query/Constitution RPC method */
+export interface QueryConstitutionResponse {
+  constitution: string;
+}
+export interface QueryConstitutionResponseProtoMsg {
+  typeUrl: "/cosmos.gov.v1.QueryConstitutionResponse";
+  value: Uint8Array;
+}
+/** QueryConstitutionResponse is the response type for the Query/Constitution RPC method */
+export interface QueryConstitutionResponseAmino {
+  constitution?: string;
+}
+export interface QueryConstitutionResponseAminoMsg {
+  type: "cosmos-sdk/v1/QueryConstitutionResponse";
+  value: QueryConstitutionResponseAmino;
+}
+/** QueryConstitutionResponse is the response type for the Query/Constitution RPC method */
+export interface QueryConstitutionResponseSDKType {
+  constitution: string;
+}
 /** QueryProposalRequest is the request type for the Query/Proposal RPC method. */
 export interface QueryProposalRequest {
   /** proposal_id defines the unique id of the proposal. */
@@ -470,6 +504,155 @@ export interface QueryTallyResultResponseAminoMsg {
 export interface QueryTallyResultResponseSDKType {
   tally?: TallyResultSDKType;
 }
+function createBaseQueryConstitutionRequest(): QueryConstitutionRequest {
+  return {};
+}
+export const QueryConstitutionRequest = {
+  typeUrl: "/cosmos.gov.v1.QueryConstitutionRequest",
+  aminoType: "cosmos-sdk/v1/QueryConstitutionRequest",
+  is(o: any): o is QueryConstitutionRequest {
+    return o && o.$typeUrl === QueryConstitutionRequest.typeUrl;
+  },
+  isSDK(o: any): o is QueryConstitutionRequestSDKType {
+    return o && o.$typeUrl === QueryConstitutionRequest.typeUrl;
+  },
+  isAmino(o: any): o is QueryConstitutionRequestAmino {
+    return o && o.$typeUrl === QueryConstitutionRequest.typeUrl;
+  },
+  encode(_: QueryConstitutionRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryConstitutionRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryConstitutionRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(_: Partial<QueryConstitutionRequest>): QueryConstitutionRequest {
+    const message = createBaseQueryConstitutionRequest();
+    return message;
+  },
+  fromAmino(_: QueryConstitutionRequestAmino): QueryConstitutionRequest {
+    const message = createBaseQueryConstitutionRequest();
+    return message;
+  },
+  toAmino(_: QueryConstitutionRequest): QueryConstitutionRequestAmino {
+    const obj: any = {};
+    return obj;
+  },
+  fromAminoMsg(object: QueryConstitutionRequestAminoMsg): QueryConstitutionRequest {
+    return QueryConstitutionRequest.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryConstitutionRequest): QueryConstitutionRequestAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/QueryConstitutionRequest",
+      value: QueryConstitutionRequest.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryConstitutionRequestProtoMsg): QueryConstitutionRequest {
+    return QueryConstitutionRequest.decode(message.value);
+  },
+  toProto(message: QueryConstitutionRequest): Uint8Array {
+    return QueryConstitutionRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryConstitutionRequest): QueryConstitutionRequestProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.QueryConstitutionRequest",
+      value: QueryConstitutionRequest.encode(message).finish()
+    };
+  }
+};
+GlobalDecoderRegistry.register(QueryConstitutionRequest.typeUrl, QueryConstitutionRequest);
+GlobalDecoderRegistry.registerAminoProtoMapping(QueryConstitutionRequest.aminoType, QueryConstitutionRequest.typeUrl);
+function createBaseQueryConstitutionResponse(): QueryConstitutionResponse {
+  return {
+    constitution: ""
+  };
+}
+export const QueryConstitutionResponse = {
+  typeUrl: "/cosmos.gov.v1.QueryConstitutionResponse",
+  aminoType: "cosmos-sdk/v1/QueryConstitutionResponse",
+  is(o: any): o is QueryConstitutionResponse {
+    return o && (o.$typeUrl === QueryConstitutionResponse.typeUrl || typeof o.constitution === "string");
+  },
+  isSDK(o: any): o is QueryConstitutionResponseSDKType {
+    return o && (o.$typeUrl === QueryConstitutionResponse.typeUrl || typeof o.constitution === "string");
+  },
+  isAmino(o: any): o is QueryConstitutionResponseAmino {
+    return o && (o.$typeUrl === QueryConstitutionResponse.typeUrl || typeof o.constitution === "string");
+  },
+  encode(message: QueryConstitutionResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.constitution !== "") {
+      writer.uint32(10).string(message.constitution);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryConstitutionResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryConstitutionResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.constitution = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryConstitutionResponse>): QueryConstitutionResponse {
+    const message = createBaseQueryConstitutionResponse();
+    message.constitution = object.constitution ?? "";
+    return message;
+  },
+  fromAmino(object: QueryConstitutionResponseAmino): QueryConstitutionResponse {
+    const message = createBaseQueryConstitutionResponse();
+    if (object.constitution !== undefined && object.constitution !== null) {
+      message.constitution = object.constitution;
+    }
+    return message;
+  },
+  toAmino(message: QueryConstitutionResponse): QueryConstitutionResponseAmino {
+    const obj: any = {};
+    obj.constitution = message.constitution === "" ? undefined : message.constitution;
+    return obj;
+  },
+  fromAminoMsg(object: QueryConstitutionResponseAminoMsg): QueryConstitutionResponse {
+    return QueryConstitutionResponse.fromAmino(object.value);
+  },
+  toAminoMsg(message: QueryConstitutionResponse): QueryConstitutionResponseAminoMsg {
+    return {
+      type: "cosmos-sdk/v1/QueryConstitutionResponse",
+      value: QueryConstitutionResponse.toAmino(message)
+    };
+  },
+  fromProtoMsg(message: QueryConstitutionResponseProtoMsg): QueryConstitutionResponse {
+    return QueryConstitutionResponse.decode(message.value);
+  },
+  toProto(message: QueryConstitutionResponse): Uint8Array {
+    return QueryConstitutionResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryConstitutionResponse): QueryConstitutionResponseProtoMsg {
+    return {
+      typeUrl: "/cosmos.gov.v1.QueryConstitutionResponse",
+      value: QueryConstitutionResponse.encode(message).finish()
+    };
+  }
+};
+GlobalDecoderRegistry.register(QueryConstitutionResponse.typeUrl, QueryConstitutionResponse);
+GlobalDecoderRegistry.registerAminoProtoMapping(QueryConstitutionResponse.aminoType, QueryConstitutionResponse.typeUrl);
 function createBaseQueryProposalRequest(): QueryProposalRequest {
   return {
     proposalId: BigInt(0)
@@ -524,7 +707,7 @@ export const QueryProposalRequest = {
   },
   toAmino(message: QueryProposalRequest): QueryProposalRequestAmino {
     const obj: any = {};
-    obj.proposal_id = message.proposalId !== BigInt(0) ? message.proposalId.toString() : undefined;
+    obj.proposal_id = message.proposalId !== BigInt(0) ? (message.proposalId?.toString)() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryProposalRequestAminoMsg): QueryProposalRequest {
@@ -675,7 +858,7 @@ export const QueryProposalsRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.proposalStatus = (reader.int32() as any);
+          message.proposalStatus = reader.int32() as any;
           break;
         case 2:
           message.voter = reader.string();
@@ -909,7 +1092,7 @@ export const QueryVoteRequest = {
   },
   toAmino(message: QueryVoteRequest): QueryVoteRequestAmino {
     const obj: any = {};
-    obj.proposal_id = message.proposalId !== BigInt(0) ? message.proposalId.toString() : undefined;
+    obj.proposal_id = message.proposalId !== BigInt(0) ? (message.proposalId?.toString)() : undefined;
     obj.voter = message.voter === "" ? undefined : message.voter;
     return obj;
   },
@@ -1083,7 +1266,7 @@ export const QueryVotesRequest = {
   },
   toAmino(message: QueryVotesRequest): QueryVotesRequestAmino {
     const obj: any = {};
-    obj.proposal_id = message.proposalId !== BigInt(0) ? message.proposalId.toString() : undefined;
+    obj.proposal_id = message.proposalId !== BigInt(0) ? (message.proposalId?.toString)() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -1469,7 +1652,7 @@ export const QueryDepositRequest = {
   },
   toAmino(message: QueryDepositRequest): QueryDepositRequestAmino {
     const obj: any = {};
-    obj.proposal_id = message.proposalId !== BigInt(0) ? message.proposalId.toString() : undefined;
+    obj.proposal_id = message.proposalId !== BigInt(0) ? (message.proposalId?.toString)() : undefined;
     obj.depositor = message.depositor === "" ? undefined : message.depositor;
     return obj;
   },
@@ -1643,7 +1826,7 @@ export const QueryDepositsRequest = {
   },
   toAmino(message: QueryDepositsRequest): QueryDepositsRequestAmino {
     const obj: any = {};
-    obj.proposal_id = message.proposalId !== BigInt(0) ? message.proposalId.toString() : undefined;
+    obj.proposal_id = message.proposalId !== BigInt(0) ? (message.proposalId?.toString)() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
     return obj;
   },
@@ -1820,7 +2003,7 @@ export const QueryTallyResultRequest = {
   },
   toAmino(message: QueryTallyResultRequest): QueryTallyResultRequestAmino {
     const obj: any = {};
-    obj.proposal_id = message.proposalId !== BigInt(0) ? message.proposalId.toString() : undefined;
+    obj.proposal_id = message.proposalId !== BigInt(0) ? (message.proposalId?.toString)() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryTallyResultRequestAminoMsg): QueryTallyResultRequest {

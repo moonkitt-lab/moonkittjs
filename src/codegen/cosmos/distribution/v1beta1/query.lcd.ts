@@ -63,7 +63,7 @@ export class LCDQueryClient {
     const endpoint = `cosmos/distribution/v1beta1/delegators/${params.delegatorAddress}/rewards/${params.validatorAddress}`;
     return await this.req.get<QueryDelegationRewardsResponseSDKType>(endpoint);
   }
-  /* DelegationTotalRewards queries the total rewards accrued by a each
+  /* DelegationTotalRewards queries the total rewards accrued by each
    validator. */
   async delegationTotalRewards(params: QueryDelegationTotalRewardsRequest): Promise<QueryDelegationTotalRewardsResponseSDKType> {
     const endpoint = `cosmos/distribution/v1beta1/delegators/${params.delegatorAddress}/rewards`;

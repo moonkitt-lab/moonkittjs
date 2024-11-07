@@ -48,3 +48,4 @@ yarn.lock
 
 # others
 .DS_Store
+.yarn/install-state.gz

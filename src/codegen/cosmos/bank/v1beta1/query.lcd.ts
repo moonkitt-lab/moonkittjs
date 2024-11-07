@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../../helpers";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryBalanceRequest, QueryBalanceResponseSDKType, QueryAllBalancesRequest, QueryAllBalancesResponseSDKType, QuerySpendableBalancesRequest, QuerySpendableBalancesResponseSDKType, QuerySpendableBalanceByDenomRequest, QuerySpendableBalanceByDenomResponseSDKType, QueryTotalSupplyRequest, QueryTotalSupplyResponseSDKType, QuerySupplyOfRequest, QuerySupplyOfResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomMetadataRequest, QueryDenomMetadataResponseSDKType, QueryDenomsMetadataRequest, QueryDenomsMetadataResponseSDKType, QueryDenomOwnersRequest, QueryDenomOwnersResponseSDKType, QuerySendEnabledRequest, QuerySendEnabledResponseSDKType } from "./query";
+import { QueryBalanceRequest, QueryBalanceResponseSDKType, QueryAllBalancesRequest, QueryAllBalancesResponseSDKType, QuerySpendableBalancesRequest, QuerySpendableBalancesResponseSDKType, QuerySpendableBalanceByDenomRequest, QuerySpendableBalanceByDenomResponseSDKType, QueryTotalSupplyRequest, QueryTotalSupplyResponseSDKType, QuerySupplyOfRequest, QuerySupplyOfResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomMetadataRequest, QueryDenomMetadataResponseSDKType, QueryDenomMetadataByQueryStringRequest, QueryDenomMetadataByQueryStringResponseSDKType, QueryDenomsMetadataRequest, QueryDenomsMetadataResponseSDKType, QueryDenomOwnersRequest, QueryDenomOwnersResponseSDKType, QueryDenomOwnersByQueryRequest, QueryDenomOwnersByQueryResponseSDKType, QuerySendEnabledRequest, QuerySendEnabledResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -17,8 +17,10 @@ export class LCDQueryClient {
     this.supplyOf = this.supplyOf.bind(this);
     this.params = this.params.bind(this);
     this.denomMetadata = this.denomMetadata.bind(this);
+    this.denomMetadataByQueryString = this.denomMetadataByQueryString.bind(this);
     this.denomsMetadata = this.denomsMetadata.bind(this);
     this.denomOwners = this.denomOwners.bind(this);
+    this.denomOwnersByQuery = this.denomOwnersByQuery.bind(this);
     this.sendEnabled = this.sendEnabled.bind(this);
   }
   /* Balance queries the balance of a single coin for a single account. */
@@ -42,6 +44,9 @@ export class LCDQueryClient {
     };
     if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
+    }
+    if (typeof params?.resolveDenom !== "undefined") {
+      options.params.resolve_denom = params.resolveDenom;
     }
     const endpoint = `cosmos/bank/v1beta1/balances/${params.address}`;
     return await this.req.get<QueryAllBalancesResponseSDKType>(endpoint, options);
@@ -115,10 +120,21 @@ export class LCDQueryClient {
     const endpoint = `cosmos/bank/v1beta1/params`;
     return await this.req.get<QueryParamsResponseSDKType>(endpoint);
   }
-  /* DenomsMetadata queries the client metadata of a given coin denomination. */
+  /* DenomMetadata queries the client metadata of a given coin denomination. */
   async denomMetadata(params: QueryDenomMetadataRequest): Promise<QueryDenomMetadataResponseSDKType> {
     const endpoint = `cosmos/bank/v1beta1/denoms_metadata/${params.denom}`;
     return await this.req.get<QueryDenomMetadataResponseSDKType>(endpoint);
+  }
+  /* DenomMetadataByQueryString queries the client metadata of a given coin denomination. */
+  async denomMetadataByQueryString(params: QueryDenomMetadataByQueryStringRequest): Promise<QueryDenomMetadataByQueryStringResponseSDKType> {
+    const options: any = {
+      params: {}
+    };
+    if (typeof params?.denom !== "undefined") {
+      options.params.denom = params.denom;
+    }
+    const endpoint = `cosmos/bank/v1beta1/denoms_metadata_by_query_string`;
+    return await this.req.get<QueryDenomMetadataByQueryStringResponseSDKType>(endpoint, options);
   }
   /* DenomsMetadata queries the client metadata for all registered coin
    denominations. */
@@ -150,6 +166,23 @@ export class LCDQueryClient {
     }
     const endpoint = `cosmos/bank/v1beta1/denom_owners/${params.denom}`;
     return await this.req.get<QueryDenomOwnersResponseSDKType>(endpoint, options);
+  }
+  /* DenomOwnersByQuery queries for all account addresses that own a particular token
+   denomination.
+  
+   Since: cosmos-sdk 0.50.3 */
+  async denomOwnersByQuery(params: QueryDenomOwnersByQueryRequest): Promise<QueryDenomOwnersByQueryResponseSDKType> {
+    const options: any = {
+      params: {}
+    };
+    if (typeof params?.denom !== "undefined") {
+      options.params.denom = params.denom;
+    }
+    if (typeof params?.pagination !== "undefined") {
+      setPaginationParams(options, params.pagination);
+    }
+    const endpoint = `cosmos/bank/v1beta1/denom_owners_by_query`;
+    return await this.req.get<QueryDenomOwnersByQueryResponseSDKType>(endpoint, options);
   }
   /* SendEnabled queries for SendEnabled entries.
   
