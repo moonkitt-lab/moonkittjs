@@ -282,7 +282,7 @@ export const Params = {
     obj.inflation_max = message.inflationMax ?? "";
     obj.inflation_min = message.inflationMin ?? "";
     obj.goal_bonded = message.goalBonded ?? "";
-    obj.blocks_per_year = message.blocksPerYear !== BigInt(0) ? (message.blocksPerYear?.toString)() : undefined;
+    obj.blocks_per_year = message.blocksPerYear !== BigInt(0) ? message.blocksPerYear?.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: ParamsAminoMsg): Params {

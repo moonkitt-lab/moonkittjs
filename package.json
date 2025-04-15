@@ -1,6 +1,6 @@
 {
   "name": "moonkittjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MoonkittJS",
   "author": "arlai <arlai@moonkitt.com>",
   "homepage": "https://github.com/moonkitt-lab/moonkittjs#readme",
@@ -42,7 +42,7 @@
     "url": "https://github.com/moonkitt-lab/moonkittjs/issues"
   },
   "devDependencies": {
-    "@cosmology/telescope": "^1.9.0",
+    "@cosmology/telescope": "^1.12.3",
     "@protobufs/confio": "^0.0.6",
     "@protobufs/cosmos_proto": "^0.0.10",
     "@protobufs/cosmwasm": "^0.1.1",

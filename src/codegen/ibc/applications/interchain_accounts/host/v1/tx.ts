@@ -424,7 +424,7 @@ export const MsgModuleQuerySafeResponse = {
   },
   toAmino(message: MsgModuleQuerySafeResponse): MsgModuleQuerySafeResponseAmino {
     const obj: any = {};
-    obj.height = message.height !== BigInt(0) ? (message.height?.toString)() : undefined;
+    obj.height = message.height !== BigInt(0) ? message.height?.toString() : undefined;
     if (message.responses) {
       obj.responses = message.responses.map(e => base64FromBytes(e));
     } else {

@@ -1,3 +1,29 @@
+// To be run with "yarn codegen"
+
+// When we want to update a proto folder for a new version, we need to run:
+/**
+ * git config -f .gitmodules submodule.cosmos-sdk.branch "v0.50.11-lsm"
+ * cd cosmos
+ * git fetch --tags
+ * git checkout v0.50.11-lsm
+ * cd ..
+ * git add cosmos
+ * git commit -m "Update cosmos-sdk submodule to v0.50.11-lsm"
+ */
+
+// When we want to add a proto folder, we need to run:
+/**
+ * git submodule add git@github.com:atomone-hub/atomone.git
+ * cd atomone
+ * git fetch --tags
+ * git checkout v2.0.0-rc1
+ * git sparse-checkout init
+ * git sparse-checkout set proto
+ * cd ..
+ * git add .gitmodules atomone
+ * git commit -m "Add atomone submodule at tag v2.0.0-rc1 with proto directory"
+ */
+
 const { join } = require('path');
 const telescope = require('@cosmology/telescope').default;
 const rimraf = require('rimraf').rimrafSync;
@@ -8,6 +34,7 @@ const protoDirs = [
   join(__dirname, '/../cosmos/proto'),
   join(__dirname, '/../ics23/proto'),
   join(__dirname, '/../ibc-go/proto'),
+  join(__dirname, '/../atomone/proto'),
 ];
 const outPath = join(__dirname, '../src/codegen');
 rimraf(outPath);

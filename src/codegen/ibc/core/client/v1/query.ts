@@ -1133,8 +1133,8 @@ export const QueryConsensusStateRequest = {
   toAmino(message: QueryConsensusStateRequest): QueryConsensusStateRequestAmino {
     const obj: any = {};
     obj.client_id = message.clientId === "" ? undefined : message.clientId;
-    obj.revision_number = message.revisionNumber !== BigInt(0) ? (message.revisionNumber?.toString)() : undefined;
-    obj.revision_height = message.revisionHeight !== BigInt(0) ? (message.revisionHeight?.toString)() : undefined;
+    obj.revision_number = message.revisionNumber !== BigInt(0) ? message.revisionNumber?.toString() : undefined;
+    obj.revision_height = message.revisionHeight !== BigInt(0) ? message.revisionHeight?.toString() : undefined;
     obj.latest_height = message.latestHeight === false ? undefined : message.latestHeight;
     return obj;
   },
@@ -2377,8 +2377,8 @@ export const QueryVerifyMembershipRequest = {
     obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.merkle_path = message.merklePath ? MerklePath.toAmino(message.merklePath) : undefined;
     obj.value = message.value ? base64FromBytes(message.value) : undefined;
-    obj.time_delay = message.timeDelay !== BigInt(0) ? (message.timeDelay?.toString)() : undefined;
-    obj.block_delay = message.blockDelay !== BigInt(0) ? (message.blockDelay?.toString)() : undefined;
+    obj.time_delay = message.timeDelay !== BigInt(0) ? message.timeDelay?.toString() : undefined;
+    obj.block_delay = message.blockDelay !== BigInt(0) ? message.blockDelay?.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryVerifyMembershipRequestAminoMsg): QueryVerifyMembershipRequest {
