@@ -35,6 +35,7 @@ const protoDirs = [
   join(__dirname, '/../ics23/proto'),
   join(__dirname, '/../ibc-go/proto'),
   join(__dirname, '/../atomone/proto'),
+  join(__dirname, '/../gaia/proto'),
 ];
 const outPath = join(__dirname, '../src/codegen');
 rimraf(outPath);
