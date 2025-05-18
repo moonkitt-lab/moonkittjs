@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script needs to be run after checkint out the repo.
+# This script needs to be run after checking out the repo.
 # Note: It needs to be run from the root of the repo
 # Usage: ./scripts/setup-proto.sh
 
@@ -8,7 +8,7 @@
 git submodule update --init --recursive
 
 # Set up sparse-checkout for each submodule
-for submodule in cosmos ics23 ibc-go atomone; do
+for submodule in cosmos ics23 ibc-go atomone gaia; do
   echo "Setting up sparse-checkout for $submodule..."
   (cd $submodule && 
    git sparse-checkout init &&
