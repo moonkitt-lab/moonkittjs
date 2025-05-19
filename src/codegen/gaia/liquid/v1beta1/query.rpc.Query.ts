@@ -1,9 +1,11 @@
 import { Rpc } from "../../../helpers";
 import { BinaryReader } from "../../../binary";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponse, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponse, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponse, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponse, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponse, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponse, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponse, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponse, QueryParamsRequest, QueryParamsResponse, QueryTokenizeShareRecordRewardRequest, QueryTokenizeShareRecordRewardResponse } from "./query";
+import { QueryLiquidValidatorRequest, QueryLiquidValidatorResponse, QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponse, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponse, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponse, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponse, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponse, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponse, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponse, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponse, QueryParamsRequest, QueryParamsResponse, QueryTokenizeShareRecordRewardRequest, QueryTokenizeShareRecordRewardResponse } from "./query";
 /** Query defines the gRPC querier service. */
 export interface Query {
+  /** Query for an individual liquid validator by validator address */
+  liquidValidator(request: QueryLiquidValidatorRequest): Promise<QueryLiquidValidatorResponse>;
   /** Query for individual tokenize share record information by share by id */
   tokenizeShareRecordById(request: QueryTokenizeShareRecordByIdRequest): Promise<QueryTokenizeShareRecordByIdResponse>;
   /** Query for individual tokenize share record information by share denom */
@@ -32,6 +34,7 @@ export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
   constructor(rpc: Rpc) {
     this.rpc = rpc;
+    this.liquidValidator = this.liquidValidator.bind(this);
     this.tokenizeShareRecordById = this.tokenizeShareRecordById.bind(this);
     this.tokenizeShareRecordByDenom = this.tokenizeShareRecordByDenom.bind(this);
     this.tokenizeShareRecordsOwned = this.tokenizeShareRecordsOwned.bind(this);
@@ -42,6 +45,11 @@ export class QueryClientImpl implements Query {
     this.tokenizeShareLockInfo = this.tokenizeShareLockInfo.bind(this);
     this.params = this.params.bind(this);
     this.tokenizeShareRecordReward = this.tokenizeShareRecordReward.bind(this);
+  }
+  liquidValidator(request: QueryLiquidValidatorRequest): Promise<QueryLiquidValidatorResponse> {
+    const data = QueryLiquidValidatorRequest.encode(request).finish();
+    const promise = this.rpc.request("gaia.liquid.v1beta1.Query", "LiquidValidator", data);
+    return promise.then(data => QueryLiquidValidatorResponse.decode(new BinaryReader(data)));
   }
   tokenizeShareRecordById(request: QueryTokenizeShareRecordByIdRequest): Promise<QueryTokenizeShareRecordByIdResponse> {
     const data = QueryTokenizeShareRecordByIdRequest.encode(request).finish();
@@ -100,6 +108,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
   const rpc = createProtobufRpcClient(base);
   const queryService = new QueryClientImpl(rpc);
   return {
+    liquidValidator(request: QueryLiquidValidatorRequest): Promise<QueryLiquidValidatorResponse> {
+      return queryService.liquidValidator(request);
+    },
     tokenizeShareRecordById(request: QueryTokenizeShareRecordByIdRequest): Promise<QueryTokenizeShareRecordByIdResponse> {
       return queryService.tokenizeShareRecordById(request);
     },

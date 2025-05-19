@@ -15,6 +15,8 @@ for submodule in cosmos ics23 ibc-go atomone gaia; do
 
     # Use correct branch for each submodule
     branch="main"
+    [ "$submodule" = "cosmos" ] && branch="v0.50.13"
+    [ "$submodule" = "ibc-go" ] && branch="v8.7.0"
     [ "$submodule" = "ics23" ] && branch="master"
 
     git fetch origin &&

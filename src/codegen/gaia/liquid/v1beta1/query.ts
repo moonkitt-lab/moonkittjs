@@ -1,8 +1,48 @@
 import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
-import { Params, ParamsAmino, ParamsSDKType, TokenizeShareRecord, TokenizeShareRecordAmino, TokenizeShareRecordSDKType, TokenizeShareRecordReward, TokenizeShareRecordRewardAmino, TokenizeShareRecordRewardSDKType } from "./liquid";
+import { LiquidValidator, LiquidValidatorAmino, LiquidValidatorSDKType, Params, ParamsAmino, ParamsSDKType, TokenizeShareRecord, TokenizeShareRecordAmino, TokenizeShareRecordSDKType, TokenizeShareRecordReward, TokenizeShareRecordRewardAmino, TokenizeShareRecordRewardSDKType } from "./liquid";
 import { Coin, CoinAmino, CoinSDKType, DecCoin, DecCoinAmino, DecCoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { GlobalDecoderRegistry } from "../../../registry";
+/** QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator RPC method. */
+export interface QueryLiquidValidatorRequest {
+  validatorAddr: string;
+}
+export interface QueryLiquidValidatorRequestProtoMsg {
+  typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorRequest";
+  value: Uint8Array;
+}
+/** QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator RPC method. */
+export interface QueryLiquidValidatorRequestAmino {
+  validator_addr?: string;
+}
+export interface QueryLiquidValidatorRequestAminoMsg {
+  type: "/gaia.liquid.v1beta1.QueryLiquidValidatorRequest";
+  value: QueryLiquidValidatorRequestAmino;
+}
+/** QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator RPC method. */
+export interface QueryLiquidValidatorRequestSDKType {
+  validator_addr: string;
+}
+/** QueryLiquidValidatorResponse is the response type for the Query/LiquidValidator RPC method. */
+export interface QueryLiquidValidatorResponse {
+  liquidValidator: LiquidValidator;
+}
+export interface QueryLiquidValidatorResponseProtoMsg {
+  typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorResponse";
+  value: Uint8Array;
+}
+/** QueryLiquidValidatorResponse is the response type for the Query/LiquidValidator RPC method. */
+export interface QueryLiquidValidatorResponseAmino {
+  liquid_validator: LiquidValidatorAmino;
+}
+export interface QueryLiquidValidatorResponseAminoMsg {
+  type: "/gaia.liquid.v1beta1.QueryLiquidValidatorResponse";
+  value: QueryLiquidValidatorResponseAmino;
+}
+/** QueryLiquidValidatorResponse is the response type for the Query/LiquidValidator RPC method. */
+export interface QueryLiquidValidatorResponseSDKType {
+  liquid_validator: LiquidValidatorSDKType;
+}
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
 export interface QueryParamsRequestProtoMsg {
@@ -560,6 +600,152 @@ export interface QueryTokenizeShareRecordRewardResponseSDKType {
   rewards: TokenizeShareRecordRewardSDKType[];
   total: DecCoinSDKType[];
 }
+function createBaseQueryLiquidValidatorRequest(): QueryLiquidValidatorRequest {
+  return {
+    validatorAddr: ""
+  };
+}
+export const QueryLiquidValidatorRequest = {
+  typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorRequest",
+  is(o: any): o is QueryLiquidValidatorRequest {
+    return o && (o.$typeUrl === QueryLiquidValidatorRequest.typeUrl || typeof o.validatorAddr === "string");
+  },
+  isSDK(o: any): o is QueryLiquidValidatorRequestSDKType {
+    return o && (o.$typeUrl === QueryLiquidValidatorRequest.typeUrl || typeof o.validator_addr === "string");
+  },
+  isAmino(o: any): o is QueryLiquidValidatorRequestAmino {
+    return o && (o.$typeUrl === QueryLiquidValidatorRequest.typeUrl || typeof o.validator_addr === "string");
+  },
+  encode(message: QueryLiquidValidatorRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.validatorAddr !== "") {
+      writer.uint32(10).string(message.validatorAddr);
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryLiquidValidatorRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryLiquidValidatorRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.validatorAddr = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryLiquidValidatorRequest>): QueryLiquidValidatorRequest {
+    const message = createBaseQueryLiquidValidatorRequest();
+    message.validatorAddr = object.validatorAddr ?? "";
+    return message;
+  },
+  fromAmino(object: QueryLiquidValidatorRequestAmino): QueryLiquidValidatorRequest {
+    const message = createBaseQueryLiquidValidatorRequest();
+    if (object.validator_addr !== undefined && object.validator_addr !== null) {
+      message.validatorAddr = object.validator_addr;
+    }
+    return message;
+  },
+  toAmino(message: QueryLiquidValidatorRequest): QueryLiquidValidatorRequestAmino {
+    const obj: any = {};
+    obj.validator_addr = message.validatorAddr === "" ? undefined : message.validatorAddr;
+    return obj;
+  },
+  fromAminoMsg(object: QueryLiquidValidatorRequestAminoMsg): QueryLiquidValidatorRequest {
+    return QueryLiquidValidatorRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryLiquidValidatorRequestProtoMsg): QueryLiquidValidatorRequest {
+    return QueryLiquidValidatorRequest.decode(message.value);
+  },
+  toProto(message: QueryLiquidValidatorRequest): Uint8Array {
+    return QueryLiquidValidatorRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryLiquidValidatorRequest): QueryLiquidValidatorRequestProtoMsg {
+    return {
+      typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorRequest",
+      value: QueryLiquidValidatorRequest.encode(message).finish()
+    };
+  }
+};
+GlobalDecoderRegistry.register(QueryLiquidValidatorRequest.typeUrl, QueryLiquidValidatorRequest);
+function createBaseQueryLiquidValidatorResponse(): QueryLiquidValidatorResponse {
+  return {
+    liquidValidator: LiquidValidator.fromPartial({})
+  };
+}
+export const QueryLiquidValidatorResponse = {
+  typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorResponse",
+  is(o: any): o is QueryLiquidValidatorResponse {
+    return o && (o.$typeUrl === QueryLiquidValidatorResponse.typeUrl || LiquidValidator.is(o.liquidValidator));
+  },
+  isSDK(o: any): o is QueryLiquidValidatorResponseSDKType {
+    return o && (o.$typeUrl === QueryLiquidValidatorResponse.typeUrl || LiquidValidator.isSDK(o.liquid_validator));
+  },
+  isAmino(o: any): o is QueryLiquidValidatorResponseAmino {
+    return o && (o.$typeUrl === QueryLiquidValidatorResponse.typeUrl || LiquidValidator.isAmino(o.liquid_validator));
+  },
+  encode(message: QueryLiquidValidatorResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.liquidValidator !== undefined) {
+      LiquidValidator.encode(message.liquidValidator, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryLiquidValidatorResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryLiquidValidatorResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.liquidValidator = LiquidValidator.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryLiquidValidatorResponse>): QueryLiquidValidatorResponse {
+    const message = createBaseQueryLiquidValidatorResponse();
+    message.liquidValidator = object.liquidValidator !== undefined && object.liquidValidator !== null ? LiquidValidator.fromPartial(object.liquidValidator) : undefined;
+    return message;
+  },
+  fromAmino(object: QueryLiquidValidatorResponseAmino): QueryLiquidValidatorResponse {
+    const message = createBaseQueryLiquidValidatorResponse();
+    if (object.liquid_validator !== undefined && object.liquid_validator !== null) {
+      message.liquidValidator = LiquidValidator.fromAmino(object.liquid_validator);
+    }
+    return message;
+  },
+  toAmino(message: QueryLiquidValidatorResponse): QueryLiquidValidatorResponseAmino {
+    const obj: any = {};
+    obj.liquid_validator = message.liquidValidator ? LiquidValidator.toAmino(message.liquidValidator) : LiquidValidator.toAmino(LiquidValidator.fromPartial({}));
+    return obj;
+  },
+  fromAminoMsg(object: QueryLiquidValidatorResponseAminoMsg): QueryLiquidValidatorResponse {
+    return QueryLiquidValidatorResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryLiquidValidatorResponseProtoMsg): QueryLiquidValidatorResponse {
+    return QueryLiquidValidatorResponse.decode(message.value);
+  },
+  toProto(message: QueryLiquidValidatorResponse): Uint8Array {
+    return QueryLiquidValidatorResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryLiquidValidatorResponse): QueryLiquidValidatorResponseProtoMsg {
+    return {
+      typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorResponse",
+      value: QueryLiquidValidatorResponse.encode(message).finish()
+    };
+  }
+};
+GlobalDecoderRegistry.register(QueryLiquidValidatorResponse.typeUrl, QueryLiquidValidatorResponse);
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }

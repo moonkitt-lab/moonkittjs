@@ -1,6 +1,6 @@
 import { Rpc } from "../../../helpers";
 import { BinaryReader } from "../../../binary";
-import { MsgCreateValidator, MsgCreateValidatorResponse, MsgEditValidator, MsgEditValidatorResponse, MsgDelegate, MsgDelegateResponse, MsgBeginRedelegate, MsgBeginRedelegateResponse, MsgUndelegate, MsgUndelegateResponse, MsgCancelUnbondingDelegation, MsgCancelUnbondingDelegationResponse, MsgUpdateParams, MsgUpdateParamsResponse, MsgUnbondValidator, MsgUnbondValidatorResponse, MsgTokenizeShares, MsgTokenizeSharesResponse, MsgRedeemTokensForShares, MsgRedeemTokensForSharesResponse, MsgTransferTokenizeShareRecord, MsgTransferTokenizeShareRecordResponse, MsgDisableTokenizeShares, MsgDisableTokenizeSharesResponse, MsgEnableTokenizeShares, MsgEnableTokenizeSharesResponse, MsgValidatorBond, MsgValidatorBondResponse } from "./tx";
+import { MsgCreateValidator, MsgCreateValidatorResponse, MsgEditValidator, MsgEditValidatorResponse, MsgDelegate, MsgDelegateResponse, MsgBeginRedelegate, MsgBeginRedelegateResponse, MsgUndelegate, MsgUndelegateResponse, MsgCancelUnbondingDelegation, MsgCancelUnbondingDelegationResponse, MsgUpdateParams, MsgUpdateParamsResponse } from "./tx";
 /** Msg defines the staking Msg service. */
 export interface Msg {
   /** CreateValidator defines a method for creating a new validator. */
@@ -35,34 +35,6 @@ export interface Msg {
    * Since: cosmos-sdk 0.47
    */
   updateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse>;
-  /**
-   * UnbondValidator defines a method for performing the status transition for a validator
-   * from bonded to unbonding
-   * This allows a validator to stop their services and jail themselves without
-   * experiencing a slash
-   */
-  unbondValidator(request: MsgUnbondValidator): Promise<MsgUnbondValidatorResponse>;
-  /** TokenizeShares defines a method for tokenizing shares from a validator. */
-  tokenizeShares(request: MsgTokenizeShares): Promise<MsgTokenizeSharesResponse>;
-  /**
-   * RedeemTokensForShares defines a method for redeeming tokens from a validator for
-   * shares.
-   */
-  redeemTokensForShares(request: MsgRedeemTokensForShares): Promise<MsgRedeemTokensForSharesResponse>;
-  /**
-   * TransferTokenizeShareRecord defines a method to transfer ownership of
-   * TokenizeShareRecord
-   */
-  transferTokenizeShareRecord(request: MsgTransferTokenizeShareRecord): Promise<MsgTransferTokenizeShareRecordResponse>;
-  /** DisableTokenizeShares defines a method to prevent the tokenization of an addresses stake */
-  disableTokenizeShares(request: MsgDisableTokenizeShares): Promise<MsgDisableTokenizeSharesResponse>;
-  /**
-   * EnableTokenizeShares defines a method to re-enable the tokenization of an addresseses stake
-   * after it has been disabled
-   */
-  enableTokenizeShares(request: MsgEnableTokenizeShares): Promise<MsgEnableTokenizeSharesResponse>;
-  /** ValidatorBond defines a method for performing a validator self-bond */
-  validatorBond(request: MsgValidatorBond): Promise<MsgValidatorBondResponse>;
 }
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
@@ -75,13 +47,6 @@ export class MsgClientImpl implements Msg {
     this.undelegate = this.undelegate.bind(this);
     this.cancelUnbondingDelegation = this.cancelUnbondingDelegation.bind(this);
     this.updateParams = this.updateParams.bind(this);
-    this.unbondValidator = this.unbondValidator.bind(this);
-    this.tokenizeShares = this.tokenizeShares.bind(this);
-    this.redeemTokensForShares = this.redeemTokensForShares.bind(this);
-    this.transferTokenizeShareRecord = this.transferTokenizeShareRecord.bind(this);
-    this.disableTokenizeShares = this.disableTokenizeShares.bind(this);
-    this.enableTokenizeShares = this.enableTokenizeShares.bind(this);
-    this.validatorBond = this.validatorBond.bind(this);
   }
   createValidator(request: MsgCreateValidator): Promise<MsgCreateValidatorResponse> {
     const data = MsgCreateValidator.encode(request).finish();
@@ -117,40 +82,5 @@ export class MsgClientImpl implements Msg {
     const data = MsgUpdateParams.encode(request).finish();
     const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "UpdateParams", data);
     return promise.then(data => MsgUpdateParamsResponse.decode(new BinaryReader(data)));
-  }
-  unbondValidator(request: MsgUnbondValidator): Promise<MsgUnbondValidatorResponse> {
-    const data = MsgUnbondValidator.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "UnbondValidator", data);
-    return promise.then(data => MsgUnbondValidatorResponse.decode(new BinaryReader(data)));
-  }
-  tokenizeShares(request: MsgTokenizeShares): Promise<MsgTokenizeSharesResponse> {
-    const data = MsgTokenizeShares.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "TokenizeShares", data);
-    return promise.then(data => MsgTokenizeSharesResponse.decode(new BinaryReader(data)));
-  }
-  redeemTokensForShares(request: MsgRedeemTokensForShares): Promise<MsgRedeemTokensForSharesResponse> {
-    const data = MsgRedeemTokensForShares.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "RedeemTokensForShares", data);
-    return promise.then(data => MsgRedeemTokensForSharesResponse.decode(new BinaryReader(data)));
-  }
-  transferTokenizeShareRecord(request: MsgTransferTokenizeShareRecord): Promise<MsgTransferTokenizeShareRecordResponse> {
-    const data = MsgTransferTokenizeShareRecord.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "TransferTokenizeShareRecord", data);
-    return promise.then(data => MsgTransferTokenizeShareRecordResponse.decode(new BinaryReader(data)));
-  }
-  disableTokenizeShares(request: MsgDisableTokenizeShares): Promise<MsgDisableTokenizeSharesResponse> {
-    const data = MsgDisableTokenizeShares.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "DisableTokenizeShares", data);
-    return promise.then(data => MsgDisableTokenizeSharesResponse.decode(new BinaryReader(data)));
-  }
-  enableTokenizeShares(request: MsgEnableTokenizeShares): Promise<MsgEnableTokenizeSharesResponse> {
-    const data = MsgEnableTokenizeShares.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "EnableTokenizeShares", data);
-    return promise.then(data => MsgEnableTokenizeSharesResponse.decode(new BinaryReader(data)));
-  }
-  validatorBond(request: MsgValidatorBond): Promise<MsgValidatorBondResponse> {
-    const data = MsgValidatorBond.encode(request).finish();
-    const promise = this.rpc.request("cosmos.staking.v1beta1.Msg", "ValidatorBond", data);
-    return promise.then(data => MsgValidatorBondResponse.decode(new BinaryReader(data)));
   }
 }

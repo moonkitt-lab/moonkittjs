@@ -1,6 +1,6 @@
 import { setPaginationParams } from "../../../helpers";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponseSDKType, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponseSDKType, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponseSDKType, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponseSDKType, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponseSDKType, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponseSDKType, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponseSDKType, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryTokenizeShareRecordRewardRequest, QueryTokenizeShareRecordRewardResponseSDKType } from "./query";
+import { QueryLiquidValidatorRequest, QueryLiquidValidatorResponseSDKType, QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponseSDKType, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponseSDKType, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponseSDKType, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponseSDKType, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponseSDKType, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponseSDKType, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponseSDKType, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryTokenizeShareRecordRewardRequest, QueryTokenizeShareRecordRewardResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -9,6 +9,7 @@ export class LCDQueryClient {
     requestClient: LCDClient;
   }) {
     this.req = requestClient;
+    this.liquidValidator = this.liquidValidator.bind(this);
     this.tokenizeShareRecordById = this.tokenizeShareRecordById.bind(this);
     this.tokenizeShareRecordByDenom = this.tokenizeShareRecordByDenom.bind(this);
     this.tokenizeShareRecordsOwned = this.tokenizeShareRecordsOwned.bind(this);
@@ -19,6 +20,11 @@ export class LCDQueryClient {
     this.tokenizeShareLockInfo = this.tokenizeShareLockInfo.bind(this);
     this.params = this.params.bind(this);
     this.tokenizeShareRecordReward = this.tokenizeShareRecordReward.bind(this);
+  }
+  /* Query for an individual liquid validator by validator address */
+  async liquidValidator(params: QueryLiquidValidatorRequest): Promise<QueryLiquidValidatorResponseSDKType> {
+    const endpoint = `gaia/liquid/v1beta1/liquid_validator/${params.validatorAddr}`;
+    return await this.req.get<QueryLiquidValidatorResponseSDKType>(endpoint);
   }
   /* Query for individual tokenize share record information by share by id */
   async tokenizeShareRecordById(params: QueryTokenizeShareRecordByIdRequest): Promise<QueryTokenizeShareRecordByIdResponseSDKType> {
