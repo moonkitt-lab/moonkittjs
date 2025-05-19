@@ -1,8 +1,7 @@
-import { Params, ParamsAmino, ParamsSDKType, Validator, ValidatorAmino, ValidatorSDKType, Delegation, DelegationAmino, DelegationSDKType, UnbondingDelegation, UnbondingDelegationAmino, UnbondingDelegationSDKType, Redelegation, RedelegationAmino, RedelegationSDKType, TokenizeShareRecord, TokenizeShareRecordAmino, TokenizeShareRecordSDKType } from "./staking";
-import { Timestamp } from "../../../google/protobuf/timestamp";
+import { Params, ParamsAmino, ParamsSDKType, Validator, ValidatorAmino, ValidatorSDKType, Delegation, DelegationAmino, DelegationSDKType, UnbondingDelegation, UnbondingDelegationAmino, UnbondingDelegationSDKType, Redelegation, RedelegationAmino, RedelegationSDKType } from "./staking";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { GlobalDecoderRegistry } from "../../../registry";
-import { bytesFromBase64, base64FromBytes, toTimestamp, fromTimestamp } from "../../../helpers";
+import { bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** GenesisState defines the staking module's genesis state. */
 export interface GenesisState {
   /** params defines all the parameters of related to deposit. */
@@ -27,14 +26,6 @@ export interface GenesisState {
   redelegations: Redelegation[];
   /** exported defines a bool to identify whether the chain dealing with exported or initialized genesis. */
   exported: boolean;
-  /** store tokenize share records to provide reward to record owners */
-  tokenizeShareRecords: TokenizeShareRecord[];
-  /** last tokenize share record id, used for next share record id calculation */
-  lastTokenizeShareRecordId: bigint;
-  /** total number of liquid staked tokens at genesis */
-  totalLiquidStakedTokens: Uint8Array;
-  /** tokenize shares locks at genesis */
-  tokenizeShareLocks: TokenizeShareLock[];
 }
 export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.staking.v1beta1.GenesisState";
@@ -64,14 +55,6 @@ export interface GenesisStateAmino {
   redelegations: RedelegationAmino[];
   /** exported defines a bool to identify whether the chain dealing with exported or initialized genesis. */
   exported?: boolean;
-  /** store tokenize share records to provide reward to record owners */
-  tokenize_share_records?: TokenizeShareRecordAmino[];
-  /** last tokenize share record id, used for next share record id calculation */
-  last_tokenize_share_record_id?: string;
-  /** total number of liquid staked tokens at genesis */
-  total_liquid_staked_tokens?: string;
-  /** tokenize shares locks at genesis */
-  tokenize_share_locks?: TokenizeShareLockAmino[];
 }
 export interface GenesisStateAminoMsg {
   type: "cosmos-sdk/GenesisState";
@@ -87,42 +70,6 @@ export interface GenesisStateSDKType {
   unbonding_delegations: UnbondingDelegationSDKType[];
   redelegations: RedelegationSDKType[];
   exported: boolean;
-  tokenize_share_records: TokenizeShareRecordSDKType[];
-  last_tokenize_share_record_id: bigint;
-  total_liquid_staked_tokens: Uint8Array;
-  tokenize_share_locks: TokenizeShareLockSDKType[];
-}
-/** TokenizeSharesLock required for specifying account locks at genesis */
-export interface TokenizeShareLock {
-  /** Address of the account that is locked */
-  address: string;
-  /** Status of the lock (LOCKED or LOCK_EXPIRING) */
-  status: string;
-  /** Completion time if the lock is expiring */
-  completionTime: Date;
-}
-export interface TokenizeShareLockProtoMsg {
-  typeUrl: "/cosmos.staking.v1beta1.TokenizeShareLock";
-  value: Uint8Array;
-}
-/** TokenizeSharesLock required for specifying account locks at genesis */
-export interface TokenizeShareLockAmino {
-  /** Address of the account that is locked */
-  address?: string;
-  /** Status of the lock (LOCKED or LOCK_EXPIRING) */
-  status?: string;
-  /** Completion time if the lock is expiring */
-  completion_time?: string;
-}
-export interface TokenizeShareLockAminoMsg {
-  type: "cosmos-sdk/TokenizeShareLock";
-  value: TokenizeShareLockAmino;
-}
-/** TokenizeSharesLock required for specifying account locks at genesis */
-export interface TokenizeShareLockSDKType {
-  address: string;
-  status: string;
-  completion_time: Date;
 }
 /** LastValidatorPower required for validator set update logic. */
 export interface LastValidatorPower {
@@ -160,24 +107,20 @@ function createBaseGenesisState(): GenesisState {
     delegations: [],
     unbondingDelegations: [],
     redelegations: [],
-    exported: false,
-    tokenizeShareRecords: [],
-    lastTokenizeShareRecordId: BigInt(0),
-    totalLiquidStakedTokens: new Uint8Array(),
-    tokenizeShareLocks: []
+    exported: false
   };
 }
 export const GenesisState = {
   typeUrl: "/cosmos.staking.v1beta1.GenesisState",
   aminoType: "cosmos-sdk/GenesisState",
   is(o: any): o is GenesisState {
-    return o && (o.$typeUrl === GenesisState.typeUrl || Params.is(o.params) && (o.lastTotalPower instanceof Uint8Array || typeof o.lastTotalPower === "string") && Array.isArray(o.lastValidatorPowers) && (!o.lastValidatorPowers.length || LastValidatorPower.is(o.lastValidatorPowers[0])) && Array.isArray(o.validators) && (!o.validators.length || Validator.is(o.validators[0])) && Array.isArray(o.delegations) && (!o.delegations.length || Delegation.is(o.delegations[0])) && Array.isArray(o.unbondingDelegations) && (!o.unbondingDelegations.length || UnbondingDelegation.is(o.unbondingDelegations[0])) && Array.isArray(o.redelegations) && (!o.redelegations.length || Redelegation.is(o.redelegations[0])) && typeof o.exported === "boolean" && Array.isArray(o.tokenizeShareRecords) && (!o.tokenizeShareRecords.length || TokenizeShareRecord.is(o.tokenizeShareRecords[0])) && typeof o.lastTokenizeShareRecordId === "bigint" && (o.totalLiquidStakedTokens instanceof Uint8Array || typeof o.totalLiquidStakedTokens === "string") && Array.isArray(o.tokenizeShareLocks) && (!o.tokenizeShareLocks.length || TokenizeShareLock.is(o.tokenizeShareLocks[0])));
+    return o && (o.$typeUrl === GenesisState.typeUrl || Params.is(o.params) && (o.lastTotalPower instanceof Uint8Array || typeof o.lastTotalPower === "string") && Array.isArray(o.lastValidatorPowers) && (!o.lastValidatorPowers.length || LastValidatorPower.is(o.lastValidatorPowers[0])) && Array.isArray(o.validators) && (!o.validators.length || Validator.is(o.validators[0])) && Array.isArray(o.delegations) && (!o.delegations.length || Delegation.is(o.delegations[0])) && Array.isArray(o.unbondingDelegations) && (!o.unbondingDelegations.length || UnbondingDelegation.is(o.unbondingDelegations[0])) && Array.isArray(o.redelegations) && (!o.redelegations.length || Redelegation.is(o.redelegations[0])) && typeof o.exported === "boolean");
   },
   isSDK(o: any): o is GenesisStateSDKType {
-    return o && (o.$typeUrl === GenesisState.typeUrl || Params.isSDK(o.params) && (o.last_total_power instanceof Uint8Array || typeof o.last_total_power === "string") && Array.isArray(o.last_validator_powers) && (!o.last_validator_powers.length || LastValidatorPower.isSDK(o.last_validator_powers[0])) && Array.isArray(o.validators) && (!o.validators.length || Validator.isSDK(o.validators[0])) && Array.isArray(o.delegations) && (!o.delegations.length || Delegation.isSDK(o.delegations[0])) && Array.isArray(o.unbonding_delegations) && (!o.unbonding_delegations.length || UnbondingDelegation.isSDK(o.unbonding_delegations[0])) && Array.isArray(o.redelegations) && (!o.redelegations.length || Redelegation.isSDK(o.redelegations[0])) && typeof o.exported === "boolean" && Array.isArray(o.tokenize_share_records) && (!o.tokenize_share_records.length || TokenizeShareRecord.isSDK(o.tokenize_share_records[0])) && typeof o.last_tokenize_share_record_id === "bigint" && (o.total_liquid_staked_tokens instanceof Uint8Array || typeof o.total_liquid_staked_tokens === "string") && Array.isArray(o.tokenize_share_locks) && (!o.tokenize_share_locks.length || TokenizeShareLock.isSDK(o.tokenize_share_locks[0])));
+    return o && (o.$typeUrl === GenesisState.typeUrl || Params.isSDK(o.params) && (o.last_total_power instanceof Uint8Array || typeof o.last_total_power === "string") && Array.isArray(o.last_validator_powers) && (!o.last_validator_powers.length || LastValidatorPower.isSDK(o.last_validator_powers[0])) && Array.isArray(o.validators) && (!o.validators.length || Validator.isSDK(o.validators[0])) && Array.isArray(o.delegations) && (!o.delegations.length || Delegation.isSDK(o.delegations[0])) && Array.isArray(o.unbonding_delegations) && (!o.unbonding_delegations.length || UnbondingDelegation.isSDK(o.unbonding_delegations[0])) && Array.isArray(o.redelegations) && (!o.redelegations.length || Redelegation.isSDK(o.redelegations[0])) && typeof o.exported === "boolean");
   },
   isAmino(o: any): o is GenesisStateAmino {
-    return o && (o.$typeUrl === GenesisState.typeUrl || Params.isAmino(o.params) && (o.last_total_power instanceof Uint8Array || typeof o.last_total_power === "string") && Array.isArray(o.last_validator_powers) && (!o.last_validator_powers.length || LastValidatorPower.isAmino(o.last_validator_powers[0])) && Array.isArray(o.validators) && (!o.validators.length || Validator.isAmino(o.validators[0])) && Array.isArray(o.delegations) && (!o.delegations.length || Delegation.isAmino(o.delegations[0])) && Array.isArray(o.unbonding_delegations) && (!o.unbonding_delegations.length || UnbondingDelegation.isAmino(o.unbonding_delegations[0])) && Array.isArray(o.redelegations) && (!o.redelegations.length || Redelegation.isAmino(o.redelegations[0])) && typeof o.exported === "boolean" && Array.isArray(o.tokenize_share_records) && (!o.tokenize_share_records.length || TokenizeShareRecord.isAmino(o.tokenize_share_records[0])) && typeof o.last_tokenize_share_record_id === "bigint" && (o.total_liquid_staked_tokens instanceof Uint8Array || typeof o.total_liquid_staked_tokens === "string") && Array.isArray(o.tokenize_share_locks) && (!o.tokenize_share_locks.length || TokenizeShareLock.isAmino(o.tokenize_share_locks[0])));
+    return o && (o.$typeUrl === GenesisState.typeUrl || Params.isAmino(o.params) && (o.last_total_power instanceof Uint8Array || typeof o.last_total_power === "string") && Array.isArray(o.last_validator_powers) && (!o.last_validator_powers.length || LastValidatorPower.isAmino(o.last_validator_powers[0])) && Array.isArray(o.validators) && (!o.validators.length || Validator.isAmino(o.validators[0])) && Array.isArray(o.delegations) && (!o.delegations.length || Delegation.isAmino(o.delegations[0])) && Array.isArray(o.unbonding_delegations) && (!o.unbonding_delegations.length || UnbondingDelegation.isAmino(o.unbonding_delegations[0])) && Array.isArray(o.redelegations) && (!o.redelegations.length || Redelegation.isAmino(o.redelegations[0])) && typeof o.exported === "boolean");
   },
   encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
@@ -203,18 +146,6 @@ export const GenesisState = {
     }
     if (message.exported === true) {
       writer.uint32(64).bool(message.exported);
-    }
-    for (const v of message.tokenizeShareRecords) {
-      TokenizeShareRecord.encode(v!, writer.uint32(74).fork()).ldelim();
-    }
-    if (message.lastTokenizeShareRecordId !== BigInt(0)) {
-      writer.uint32(80).uint64(message.lastTokenizeShareRecordId);
-    }
-    if (message.totalLiquidStakedTokens.length !== 0) {
-      writer.uint32(90).bytes(message.totalLiquidStakedTokens);
-    }
-    for (const v of message.tokenizeShareLocks) {
-      TokenizeShareLock.encode(v!, writer.uint32(98).fork()).ldelim();
     }
     return writer;
   },
@@ -249,18 +180,6 @@ export const GenesisState = {
         case 8:
           message.exported = reader.bool();
           break;
-        case 9:
-          message.tokenizeShareRecords.push(TokenizeShareRecord.decode(reader, reader.uint32()));
-          break;
-        case 10:
-          message.lastTokenizeShareRecordId = reader.uint64();
-          break;
-        case 11:
-          message.totalLiquidStakedTokens = reader.bytes();
-          break;
-        case 12:
-          message.tokenizeShareLocks.push(TokenizeShareLock.decode(reader, reader.uint32()));
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -278,10 +197,6 @@ export const GenesisState = {
     message.unbondingDelegations = object.unbondingDelegations?.map(e => UnbondingDelegation.fromPartial(e)) || [];
     message.redelegations = object.redelegations?.map(e => Redelegation.fromPartial(e)) || [];
     message.exported = object.exported ?? false;
-    message.tokenizeShareRecords = object.tokenizeShareRecords?.map(e => TokenizeShareRecord.fromPartial(e)) || [];
-    message.lastTokenizeShareRecordId = object.lastTokenizeShareRecordId !== undefined && object.lastTokenizeShareRecordId !== null ? BigInt(object.lastTokenizeShareRecordId.toString()) : BigInt(0);
-    message.totalLiquidStakedTokens = object.totalLiquidStakedTokens ?? new Uint8Array();
-    message.tokenizeShareLocks = object.tokenizeShareLocks?.map(e => TokenizeShareLock.fromPartial(e)) || [];
     return message;
   },
   fromAmino(object: GenesisStateAmino): GenesisState {
@@ -300,14 +215,6 @@ export const GenesisState = {
     if (object.exported !== undefined && object.exported !== null) {
       message.exported = object.exported;
     }
-    message.tokenizeShareRecords = object.tokenize_share_records?.map(e => TokenizeShareRecord.fromAmino(e)) || [];
-    if (object.last_tokenize_share_record_id !== undefined && object.last_tokenize_share_record_id !== null) {
-      message.lastTokenizeShareRecordId = BigInt(object.last_tokenize_share_record_id);
-    }
-    if (object.total_liquid_staked_tokens !== undefined && object.total_liquid_staked_tokens !== null) {
-      message.totalLiquidStakedTokens = bytesFromBase64(object.total_liquid_staked_tokens);
-    }
-    message.tokenizeShareLocks = object.tokenize_share_locks?.map(e => TokenizeShareLock.fromAmino(e)) || [];
     return message;
   },
   toAmino(message: GenesisState): GenesisStateAmino {
@@ -340,18 +247,6 @@ export const GenesisState = {
       obj.redelegations = message.redelegations;
     }
     obj.exported = message.exported === false ? undefined : message.exported;
-    if (message.tokenizeShareRecords) {
-      obj.tokenize_share_records = message.tokenizeShareRecords.map(e => e ? TokenizeShareRecord.toAmino(e) : undefined);
-    } else {
-      obj.tokenize_share_records = message.tokenizeShareRecords;
-    }
-    obj.last_tokenize_share_record_id = message.lastTokenizeShareRecordId !== BigInt(0) ? message.lastTokenizeShareRecordId?.toString() : undefined;
-    obj.total_liquid_staked_tokens = message.totalLiquidStakedTokens ? base64FromBytes(message.totalLiquidStakedTokens) : undefined;
-    if (message.tokenizeShareLocks) {
-      obj.tokenize_share_locks = message.tokenizeShareLocks.map(e => e ? TokenizeShareLock.toAmino(e) : undefined);
-    } else {
-      obj.tokenize_share_locks = message.tokenizeShareLocks;
-    }
     return obj;
   },
   fromAminoMsg(object: GenesisStateAminoMsg): GenesisState {
@@ -378,111 +273,6 @@ export const GenesisState = {
 };
 GlobalDecoderRegistry.register(GenesisState.typeUrl, GenesisState);
 GlobalDecoderRegistry.registerAminoProtoMapping(GenesisState.aminoType, GenesisState.typeUrl);
-function createBaseTokenizeShareLock(): TokenizeShareLock {
-  return {
-    address: "",
-    status: "",
-    completionTime: new Date()
-  };
-}
-export const TokenizeShareLock = {
-  typeUrl: "/cosmos.staking.v1beta1.TokenizeShareLock",
-  aminoType: "cosmos-sdk/TokenizeShareLock",
-  is(o: any): o is TokenizeShareLock {
-    return o && (o.$typeUrl === TokenizeShareLock.typeUrl || typeof o.address === "string" && typeof o.status === "string" && Timestamp.is(o.completionTime));
-  },
-  isSDK(o: any): o is TokenizeShareLockSDKType {
-    return o && (o.$typeUrl === TokenizeShareLock.typeUrl || typeof o.address === "string" && typeof o.status === "string" && Timestamp.isSDK(o.completion_time));
-  },
-  isAmino(o: any): o is TokenizeShareLockAmino {
-    return o && (o.$typeUrl === TokenizeShareLock.typeUrl || typeof o.address === "string" && typeof o.status === "string" && Timestamp.isAmino(o.completion_time));
-  },
-  encode(message: TokenizeShareLock, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
-    if (message.address !== "") {
-      writer.uint32(10).string(message.address);
-    }
-    if (message.status !== "") {
-      writer.uint32(18).string(message.status);
-    }
-    if (message.completionTime !== undefined) {
-      Timestamp.encode(toTimestamp(message.completionTime), writer.uint32(26).fork()).ldelim();
-    }
-    return writer;
-  },
-  decode(input: BinaryReader | Uint8Array, length?: number): TokenizeShareLock {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseTokenizeShareLock();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.address = reader.string();
-          break;
-        case 2:
-          message.status = reader.string();
-          break;
-        case 3:
-          message.completionTime = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromPartial(object: Partial<TokenizeShareLock>): TokenizeShareLock {
-    const message = createBaseTokenizeShareLock();
-    message.address = object.address ?? "";
-    message.status = object.status ?? "";
-    message.completionTime = object.completionTime ?? undefined;
-    return message;
-  },
-  fromAmino(object: TokenizeShareLockAmino): TokenizeShareLock {
-    const message = createBaseTokenizeShareLock();
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
-    }
-    if (object.status !== undefined && object.status !== null) {
-      message.status = object.status;
-    }
-    if (object.completion_time !== undefined && object.completion_time !== null) {
-      message.completionTime = fromTimestamp(Timestamp.fromAmino(object.completion_time));
-    }
-    return message;
-  },
-  toAmino(message: TokenizeShareLock): TokenizeShareLockAmino {
-    const obj: any = {};
-    obj.address = message.address === "" ? undefined : message.address;
-    obj.status = message.status === "" ? undefined : message.status;
-    obj.completion_time = message.completionTime ? Timestamp.toAmino(toTimestamp(message.completionTime)) : undefined;
-    return obj;
-  },
-  fromAminoMsg(object: TokenizeShareLockAminoMsg): TokenizeShareLock {
-    return TokenizeShareLock.fromAmino(object.value);
-  },
-  toAminoMsg(message: TokenizeShareLock): TokenizeShareLockAminoMsg {
-    return {
-      type: "cosmos-sdk/TokenizeShareLock",
-      value: TokenizeShareLock.toAmino(message)
-    };
-  },
-  fromProtoMsg(message: TokenizeShareLockProtoMsg): TokenizeShareLock {
-    return TokenizeShareLock.decode(message.value);
-  },
-  toProto(message: TokenizeShareLock): Uint8Array {
-    return TokenizeShareLock.encode(message).finish();
-  },
-  toProtoMsg(message: TokenizeShareLock): TokenizeShareLockProtoMsg {
-    return {
-      typeUrl: "/cosmos.staking.v1beta1.TokenizeShareLock",
-      value: TokenizeShareLock.encode(message).finish()
-    };
-  }
-};
-GlobalDecoderRegistry.register(TokenizeShareLock.typeUrl, TokenizeShareLock);
-GlobalDecoderRegistry.registerAminoProtoMapping(TokenizeShareLock.aminoType, TokenizeShareLock.typeUrl);
 function createBaseLastValidatorPower(): LastValidatorPower {
   return {
     address: "",

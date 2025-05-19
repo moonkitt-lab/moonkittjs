@@ -19,6 +19,8 @@ export * from "./ibc/bundle";
 export * from "./ibc/client";
 export * from "./atomone/bundle";
 export * from "./atomone/client";
+export * from "./gaia/bundle";
+export * from "./gaia/client";
 export * from "./varint";
 export * from "./utf8";
 export * from "./binary";

@@ -13,3 +13,6 @@
 [submodule "atomone"]
 	path = atomone
 	url = git@github.com:atomone-hub/atomone.git
+[submodule "gaia"]
+	path = gaia
+	url = git@github.com:cosmos/gaia.git

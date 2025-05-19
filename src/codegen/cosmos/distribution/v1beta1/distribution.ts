@@ -286,29 +286,6 @@ export interface FeePoolAminoMsg {
 export interface FeePoolSDKType {
   community_pool: DecCoinSDKType[];
 }
-/** TokenizeShareRecordReward represents the properties of tokenize share */
-export interface TokenizeShareRecordReward {
-  recordId: bigint;
-  reward: DecCoin[];
-}
-export interface TokenizeShareRecordRewardProtoMsg {
-  typeUrl: "/cosmos.distribution.v1beta1.TokenizeShareRecordReward";
-  value: Uint8Array;
-}
-/** TokenizeShareRecordReward represents the properties of tokenize share */
-export interface TokenizeShareRecordRewardAmino {
-  record_id?: string;
-  reward?: DecCoinAmino[];
-}
-export interface TokenizeShareRecordRewardAminoMsg {
-  type: "cosmos-sdk/TokenizeShareRecordReward";
-  value: TokenizeShareRecordRewardAmino;
-}
-/** TokenizeShareRecordReward represents the properties of tokenize share */
-export interface TokenizeShareRecordRewardSDKType {
-  record_id: bigint;
-  reward: DecCoinSDKType[];
-}
 /**
  * CommunityPoolSpendProposal details a proposal for use of community funds,
  * together with how many coins are proposed to be spent, and to which
@@ -1224,101 +1201,6 @@ export const FeePool = {
 };
 GlobalDecoderRegistry.register(FeePool.typeUrl, FeePool);
 GlobalDecoderRegistry.registerAminoProtoMapping(FeePool.aminoType, FeePool.typeUrl);
-function createBaseTokenizeShareRecordReward(): TokenizeShareRecordReward {
-  return {
-    recordId: BigInt(0),
-    reward: []
-  };
-}
-export const TokenizeShareRecordReward = {
-  typeUrl: "/cosmos.distribution.v1beta1.TokenizeShareRecordReward",
-  aminoType: "cosmos-sdk/TokenizeShareRecordReward",
-  is(o: any): o is TokenizeShareRecordReward {
-    return o && (o.$typeUrl === TokenizeShareRecordReward.typeUrl || typeof o.recordId === "bigint" && Array.isArray(o.reward) && (!o.reward.length || DecCoin.is(o.reward[0])));
-  },
-  isSDK(o: any): o is TokenizeShareRecordRewardSDKType {
-    return o && (o.$typeUrl === TokenizeShareRecordReward.typeUrl || typeof o.record_id === "bigint" && Array.isArray(o.reward) && (!o.reward.length || DecCoin.isSDK(o.reward[0])));
-  },
-  isAmino(o: any): o is TokenizeShareRecordRewardAmino {
-    return o && (o.$typeUrl === TokenizeShareRecordReward.typeUrl || typeof o.record_id === "bigint" && Array.isArray(o.reward) && (!o.reward.length || DecCoin.isAmino(o.reward[0])));
-  },
-  encode(message: TokenizeShareRecordReward, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
-    if (message.recordId !== BigInt(0)) {
-      writer.uint32(8).uint64(message.recordId);
-    }
-    for (const v of message.reward) {
-      DecCoin.encode(v!, writer.uint32(18).fork()).ldelim();
-    }
-    return writer;
-  },
-  decode(input: BinaryReader | Uint8Array, length?: number): TokenizeShareRecordReward {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseTokenizeShareRecordReward();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.recordId = reader.uint64();
-          break;
-        case 2:
-          message.reward.push(DecCoin.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromPartial(object: Partial<TokenizeShareRecordReward>): TokenizeShareRecordReward {
-    const message = createBaseTokenizeShareRecordReward();
-    message.recordId = object.recordId !== undefined && object.recordId !== null ? BigInt(object.recordId.toString()) : BigInt(0);
-    message.reward = object.reward?.map(e => DecCoin.fromPartial(e)) || [];
-    return message;
-  },
-  fromAmino(object: TokenizeShareRecordRewardAmino): TokenizeShareRecordReward {
-    const message = createBaseTokenizeShareRecordReward();
-    if (object.record_id !== undefined && object.record_id !== null) {
-      message.recordId = BigInt(object.record_id);
-    }
-    message.reward = object.reward?.map(e => DecCoin.fromAmino(e)) || [];
-    return message;
-  },
-  toAmino(message: TokenizeShareRecordReward): TokenizeShareRecordRewardAmino {
-    const obj: any = {};
-    obj.record_id = message.recordId !== BigInt(0) ? message.recordId?.toString() : undefined;
-    if (message.reward) {
-      obj.reward = message.reward.map(e => e ? DecCoin.toAmino(e) : undefined);
-    } else {
-      obj.reward = message.reward;
-    }
-    return obj;
-  },
-  fromAminoMsg(object: TokenizeShareRecordRewardAminoMsg): TokenizeShareRecordReward {
-    return TokenizeShareRecordReward.fromAmino(object.value);
-  },
-  toAminoMsg(message: TokenizeShareRecordReward): TokenizeShareRecordRewardAminoMsg {
-    return {
-      type: "cosmos-sdk/TokenizeShareRecordReward",
-      value: TokenizeShareRecordReward.toAmino(message)
-    };
-  },
-  fromProtoMsg(message: TokenizeShareRecordRewardProtoMsg): TokenizeShareRecordReward {
-    return TokenizeShareRecordReward.decode(message.value);
-  },
-  toProto(message: TokenizeShareRecordReward): Uint8Array {
-    return TokenizeShareRecordReward.encode(message).finish();
-  },
-  toProtoMsg(message: TokenizeShareRecordReward): TokenizeShareRecordRewardProtoMsg {
-    return {
-      typeUrl: "/cosmos.distribution.v1beta1.TokenizeShareRecordReward",
-      value: TokenizeShareRecordReward.encode(message).finish()
-    };
-  }
-};
-GlobalDecoderRegistry.register(TokenizeShareRecordReward.typeUrl, TokenizeShareRecordReward);
-GlobalDecoderRegistry.registerAminoProtoMapping(TokenizeShareRecordReward.aminoType, TokenizeShareRecordReward.typeUrl);
 function createBaseCommunityPoolSpendProposal(): CommunityPoolSpendProposal {
   return {
     $typeUrl: "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",

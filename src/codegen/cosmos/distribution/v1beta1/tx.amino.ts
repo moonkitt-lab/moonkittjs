@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgSetWithdrawAddress, MsgWithdrawDelegatorReward, MsgWithdrawValidatorCommission, MsgFundCommunityPool, MsgUpdateParams, MsgCommunityPoolSpend, MsgDepositValidatorRewardsPool, MsgWithdrawTokenizeShareRecordReward, MsgWithdrawAllTokenizeShareRecordReward } from "./tx";
+import { MsgSetWithdrawAddress, MsgWithdrawDelegatorReward, MsgWithdrawValidatorCommission, MsgFundCommunityPool, MsgUpdateParams, MsgCommunityPoolSpend, MsgDepositValidatorRewardsPool } from "./tx";
 export const AminoConverter = {
   "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress": {
     aminoType: "cosmos-sdk/MsgModifyWithdrawAddress",
@@ -35,15 +35,5 @@ export const AminoConverter = {
     aminoType: "cosmos-sdk/distr/MsgDepositValRewards",
     toAmino: MsgDepositValidatorRewardsPool.toAmino,
     fromAmino: MsgDepositValidatorRewardsPool.fromAmino
-  },
-  "/cosmos.distribution.v1beta1.MsgWithdrawTokenizeShareRecordReward": {
-    aminoType: "cosmos-sdk/distr/MsgWithdrawTokenizeShareRecordReward",
-    toAmino: MsgWithdrawTokenizeShareRecordReward.toAmino,
-    fromAmino: MsgWithdrawTokenizeShareRecordReward.fromAmino
-  },
-  "/cosmos.distribution.v1beta1.MsgWithdrawAllTokenizeShareRecordReward": {
-    aminoType: "cosmos-sdk/distr/MsgWithdrawAllTokenizeShareRecordReward",
-    toAmino: MsgWithdrawAllTokenizeShareRecordReward.toAmino,
-    fromAmino: MsgWithdrawAllTokenizeShareRecordReward.fromAmino
   }
 };
