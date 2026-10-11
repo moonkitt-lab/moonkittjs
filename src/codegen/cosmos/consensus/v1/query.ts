@@ -1,13 +1,18 @@
-import { ConsensusParams, ConsensusParamsAmino, ConsensusParamsSDKType } from "../../../tendermint/types/params";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { ConsensusParams, ConsensusParamsAmino, ConsensusParamsSDKType } from "../../../tendermint/types/params.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** QueryParamsRequest defines the request type for querying x/consensus parameters. */
 export interface QueryParamsRequest {}
 export interface QueryParamsRequestProtoMsg {
   typeUrl: "/cosmos.consensus.v1.QueryParamsRequest";
   value: Uint8Array;
 }
-/** QueryParamsRequest defines the request type for querying x/consensus parameters. */
+/**
+ * QueryParamsRequest defines the request type for querying x/consensus parameters.
+ * @name QueryParamsRequestAmino
+ * @package cosmos.consensus.v1
+ * @see proto type: cosmos.consensus.v1.QueryParamsRequest
+ */
 export interface QueryParamsRequestAmino {}
 export interface QueryParamsRequestAminoMsg {
   type: "cosmos-sdk/QueryParamsRequest";
@@ -28,7 +33,12 @@ export interface QueryParamsResponseProtoMsg {
   typeUrl: "/cosmos.consensus.v1.QueryParamsResponse";
   value: Uint8Array;
 }
-/** QueryParamsResponse defines the response type for querying x/consensus parameters. */
+/**
+ * QueryParamsResponse defines the response type for querying x/consensus parameters.
+ * @name QueryParamsResponseAmino
+ * @package cosmos.consensus.v1
+ * @see proto type: cosmos.consensus.v1.QueryParamsResponse
+ */
 export interface QueryParamsResponseAmino {
   /**
    * params are the tendermint consensus params stored in the consensus module.

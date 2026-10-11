@@ -1,7 +1,7 @@
-import { RequestFinalizeBlock, RequestFinalizeBlockAmino, RequestFinalizeBlockSDKType, ResponseFinalizeBlock, ResponseFinalizeBlockAmino, ResponseFinalizeBlockSDKType, ResponseCommit, ResponseCommitAmino, ResponseCommitSDKType } from "../../../../tendermint/abci/types";
-import { StoreKVPair, StoreKVPairAmino, StoreKVPairSDKType } from "../../v1beta1/listening";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
+import { RequestFinalizeBlock, RequestFinalizeBlockAmino, RequestFinalizeBlockSDKType, ResponseFinalizeBlock, ResponseFinalizeBlockAmino, ResponseFinalizeBlockSDKType, ResponseCommit, ResponseCommitAmino, ResponseCommitSDKType } from "../../../../tendermint/abci/types.js";
+import { StoreKVPair, StoreKVPairAmino, StoreKVPairSDKType } from "../../v1beta1/listening.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
 /** ListenEndBlockRequest is the request type for the ListenEndBlock RPC method */
 export interface ListenFinalizeBlockRequest {
   req?: RequestFinalizeBlock;
@@ -11,7 +11,12 @@ export interface ListenFinalizeBlockRequestProtoMsg {
   typeUrl: "/cosmos.store.streaming.abci.ListenFinalizeBlockRequest";
   value: Uint8Array;
 }
-/** ListenEndBlockRequest is the request type for the ListenEndBlock RPC method */
+/**
+ * ListenEndBlockRequest is the request type for the ListenEndBlock RPC method
+ * @name ListenFinalizeBlockRequestAmino
+ * @package cosmos.store.streaming.abci
+ * @see proto type: cosmos.store.streaming.abci.ListenFinalizeBlockRequest
+ */
 export interface ListenFinalizeBlockRequestAmino {
   req?: RequestFinalizeBlockAmino;
   res?: ResponseFinalizeBlockAmino;
@@ -31,7 +36,12 @@ export interface ListenFinalizeBlockResponseProtoMsg {
   typeUrl: "/cosmos.store.streaming.abci.ListenFinalizeBlockResponse";
   value: Uint8Array;
 }
-/** ListenEndBlockResponse is the response type for the ListenEndBlock RPC method */
+/**
+ * ListenEndBlockResponse is the response type for the ListenEndBlock RPC method
+ * @name ListenFinalizeBlockResponseAmino
+ * @package cosmos.store.streaming.abci
+ * @see proto type: cosmos.store.streaming.abci.ListenFinalizeBlockResponse
+ */
 export interface ListenFinalizeBlockResponseAmino {}
 export interface ListenFinalizeBlockResponseAminoMsg {
   type: "cosmos-sdk/ListenFinalizeBlockResponse";
@@ -50,9 +60,16 @@ export interface ListenCommitRequestProtoMsg {
   typeUrl: "/cosmos.store.streaming.abci.ListenCommitRequest";
   value: Uint8Array;
 }
-/** ListenCommitRequest is the request type for the ListenCommit RPC method */
+/**
+ * ListenCommitRequest is the request type for the ListenCommit RPC method
+ * @name ListenCommitRequestAmino
+ * @package cosmos.store.streaming.abci
+ * @see proto type: cosmos.store.streaming.abci.ListenCommitRequest
+ */
 export interface ListenCommitRequestAmino {
-  /** explicitly pass in block height as ResponseCommit does not contain this info */
+  /**
+   * explicitly pass in block height as ResponseCommit does not contain this info
+   */
   block_height?: string;
   res?: ResponseCommitAmino;
   change_set?: StoreKVPairAmino[];
@@ -73,7 +90,12 @@ export interface ListenCommitResponseProtoMsg {
   typeUrl: "/cosmos.store.streaming.abci.ListenCommitResponse";
   value: Uint8Array;
 }
-/** ListenCommitResponse is the response type for the ListenCommit RPC method */
+/**
+ * ListenCommitResponse is the response type for the ListenCommit RPC method
+ * @name ListenCommitResponseAmino
+ * @package cosmos.store.streaming.abci
+ * @see proto type: cosmos.store.streaming.abci.ListenCommitResponse
+ */
 export interface ListenCommitResponseAmino {}
 export interface ListenCommitResponseAminoMsg {
   type: "cosmos-sdk/ListenCommitResponse";

@@ -1,6 +1,6 @@
-import { setPaginationParams } from "../../../helpers";
+import { setPaginationParams } from "../../../helpers.js";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryGrantsRequest, QueryGrantsResponseSDKType, QueryGranterGrantsRequest, QueryGranterGrantsResponseSDKType, QueryGranteeGrantsRequest, QueryGranteeGrantsResponseSDKType } from "./query";
+import { QueryGrantsRequest, QueryGrantsResponseSDKType, QueryGranterGrantsRequest, QueryGranterGrantsResponseSDKType, QueryGranteeGrantsRequest, QueryGranteeGrantsResponseSDKType } from "./query.js";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -33,9 +33,7 @@ export class LCDQueryClient {
     const endpoint = `cosmos/authz/v1beta1/grants`;
     return await this.req.get<QueryGrantsResponseSDKType>(endpoint, options);
   }
-  /* GranterGrants returns list of `GrantAuthorization`, granted by granter.
-  
-   Since: cosmos-sdk 0.46 */
+  /* GranterGrants returns list of `GrantAuthorization`, granted by granter. */
   async granterGrants(params: QueryGranterGrantsRequest): Promise<QueryGranterGrantsResponseSDKType> {
     const options: any = {
       params: {}
@@ -46,9 +44,7 @@ export class LCDQueryClient {
     const endpoint = `cosmos/authz/v1beta1/grants/granter/${params.granter}`;
     return await this.req.get<QueryGranterGrantsResponseSDKType>(endpoint, options);
   }
-  /* GranteeGrants returns a list of `GrantAuthorization` by grantee.
-  
-   Since: cosmos-sdk 0.46 */
+  /* GranteeGrants returns a list of `GrantAuthorization` by grantee. */
   async granteeGrants(params: QueryGranteeGrantsRequest): Promise<QueryGranteeGrantsResponseSDKType> {
     const options: any = {
       params: {}

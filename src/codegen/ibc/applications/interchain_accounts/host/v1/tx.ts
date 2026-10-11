@@ -1,7 +1,7 @@
-import { Params, ParamsAmino, ParamsSDKType, QueryRequest, QueryRequestAmino, QueryRequestSDKType } from "./host";
-import { BinaryReader, BinaryWriter } from "../../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../../../helpers";
+import { Params, ParamsAmino, ParamsSDKType, QueryRequest, QueryRequestAmino, QueryRequestSDKType } from "./host.js";
+import { BinaryReader, BinaryWriter } from "../../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../../../helpers.js";
 /** MsgUpdateParams defines the payload for Msg/UpdateParams */
 export interface MsgUpdateParams {
   /** signer address */
@@ -17,9 +17,16 @@ export interface MsgUpdateParamsProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.host.v1.MsgUpdateParams";
   value: Uint8Array;
 }
-/** MsgUpdateParams defines the payload for Msg/UpdateParams */
+/**
+ * MsgUpdateParams defines the payload for Msg/UpdateParams
+ * @name MsgUpdateParamsAmino
+ * @package ibc.applications.interchain_accounts.host.v1
+ * @see proto type: ibc.applications.interchain_accounts.host.v1.MsgUpdateParams
+ */
 export interface MsgUpdateParamsAmino {
-  /** signer address */
+  /**
+   * signer address
+   */
   signer?: string;
   /**
    * params defines the 27-interchain-accounts/host parameters to update.
@@ -43,7 +50,12 @@ export interface MsgUpdateParamsResponseProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.host.v1.MsgUpdateParamsResponse";
   value: Uint8Array;
 }
-/** MsgUpdateParamsResponse defines the response for Msg/UpdateParams */
+/**
+ * MsgUpdateParamsResponse defines the response for Msg/UpdateParams
+ * @name MsgUpdateParamsResponseAmino
+ * @package ibc.applications.interchain_accounts.host.v1
+ * @see proto type: ibc.applications.interchain_accounts.host.v1.MsgUpdateParamsResponse
+ */
 export interface MsgUpdateParamsResponseAmino {}
 export interface MsgUpdateParamsResponseAminoMsg {
   type: "cosmos-sdk/MsgUpdateParamsResponse";
@@ -62,11 +74,20 @@ export interface MsgModuleQuerySafeProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.host.v1.MsgModuleQuerySafe";
   value: Uint8Array;
 }
-/** MsgModuleQuerySafe defines the payload for Msg/ModuleQuerySafe */
+/**
+ * MsgModuleQuerySafe defines the payload for Msg/ModuleQuerySafe
+ * @name MsgModuleQuerySafeAmino
+ * @package ibc.applications.interchain_accounts.host.v1
+ * @see proto type: ibc.applications.interchain_accounts.host.v1.MsgModuleQuerySafe
+ */
 export interface MsgModuleQuerySafeAmino {
-  /** signer address */
+  /**
+   * signer address
+   */
   signer?: string;
-  /** requests defines the module safe queries to execute. */
+  /**
+   * requests defines the module safe queries to execute.
+   */
   requests?: QueryRequestAmino[];
 }
 export interface MsgModuleQuerySafeAminoMsg {
@@ -89,11 +110,20 @@ export interface MsgModuleQuerySafeResponseProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.host.v1.MsgModuleQuerySafeResponse";
   value: Uint8Array;
 }
-/** MsgModuleQuerySafeResponse defines the response for Msg/ModuleQuerySafe */
+/**
+ * MsgModuleQuerySafeResponse defines the response for Msg/ModuleQuerySafe
+ * @name MsgModuleQuerySafeResponseAmino
+ * @package ibc.applications.interchain_accounts.host.v1
+ * @see proto type: ibc.applications.interchain_accounts.host.v1.MsgModuleQuerySafeResponse
+ */
 export interface MsgModuleQuerySafeResponseAmino {
-  /** height at which the responses were queried */
+  /**
+   * height at which the responses were queried
+   */
   height?: string;
-  /** protobuf encoded responses for each query */
+  /**
+   * protobuf encoded responses for each query
+   */
   responses?: string[];
 }
 export interface MsgModuleQuerySafeResponseAminoMsg {

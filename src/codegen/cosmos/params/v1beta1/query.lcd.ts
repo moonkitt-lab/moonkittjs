@@ -1,5 +1,5 @@
 import { LCDClient } from "@cosmology/lcd";
-import { QueryParamsRequest, QueryParamsResponseSDKType, QuerySubspacesRequest, QuerySubspacesResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QuerySubspacesRequest, QuerySubspacesResponseSDKType } from "./query.js";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -26,9 +26,7 @@ export class LCDQueryClient {
     const endpoint = `cosmos/params/v1beta1/params`;
     return await this.req.get<QueryParamsResponseSDKType>(endpoint, options);
   }
-  /* Subspaces queries for all registered subspaces and all keys for a subspace.
-  
-   Since: cosmos-sdk 0.46 */
+  /* Subspaces queries for all registered subspaces and all keys for a subspace. */
   async subspaces(_params: QuerySubspacesRequest = {}): Promise<QuerySubspacesResponseSDKType> {
     const endpoint = `cosmos/params/v1beta1/subspaces`;
     return await this.req.get<QuerySubspacesResponseSDKType>(endpoint);

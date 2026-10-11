@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgMintPhoton, MsgUpdateParams } from "./tx";
+import { MsgMintPhoton, MsgUpdateParams } from "./tx.js";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/atomone.photon.v1.MsgMintPhoton", MsgMintPhoton], ["/atomone.photon.v1.MsgUpdateParams", MsgUpdateParams]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {

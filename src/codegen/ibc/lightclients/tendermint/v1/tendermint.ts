@@ -1,13 +1,13 @@
-import { Duration, DurationAmino, DurationSDKType } from "../../../../google/protobuf/duration";
-import { Height, HeightAmino, HeightSDKType } from "../../../core/client/v1/client";
-import { ProofSpec, ProofSpecAmino, ProofSpecSDKType } from "../../../../cosmos/ics23/v1/proofs";
-import { Timestamp } from "../../../../google/protobuf/timestamp";
-import { MerkleRoot, MerkleRootAmino, MerkleRootSDKType } from "../../../core/commitment/v1/commitment";
-import { SignedHeader, SignedHeaderAmino, SignedHeaderSDKType } from "../../../../tendermint/types/types";
-import { ValidatorSet, ValidatorSetAmino, ValidatorSetSDKType } from "../../../../tendermint/types/validator";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
-import { toTimestamp, fromTimestamp, bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { Duration, DurationAmino, DurationSDKType } from "../../../../google/protobuf/duration.js";
+import { Height, HeightAmino, HeightSDKType } from "../../../core/client/v1/client.js";
+import { ProofSpec, ProofSpecAmino, ProofSpecSDKType } from "../../../../cosmos/ics23/v1/proofs.js";
+import { Timestamp } from "../../../../google/protobuf/timestamp.js";
+import { MerkleRoot, MerkleRootAmino, MerkleRootSDKType } from "../../../core/commitment/v1/commitment.js";
+import { SignedHeader, SignedHeaderAmino, SignedHeaderSDKType } from "../../../../tendermint/types/types.js";
+import { ValidatorSet, ValidatorSetAmino, ValidatorSetSDKType } from "../../../../tendermint/types/validator.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
+import { toTimestamp, fromTimestamp, bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
 /**
  * ClientState from Tendermint tracks the current validator set, latest height,
  * and a possible frozen height.
@@ -16,7 +16,7 @@ export interface ClientState {
   chainId: string;
   trustLevel: Fraction;
   /**
-   * duration of the period since the LastestTimestamp during which the
+   * duration of the period since the LatestTimestamp during which the
    * submitted headers are valid for upgrade
    */
   trustingPeriod: Duration;
@@ -54,24 +54,37 @@ export interface ClientStateProtoMsg {
 /**
  * ClientState from Tendermint tracks the current validator set, latest height,
  * and a possible frozen height.
+ * @name ClientStateAmino
+ * @package ibc.lightclients.tendermint.v1
+ * @see proto type: ibc.lightclients.tendermint.v1.ClientState
  */
 export interface ClientStateAmino {
   chain_id?: string;
   trust_level?: FractionAmino;
   /**
-   * duration of the period since the LastestTimestamp during which the
+   * duration of the period since the LatestTimestamp during which the
    * submitted headers are valid for upgrade
    */
   trusting_period?: DurationAmino;
-  /** duration of the staking unbonding period */
+  /**
+   * duration of the staking unbonding period
+   */
   unbonding_period?: DurationAmino;
-  /** defines how much new (untrusted) header's Time can drift into the future. */
+  /**
+   * defines how much new (untrusted) header's Time can drift into the future.
+   */
   max_clock_drift?: DurationAmino;
-  /** Block height when the client was frozen due to a misbehaviour */
+  /**
+   * Block height when the client was frozen due to a misbehaviour
+   */
   frozen_height?: HeightAmino;
-  /** Latest height the client was updated to */
+  /**
+   * Latest height the client was updated to
+   */
   latest_height?: HeightAmino;
-  /** Proof specifications used in verifying counterparty state */
+  /**
+   * Proof specifications used in verifying counterparty state
+   */
   proof_specs?: ProofSpecAmino[];
   /**
    * Path at which next upgraded client will be committed.
@@ -83,11 +96,15 @@ export interface ClientStateAmino {
    * "upgradedIBCState"}`
    */
   upgrade_path?: string[];
-  /** allow_update_after_expiry is deprecated */
-  /** @deprecated */
+  /**
+   * allow_update_after_expiry is deprecated
+   * @deprecated
+   */
   allow_update_after_expiry?: boolean;
-  /** allow_update_after_misbehaviour is deprecated */
-  /** @deprecated */
+  /**
+   * allow_update_after_misbehaviour is deprecated
+   * @deprecated
+   */
   allow_update_after_misbehaviour?: boolean;
 }
 export interface ClientStateAminoMsg {
@@ -128,14 +145,21 @@ export interface ConsensusStateProtoMsg {
   typeUrl: "/ibc.lightclients.tendermint.v1.ConsensusState";
   value: Uint8Array;
 }
-/** ConsensusState defines the consensus state from Tendermint. */
+/**
+ * ConsensusState defines the consensus state from Tendermint.
+ * @name ConsensusStateAmino
+ * @package ibc.lightclients.tendermint.v1
+ * @see proto type: ibc.lightclients.tendermint.v1.ConsensusState
+ */
 export interface ConsensusStateAmino {
   /**
    * timestamp that corresponds to the block height in which the ConsensusState
    * was stored.
    */
   timestamp?: string;
-  /** commitment root (i.e app hash) */
+  /**
+   * commitment root (i.e app hash)
+   */
   root?: MerkleRootAmino;
   next_validators_hash?: string;
 }
@@ -167,10 +191,15 @@ export interface MisbehaviourProtoMsg {
 /**
  * Misbehaviour is a wrapper over two conflicting Headers
  * that implements Misbehaviour interface expected by ICS-02
+ * @name MisbehaviourAmino
+ * @package ibc.lightclients.tendermint.v1
+ * @see proto type: ibc.lightclients.tendermint.v1.Misbehaviour
  */
 export interface MisbehaviourAmino {
-  /** ClientID is deprecated */
-  /** @deprecated */
+  /**
+   * ClientID is deprecated
+   * @deprecated
+   */
   client_id?: string;
   header_1?: HeaderAmino;
   header_2?: HeaderAmino;
@@ -226,6 +255,9 @@ export interface HeaderProtoMsg {
  * current time in order to correctly verify, and the TrustedValidators must
  * hash to TrustedConsensusState.NextValidatorsHash since that is the last
  * trusted validator set at the TrustedHeight.
+ * @name HeaderAmino
+ * @package ibc.lightclients.tendermint.v1
+ * @see proto type: ibc.lightclients.tendermint.v1.Header
  */
 export interface HeaderAmino {
   signed_header?: SignedHeaderAmino;
@@ -272,6 +304,9 @@ export interface FractionProtoMsg {
 /**
  * Fraction defines the protobuf message type for tmmath.Fraction that only
  * supports positive values.
+ * @name FractionAmino
+ * @package ibc.lightclients.tendermint.v1
+ * @see proto type: ibc.lightclients.tendermint.v1.Fraction
  */
 export interface FractionAmino {
   numerator?: string;

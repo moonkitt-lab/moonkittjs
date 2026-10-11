@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgMintPhoton, MsgUpdateParams } from "./tx";
+import { MsgMintPhoton, MsgUpdateParams } from "./tx.js";
 export const AminoConverter = {
   "/atomone.photon.v1.MsgMintPhoton": {
     aminoType: "atomone/photon/v1/MsgMintPhoton",

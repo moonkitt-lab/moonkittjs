@@ -1,7 +1,7 @@
-import { Params, ParamsAmino, ParamsSDKType, Validator, ValidatorAmino, ValidatorSDKType, Delegation, DelegationAmino, DelegationSDKType, UnbondingDelegation, UnbondingDelegationAmino, UnbondingDelegationSDKType, Redelegation, RedelegationAmino, RedelegationSDKType } from "./staking";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../helpers";
+import { Params, ParamsAmino, ParamsSDKType, Validator, ValidatorAmino, ValidatorSDKType, Delegation, DelegationAmino, DelegationSDKType, UnbondingDelegation, UnbondingDelegationAmino, UnbondingDelegationSDKType, Redelegation, RedelegationAmino, RedelegationSDKType } from "./staking.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../helpers.js";
 /** GenesisState defines the staking module's genesis state. */
 export interface GenesisState {
   /** params defines all the parameters of related to deposit. */
@@ -31,9 +31,16 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.staking.v1beta1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the staking module's genesis state. */
+/**
+ * GenesisState defines the staking module's genesis state.
+ * @name GenesisStateAmino
+ * @package cosmos.staking.v1beta1
+ * @see proto type: cosmos.staking.v1beta1.GenesisState
+ */
 export interface GenesisStateAmino {
-  /** params defines all the parameters of related to deposit. */
+  /**
+   * params defines all the parameters of related to deposit.
+   */
   params: ParamsAmino;
   /**
    * last_total_power tracks the total amounts of bonded tokens recorded during
@@ -45,15 +52,25 @@ export interface GenesisStateAmino {
    * of the last-block's bonded validators.
    */
   last_validator_powers: LastValidatorPowerAmino[];
-  /** validators defines the validator set at genesis. */
+  /**
+   * validators defines the validator set at genesis.
+   */
   validators: ValidatorAmino[];
-  /** delegations defines the delegations active at genesis. */
+  /**
+   * delegations defines the delegations active at genesis.
+   */
   delegations: DelegationAmino[];
-  /** unbonding_delegations defines the unbonding delegations active at genesis. */
+  /**
+   * unbonding_delegations defines the unbonding delegations active at genesis.
+   */
   unbonding_delegations: UnbondingDelegationAmino[];
-  /** redelegations defines the redelegations active at genesis. */
+  /**
+   * redelegations defines the redelegations active at genesis.
+   */
   redelegations: RedelegationAmino[];
-  /** exported defines a bool to identify whether the chain dealing with exported or initialized genesis. */
+  /**
+   * exported defines a bool to identify whether the chain dealing with exported or initialized genesis.
+   */
   exported?: boolean;
 }
 export interface GenesisStateAminoMsg {
@@ -82,11 +99,20 @@ export interface LastValidatorPowerProtoMsg {
   typeUrl: "/cosmos.staking.v1beta1.LastValidatorPower";
   value: Uint8Array;
 }
-/** LastValidatorPower required for validator set update logic. */
+/**
+ * LastValidatorPower required for validator set update logic.
+ * @name LastValidatorPowerAmino
+ * @package cosmos.staking.v1beta1
+ * @see proto type: cosmos.staking.v1beta1.LastValidatorPower
+ */
 export interface LastValidatorPowerAmino {
-  /** address is the address of the validator. */
+  /**
+   * address is the address of the validator.
+   */
   address?: string;
-  /** power defines the power of the validator. */
+  /**
+   * power defines the power of the validator.
+   */
   power?: string;
 }
 export interface LastValidatorPowerAminoMsg {

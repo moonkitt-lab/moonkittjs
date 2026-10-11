@@ -1,6 +1,6 @@
-import { isSet } from "../../../helpers";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { isSet } from "../../../helpers.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** Level is the permission level. */
 export enum Permissions_Level {
   /**
@@ -85,9 +85,14 @@ export interface PermissionsProtoMsg {
 /**
  * Permissions are the permissions that an account has to trip
  * or reset the circuit breaker.
+ * @name PermissionsAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.Permissions
  */
 export interface PermissionsAmino {
-  /** level is the level of permissions granted to this account. */
+  /**
+   * level is the level of permissions granted to this account.
+   */
   level?: Permissions_Level;
   /**
    * limit_type_urls is used with LEVEL_SOME_MSGS to limit the lists of Msg type
@@ -117,7 +122,12 @@ export interface GenesisAccountPermissionsProtoMsg {
   typeUrl: "/cosmos.circuit.v1.GenesisAccountPermissions";
   value: Uint8Array;
 }
-/** GenesisAccountPermissions is the account permissions for the circuit breaker in genesis */
+/**
+ * GenesisAccountPermissions is the account permissions for the circuit breaker in genesis
+ * @name GenesisAccountPermissionsAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.GenesisAccountPermissions
+ */
 export interface GenesisAccountPermissionsAmino {
   address?: string;
   permissions?: PermissionsAmino;
@@ -140,7 +150,12 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.circuit.v1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState is the state that must be provided at genesis. */
+/**
+ * GenesisState is the state that must be provided at genesis.
+ * @name GenesisStateAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.GenesisState
+ */
 export interface GenesisStateAmino {
   account_permissions?: GenesisAccountPermissionsAmino[];
   disabled_type_urls?: string[];

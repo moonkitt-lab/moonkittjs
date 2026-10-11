@@ -1,12 +1,8 @@
-import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin";
-import { isSet } from "../../../helpers";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
-/**
- * AuthorizationType defines the type of staking module authorization type
- * 
- * Since: cosmos-sdk 0.43
- */
+import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin.js";
+import { isSet } from "../../../helpers.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
+/** AuthorizationType defines the type of staking module authorization type */
 export enum AuthorizationType {
   /** AUTHORIZATION_TYPE_UNSPECIFIED - AUTHORIZATION_TYPE_UNSPECIFIED specifies an unknown authorization type */
   AUTHORIZATION_TYPE_UNSPECIFIED = 0,
@@ -62,11 +58,7 @@ export function authorizationTypeToJSON(object: AuthorizationType): string {
       return "UNRECOGNIZED";
   }
 }
-/**
- * StakeAuthorization defines authorization for delegate/undelegate/redelegate.
- * 
- * Since: cosmos-sdk 0.43
- */
+/** StakeAuthorization defines authorization for delegate/undelegate/redelegate. */
 export interface StakeAuthorization {
   $typeUrl?: "/cosmos.staking.v1beta1.StakeAuthorization";
   /**
@@ -90,8 +82,9 @@ export interface StakeAuthorizationProtoMsg {
 }
 /**
  * StakeAuthorization defines authorization for delegate/undelegate/redelegate.
- * 
- * Since: cosmos-sdk 0.43
+ * @name StakeAuthorizationAmino
+ * @package cosmos.staking.v1beta1
+ * @see proto type: cosmos.staking.v1beta1.StakeAuthorization
  */
 export interface StakeAuthorizationAmino {
   /**
@@ -104,20 +97,20 @@ export interface StakeAuthorizationAmino {
    * account.
    */
   allow_list?: StakeAuthorization_ValidatorsAmino;
-  /** deny_list specifies list of validator addresses to whom grantee can not delegate tokens. */
+  /**
+   * deny_list specifies list of validator addresses to whom grantee can not delegate tokens.
+   */
   deny_list?: StakeAuthorization_ValidatorsAmino;
-  /** authorization_type defines one of AuthorizationType. */
+  /**
+   * authorization_type defines one of AuthorizationType.
+   */
   authorization_type?: AuthorizationType;
 }
 export interface StakeAuthorizationAminoMsg {
   type: "cosmos-sdk/StakeAuthorization";
   value: StakeAuthorizationAmino;
 }
-/**
- * StakeAuthorization defines authorization for delegate/undelegate/redelegate.
- * 
- * Since: cosmos-sdk 0.43
- */
+/** StakeAuthorization defines authorization for delegate/undelegate/redelegate. */
 export interface StakeAuthorizationSDKType {
   $typeUrl?: "/cosmos.staking.v1beta1.StakeAuthorization";
   max_tokens?: CoinSDKType;
@@ -133,7 +126,12 @@ export interface StakeAuthorization_ValidatorsProtoMsg {
   typeUrl: "/cosmos.staking.v1beta1.Validators";
   value: Uint8Array;
 }
-/** Validators defines list of validator addresses. */
+/**
+ * Validators defines list of validator addresses.
+ * @name StakeAuthorization_ValidatorsAmino
+ * @package cosmos.staking.v1beta1
+ * @see proto type: cosmos.staking.v1beta1.StakeAuthorization_Validators
+ */
 export interface StakeAuthorization_ValidatorsAmino {
   address?: string[];
 }

@@ -1,7 +1,7 @@
-import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../../cosmos/base/query/v1beta1/pagination";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../../cosmos/base/query/v1beta1/pagination.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
 /** QueryChecksumsRequest is the request type for the Query/Checksums RPC method. */
 export interface QueryChecksumsRequest {
   /** pagination defines an optional pagination for the request. */
@@ -11,9 +11,16 @@ export interface QueryChecksumsRequestProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.QueryChecksumsRequest";
   value: Uint8Array;
 }
-/** QueryChecksumsRequest is the request type for the Query/Checksums RPC method. */
+/**
+ * QueryChecksumsRequest is the request type for the Query/Checksums RPC method.
+ * @name QueryChecksumsRequestAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.QueryChecksumsRequest
+ */
 export interface QueryChecksumsRequestAmino {
-  /** pagination defines an optional pagination for the request. */
+  /**
+   * pagination defines an optional pagination for the request.
+   */
   pagination?: PageRequestAmino;
 }
 export interface QueryChecksumsRequestAminoMsg {
@@ -35,11 +42,20 @@ export interface QueryChecksumsResponseProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.QueryChecksumsResponse";
   value: Uint8Array;
 }
-/** QueryChecksumsResponse is the response type for the Query/Checksums RPC method. */
+/**
+ * QueryChecksumsResponse is the response type for the Query/Checksums RPC method.
+ * @name QueryChecksumsResponseAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.QueryChecksumsResponse
+ */
 export interface QueryChecksumsResponseAmino {
-  /** checksums is a list of the hex encoded checksums of all wasm codes stored. */
+  /**
+   * checksums is a list of the hex encoded checksums of all wasm codes stored.
+   */
   checksums?: string[];
-  /** pagination defines the pagination in the response. */
+  /**
+   * pagination defines the pagination in the response.
+   */
   pagination?: PageResponseAmino;
 }
 export interface QueryChecksumsResponseAminoMsg {
@@ -60,9 +76,16 @@ export interface QueryCodeRequestProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.QueryCodeRequest";
   value: Uint8Array;
 }
-/** QueryCodeRequest is the request type for the Query/Code RPC method. */
+/**
+ * QueryCodeRequest is the request type for the Query/Code RPC method.
+ * @name QueryCodeRequestAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.QueryCodeRequest
+ */
 export interface QueryCodeRequestAmino {
-  /** checksum is a hex encoded string of the code stored. */
+  /**
+   * checksum is a hex encoded string of the code stored.
+   */
   checksum?: string;
 }
 export interface QueryCodeRequestAminoMsg {
@@ -81,7 +104,12 @@ export interface QueryCodeResponseProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.QueryCodeResponse";
   value: Uint8Array;
 }
-/** QueryCodeResponse is the response type for the Query/Code RPC method. */
+/**
+ * QueryCodeResponse is the response type for the Query/Code RPC method.
+ * @name QueryCodeResponseAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.QueryCodeResponse
+ */
 export interface QueryCodeResponseAmino {
   data?: string;
 }

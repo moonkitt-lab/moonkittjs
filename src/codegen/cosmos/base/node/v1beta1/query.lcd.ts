@@ -1,5 +1,5 @@
 import { LCDClient } from "@cosmology/lcd";
-import { ConfigRequest, ConfigResponseSDKType, StatusRequest, StatusResponseSDKType } from "./query";
+import { ConfigRequest, ConfigResponseSDKType, StatusRequest, StatusResponseSDKType } from "./query.js";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({

@@ -1,10 +1,10 @@
-import { Height, HeightAmino, HeightSDKType } from "../../client/v1/client";
-import { isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
+import { Height, HeightAmino, HeightSDKType } from "../../client/v1/client.js";
+import { isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
 /**
  * State defines if a channel is in one of the following states:
- * CLOSED, INIT, TRYOPEN, OPEN, FLUSHING, FLUSHCOMPLETE or UNINITIALIZED.
+ * CLOSED, INIT, TRYOPEN, OPEN, or UNINITIALIZED.
  */
 export enum State {
   /** STATE_UNINITIALIZED_UNSPECIFIED - Default State */
@@ -23,10 +23,6 @@ export enum State {
    * packets.
    */
   STATE_CLOSED = 4,
-  /** STATE_FLUSHING - A channel has just accepted the upgrade handshake attempt and is flushing in-flight packets. */
-  STATE_FLUSHING = 5,
-  /** STATE_FLUSHCOMPLETE - A channel has just completed flushing any in-flight packets. */
-  STATE_FLUSHCOMPLETE = 6,
   UNRECOGNIZED = -1,
 }
 export const StateSDKType = State;
@@ -48,12 +44,6 @@ export function stateFromJSON(object: any): State {
     case 4:
     case "STATE_CLOSED":
       return State.STATE_CLOSED;
-    case 5:
-    case "STATE_FLUSHING":
-      return State.STATE_FLUSHING;
-    case 6:
-    case "STATE_FLUSHCOMPLETE":
-      return State.STATE_FLUSHCOMPLETE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -72,10 +62,6 @@ export function stateToJSON(object: State): string {
       return "STATE_OPEN";
     case State.STATE_CLOSED:
       return "STATE_CLOSED";
-    case State.STATE_FLUSHING:
-      return "STATE_FLUSHING";
-    case State.STATE_FLUSHCOMPLETE:
-      return "STATE_FLUSHCOMPLETE";
     case State.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -145,11 +131,6 @@ export interface Channel {
   connectionHops: string[];
   /** opaque channel version, which is agreed upon during the handshake */
   version: string;
-  /**
-   * upgrade sequence indicates the latest upgrade attempt performed by this channel
-   * the value of 0 indicates the channel has never been upgraded
-   */
-  upgradeSequence: bigint;
 }
 export interface ChannelProtoMsg {
   typeUrl: "/ibc.core.channel.v1.Channel";
@@ -159,26 +140,32 @@ export interface ChannelProtoMsg {
  * Channel defines pipeline for exactly-once packet delivery between specific
  * modules on separate blockchains, which has at least one end capable of
  * sending packets and one end capable of receiving packets.
+ * @name ChannelAmino
+ * @package ibc.core.channel.v1
+ * @see proto type: ibc.core.channel.v1.Channel
  */
 export interface ChannelAmino {
-  /** current state of the channel end */
+  /**
+   * current state of the channel end
+   */
   state?: State;
-  /** whether the channel is ordered or unordered */
+  /**
+   * whether the channel is ordered or unordered
+   */
   ordering?: Order;
-  /** counterparty channel end */
+  /**
+   * counterparty channel end
+   */
   counterparty?: CounterpartyAmino;
   /**
    * list of connection identifiers, in order, along which packets sent on
    * this channel will travel
    */
   connection_hops?: string[];
-  /** opaque channel version, which is agreed upon during the handshake */
-  version?: string;
   /**
-   * upgrade sequence indicates the latest upgrade attempt performed by this channel
-   * the value of 0 indicates the channel has never been upgraded
+   * opaque channel version, which is agreed upon during the handshake
    */
-  upgrade_sequence?: string;
+  version?: string;
 }
 export interface ChannelAminoMsg {
   type: "cosmos-sdk/Channel";
@@ -195,7 +182,6 @@ export interface ChannelSDKType {
   counterparty: CounterpartySDKType;
   connection_hops: string[];
   version: string;
-  upgrade_sequence: bigint;
 }
 /**
  * IdentifiedChannel defines a channel with additional port and channel
@@ -219,11 +205,6 @@ export interface IdentifiedChannel {
   portId: string;
   /** channel identifier */
   channelId: string;
-  /**
-   * upgrade sequence indicates the latest upgrade attempt performed by this channel
-   * the value of 0 indicates the channel has never been upgraded
-   */
-  upgradeSequence: bigint;
 }
 export interface IdentifiedChannelProtoMsg {
   typeUrl: "/ibc.core.channel.v1.IdentifiedChannel";
@@ -232,30 +213,40 @@ export interface IdentifiedChannelProtoMsg {
 /**
  * IdentifiedChannel defines a channel with additional port and channel
  * identifier fields.
+ * @name IdentifiedChannelAmino
+ * @package ibc.core.channel.v1
+ * @see proto type: ibc.core.channel.v1.IdentifiedChannel
  */
 export interface IdentifiedChannelAmino {
-  /** current state of the channel end */
+  /**
+   * current state of the channel end
+   */
   state?: State;
-  /** whether the channel is ordered or unordered */
+  /**
+   * whether the channel is ordered or unordered
+   */
   ordering?: Order;
-  /** counterparty channel end */
+  /**
+   * counterparty channel end
+   */
   counterparty?: CounterpartyAmino;
   /**
    * list of connection identifiers, in order, along which packets sent on
    * this channel will travel
    */
   connection_hops?: string[];
-  /** opaque channel version, which is agreed upon during the handshake */
-  version?: string;
-  /** port identifier */
-  port_id?: string;
-  /** channel identifier */
-  channel_id?: string;
   /**
-   * upgrade sequence indicates the latest upgrade attempt performed by this channel
-   * the value of 0 indicates the channel has never been upgraded
+   * opaque channel version, which is agreed upon during the handshake
    */
-  upgrade_sequence?: string;
+  version?: string;
+  /**
+   * port identifier
+   */
+  port_id?: string;
+  /**
+   * channel identifier
+   */
+  channel_id?: string;
 }
 export interface IdentifiedChannelAminoMsg {
   type: "cosmos-sdk/IdentifiedChannel";
@@ -273,7 +264,6 @@ export interface IdentifiedChannelSDKType {
   version: string;
   port_id: string;
   channel_id: string;
-  upgrade_sequence: bigint;
 }
 /** Counterparty defines a channel end counterparty */
 export interface Counterparty {
@@ -286,11 +276,20 @@ export interface CounterpartyProtoMsg {
   typeUrl: "/ibc.core.channel.v1.Counterparty";
   value: Uint8Array;
 }
-/** Counterparty defines a channel end counterparty */
+/**
+ * Counterparty defines a channel end counterparty
+ * @name CounterpartyAmino
+ * @package ibc.core.channel.v1
+ * @see proto type: ibc.core.channel.v1.Counterparty
+ */
 export interface CounterpartyAmino {
-  /** port on the counterparty chain which owns the other end of the channel. */
+  /**
+   * port on the counterparty chain which owns the other end of the channel.
+   */
   port_id?: string;
-  /** channel end on the counterparty chain */
+  /**
+   * channel end on the counterparty chain
+   */
   channel_id?: string;
 }
 export interface CounterpartyAminoMsg {
@@ -329,7 +328,12 @@ export interface PacketProtoMsg {
   typeUrl: "/ibc.core.channel.v1.Packet";
   value: Uint8Array;
 }
-/** Packet defines a type that carries data across different chains through IBC */
+/**
+ * Packet defines a type that carries data across different chains through IBC
+ * @name PacketAmino
+ * @package ibc.core.channel.v1
+ * @see proto type: ibc.core.channel.v1.Packet
+ */
 export interface PacketAmino {
   /**
    * number corresponds to the order of sends and receives, where a Packet
@@ -337,19 +341,33 @@ export interface PacketAmino {
    * with a later sequence number.
    */
   sequence?: string;
-  /** identifies the port on the sending chain. */
+  /**
+   * identifies the port on the sending chain.
+   */
   source_port?: string;
-  /** identifies the channel end on the sending chain. */
+  /**
+   * identifies the channel end on the sending chain.
+   */
   source_channel?: string;
-  /** identifies the port on the receiving chain. */
+  /**
+   * identifies the port on the receiving chain.
+   */
   destination_port?: string;
-  /** identifies the channel end on the receiving chain. */
+  /**
+   * identifies the channel end on the receiving chain.
+   */
   destination_channel?: string;
-  /** actual opaque bytes transferred directly to the application module */
+  /**
+   * actual opaque bytes transferred directly to the application module
+   */
   data?: string;
-  /** block height after which the packet times out */
+  /**
+   * block height after which the packet times out
+   */
   timeout_height?: HeightAmino;
-  /** block timestamp (in nanoseconds) after which the packet times out */
+  /**
+   * block timestamp (in nanoseconds) after which the packet times out
+   */
   timeout_timestamp?: string;
 }
 export interface PacketAminoMsg {
@@ -392,15 +410,26 @@ export interface PacketStateProtoMsg {
  * packet commitments, acknowledgements, and receipts.
  * Caller is responsible for knowing the context necessary to interpret this
  * state as a commitment, acknowledgement, or a receipt.
+ * @name PacketStateAmino
+ * @package ibc.core.channel.v1
+ * @see proto type: ibc.core.channel.v1.PacketState
  */
 export interface PacketStateAmino {
-  /** channel port identifier. */
+  /**
+   * channel port identifier.
+   */
   port_id?: string;
-  /** channel unique identifier. */
+  /**
+   * channel unique identifier.
+   */
   channel_id?: string;
-  /** packet sequence. */
+  /**
+   * packet sequence.
+   */
   sequence?: string;
-  /** embedded data that represents packet state. */
+  /**
+   * embedded data that represents packet state.
+   */
   data?: string;
 }
 export interface PacketStateAminoMsg {
@@ -420,7 +449,7 @@ export interface PacketStateSDKType {
   data: Uint8Array;
 }
 /**
- * PacketId is an identifer for a unique Packet
+ * PacketId is an identifier for a unique Packet
  * Source chains refer to packets by source port/channel
  * Destination chains refer to packets by destination port/channel
  */
@@ -437,16 +466,25 @@ export interface PacketIdProtoMsg {
   value: Uint8Array;
 }
 /**
- * PacketId is an identifer for a unique Packet
+ * PacketId is an identifier for a unique Packet
  * Source chains refer to packets by source port/channel
  * Destination chains refer to packets by destination port/channel
+ * @name PacketIdAmino
+ * @package ibc.core.channel.v1
+ * @see proto type: ibc.core.channel.v1.PacketId
  */
 export interface PacketIdAmino {
-  /** channel port identifier */
+  /**
+   * channel port identifier
+   */
   port_id?: string;
-  /** channel unique identifier */
+  /**
+   * channel unique identifier
+   */
   channel_id?: string;
-  /** packet sequence */
+  /**
+   * packet sequence
+   */
   sequence?: string;
 }
 export interface PacketIdAminoMsg {
@@ -454,7 +492,7 @@ export interface PacketIdAminoMsg {
   value: PacketIdAmino;
 }
 /**
- * PacketId is an identifer for a unique Packet
+ * PacketId is an identifier for a unique Packet
  * Source chains refer to packets by source port/channel
  * Destination chains refer to packets by destination port/channel
  */
@@ -488,6 +526,9 @@ export interface AcknowledgementProtoMsg {
  * The first byte of any message with this format will be the non-ASCII values
  * `0xaa` (result) or `0xb2` (error). Implemented as defined by ICS:
  * https://github.com/cosmos/ibc/tree/master/spec/core/ics-004-channel-and-packet-semantics#acknowledgement-envelope
+ * @name AcknowledgementAmino
+ * @package ibc.core.channel.v1
+ * @see proto type: ibc.core.channel.v1.Acknowledgement
  */
 export interface AcknowledgementAmino {
   result?: string;
@@ -512,13 +553,13 @@ export interface AcknowledgementSDKType {
 }
 /**
  * Timeout defines an execution deadline structure for 04-channel handlers.
- * This includes packet lifecycle handlers as well as the upgrade handshake handlers.
+ * This includes packet lifecycle handlers.
  * A valid Timeout contains either one or both of a timestamp and block height (sequence).
  */
 export interface Timeout {
-  /** block height after which the packet or upgrade times out */
+  /** block height after which the packet times out */
   height: Height;
-  /** block timestamp (in nanoseconds) after which the packet or upgrade times out */
+  /** block timestamp (in nanoseconds) after which the packet times out */
   timestamp: bigint;
 }
 export interface TimeoutProtoMsg {
@@ -527,13 +568,20 @@ export interface TimeoutProtoMsg {
 }
 /**
  * Timeout defines an execution deadline structure for 04-channel handlers.
- * This includes packet lifecycle handlers as well as the upgrade handshake handlers.
+ * This includes packet lifecycle handlers.
  * A valid Timeout contains either one or both of a timestamp and block height (sequence).
+ * @name TimeoutAmino
+ * @package ibc.core.channel.v1
+ * @see proto type: ibc.core.channel.v1.Timeout
  */
 export interface TimeoutAmino {
-  /** block height after which the packet or upgrade times out */
+  /**
+   * block height after which the packet times out
+   */
   height?: HeightAmino;
-  /** block timestamp (in nanoseconds) after which the packet or upgrade times out */
+  /**
+   * block timestamp (in nanoseconds) after which the packet times out
+   */
   timestamp?: string;
 }
 export interface TimeoutAminoMsg {
@@ -542,34 +590,12 @@ export interface TimeoutAminoMsg {
 }
 /**
  * Timeout defines an execution deadline structure for 04-channel handlers.
- * This includes packet lifecycle handlers as well as the upgrade handshake handlers.
+ * This includes packet lifecycle handlers.
  * A valid Timeout contains either one or both of a timestamp and block height (sequence).
  */
 export interface TimeoutSDKType {
   height: HeightSDKType;
   timestamp: bigint;
-}
-/** Params defines the set of IBC channel parameters. */
-export interface Params {
-  /** the relative timeout after which channel upgrades will time out. */
-  upgradeTimeout: Timeout;
-}
-export interface ParamsProtoMsg {
-  typeUrl: "/ibc.core.channel.v1.Params";
-  value: Uint8Array;
-}
-/** Params defines the set of IBC channel parameters. */
-export interface ParamsAmino {
-  /** the relative timeout after which channel upgrades will time out. */
-  upgrade_timeout?: TimeoutAmino;
-}
-export interface ParamsAminoMsg {
-  type: "cosmos-sdk/Params";
-  value: ParamsAmino;
-}
-/** Params defines the set of IBC channel parameters. */
-export interface ParamsSDKType {
-  upgrade_timeout: TimeoutSDKType;
 }
 function createBaseChannel(): Channel {
   return {
@@ -577,21 +603,20 @@ function createBaseChannel(): Channel {
     ordering: 0,
     counterparty: Counterparty.fromPartial({}),
     connectionHops: [],
-    version: "",
-    upgradeSequence: BigInt(0)
+    version: ""
   };
 }
 export const Channel = {
   typeUrl: "/ibc.core.channel.v1.Channel",
   aminoType: "cosmos-sdk/Channel",
   is(o: any): o is Channel {
-    return o && (o.$typeUrl === Channel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.is(o.counterparty) && Array.isArray(o.connectionHops) && (!o.connectionHops.length || typeof o.connectionHops[0] === "string") && typeof o.version === "string" && typeof o.upgradeSequence === "bigint");
+    return o && (o.$typeUrl === Channel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.is(o.counterparty) && Array.isArray(o.connectionHops) && (!o.connectionHops.length || typeof o.connectionHops[0] === "string") && typeof o.version === "string");
   },
   isSDK(o: any): o is ChannelSDKType {
-    return o && (o.$typeUrl === Channel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.isSDK(o.counterparty) && Array.isArray(o.connection_hops) && (!o.connection_hops.length || typeof o.connection_hops[0] === "string") && typeof o.version === "string" && typeof o.upgrade_sequence === "bigint");
+    return o && (o.$typeUrl === Channel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.isSDK(o.counterparty) && Array.isArray(o.connection_hops) && (!o.connection_hops.length || typeof o.connection_hops[0] === "string") && typeof o.version === "string");
   },
   isAmino(o: any): o is ChannelAmino {
-    return o && (o.$typeUrl === Channel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.isAmino(o.counterparty) && Array.isArray(o.connection_hops) && (!o.connection_hops.length || typeof o.connection_hops[0] === "string") && typeof o.version === "string" && typeof o.upgrade_sequence === "bigint");
+    return o && (o.$typeUrl === Channel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.isAmino(o.counterparty) && Array.isArray(o.connection_hops) && (!o.connection_hops.length || typeof o.connection_hops[0] === "string") && typeof o.version === "string");
   },
   encode(message: Channel, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.state !== 0) {
@@ -608,9 +633,6 @@ export const Channel = {
     }
     if (message.version !== "") {
       writer.uint32(42).string(message.version);
-    }
-    if (message.upgradeSequence !== BigInt(0)) {
-      writer.uint32(48).uint64(message.upgradeSequence);
     }
     return writer;
   },
@@ -636,9 +658,6 @@ export const Channel = {
         case 5:
           message.version = reader.string();
           break;
-        case 6:
-          message.upgradeSequence = reader.uint64();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -653,7 +672,6 @@ export const Channel = {
     message.counterparty = object.counterparty !== undefined && object.counterparty !== null ? Counterparty.fromPartial(object.counterparty) : undefined;
     message.connectionHops = object.connectionHops?.map(e => e) || [];
     message.version = object.version ?? "";
-    message.upgradeSequence = object.upgradeSequence !== undefined && object.upgradeSequence !== null ? BigInt(object.upgradeSequence.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: ChannelAmino): Channel {
@@ -671,9 +689,6 @@ export const Channel = {
     if (object.version !== undefined && object.version !== null) {
       message.version = object.version;
     }
-    if (object.upgrade_sequence !== undefined && object.upgrade_sequence !== null) {
-      message.upgradeSequence = BigInt(object.upgrade_sequence);
-    }
     return message;
   },
   toAmino(message: Channel): ChannelAmino {
@@ -687,7 +702,6 @@ export const Channel = {
       obj.connection_hops = message.connectionHops;
     }
     obj.version = message.version === "" ? undefined : message.version;
-    obj.upgrade_sequence = message.upgradeSequence !== BigInt(0) ? message.upgradeSequence?.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: ChannelAminoMsg): Channel {
@@ -722,21 +736,20 @@ function createBaseIdentifiedChannel(): IdentifiedChannel {
     connectionHops: [],
     version: "",
     portId: "",
-    channelId: "",
-    upgradeSequence: BigInt(0)
+    channelId: ""
   };
 }
 export const IdentifiedChannel = {
   typeUrl: "/ibc.core.channel.v1.IdentifiedChannel",
   aminoType: "cosmos-sdk/IdentifiedChannel",
   is(o: any): o is IdentifiedChannel {
-    return o && (o.$typeUrl === IdentifiedChannel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.is(o.counterparty) && Array.isArray(o.connectionHops) && (!o.connectionHops.length || typeof o.connectionHops[0] === "string") && typeof o.version === "string" && typeof o.portId === "string" && typeof o.channelId === "string" && typeof o.upgradeSequence === "bigint");
+    return o && (o.$typeUrl === IdentifiedChannel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.is(o.counterparty) && Array.isArray(o.connectionHops) && (!o.connectionHops.length || typeof o.connectionHops[0] === "string") && typeof o.version === "string" && typeof o.portId === "string" && typeof o.channelId === "string");
   },
   isSDK(o: any): o is IdentifiedChannelSDKType {
-    return o && (o.$typeUrl === IdentifiedChannel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.isSDK(o.counterparty) && Array.isArray(o.connection_hops) && (!o.connection_hops.length || typeof o.connection_hops[0] === "string") && typeof o.version === "string" && typeof o.port_id === "string" && typeof o.channel_id === "string" && typeof o.upgrade_sequence === "bigint");
+    return o && (o.$typeUrl === IdentifiedChannel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.isSDK(o.counterparty) && Array.isArray(o.connection_hops) && (!o.connection_hops.length || typeof o.connection_hops[0] === "string") && typeof o.version === "string" && typeof o.port_id === "string" && typeof o.channel_id === "string");
   },
   isAmino(o: any): o is IdentifiedChannelAmino {
-    return o && (o.$typeUrl === IdentifiedChannel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.isAmino(o.counterparty) && Array.isArray(o.connection_hops) && (!o.connection_hops.length || typeof o.connection_hops[0] === "string") && typeof o.version === "string" && typeof o.port_id === "string" && typeof o.channel_id === "string" && typeof o.upgrade_sequence === "bigint");
+    return o && (o.$typeUrl === IdentifiedChannel.typeUrl || isSet(o.state) && isSet(o.ordering) && Counterparty.isAmino(o.counterparty) && Array.isArray(o.connection_hops) && (!o.connection_hops.length || typeof o.connection_hops[0] === "string") && typeof o.version === "string" && typeof o.port_id === "string" && typeof o.channel_id === "string");
   },
   encode(message: IdentifiedChannel, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.state !== 0) {
@@ -759,9 +772,6 @@ export const IdentifiedChannel = {
     }
     if (message.channelId !== "") {
       writer.uint32(58).string(message.channelId);
-    }
-    if (message.upgradeSequence !== BigInt(0)) {
-      writer.uint32(64).uint64(message.upgradeSequence);
     }
     return writer;
   },
@@ -793,9 +803,6 @@ export const IdentifiedChannel = {
         case 7:
           message.channelId = reader.string();
           break;
-        case 8:
-          message.upgradeSequence = reader.uint64();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -812,7 +819,6 @@ export const IdentifiedChannel = {
     message.version = object.version ?? "";
     message.portId = object.portId ?? "";
     message.channelId = object.channelId ?? "";
-    message.upgradeSequence = object.upgradeSequence !== undefined && object.upgradeSequence !== null ? BigInt(object.upgradeSequence.toString()) : BigInt(0);
     return message;
   },
   fromAmino(object: IdentifiedChannelAmino): IdentifiedChannel {
@@ -836,9 +842,6 @@ export const IdentifiedChannel = {
     if (object.channel_id !== undefined && object.channel_id !== null) {
       message.channelId = object.channel_id;
     }
-    if (object.upgrade_sequence !== undefined && object.upgrade_sequence !== null) {
-      message.upgradeSequence = BigInt(object.upgrade_sequence);
-    }
     return message;
   },
   toAmino(message: IdentifiedChannel): IdentifiedChannelAmino {
@@ -854,7 +857,6 @@ export const IdentifiedChannel = {
     obj.version = message.version === "" ? undefined : message.version;
     obj.port_id = message.portId === "" ? undefined : message.portId;
     obj.channel_id = message.channelId === "" ? undefined : message.channelId;
-    obj.upgrade_sequence = message.upgradeSequence !== BigInt(0) ? message.upgradeSequence?.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: IdentifiedChannelAminoMsg): IdentifiedChannel {
@@ -1547,84 +1549,3 @@ export const Timeout = {
 };
 GlobalDecoderRegistry.register(Timeout.typeUrl, Timeout);
 GlobalDecoderRegistry.registerAminoProtoMapping(Timeout.aminoType, Timeout.typeUrl);
-function createBaseParams(): Params {
-  return {
-    upgradeTimeout: Timeout.fromPartial({})
-  };
-}
-export const Params = {
-  typeUrl: "/ibc.core.channel.v1.Params",
-  aminoType: "cosmos-sdk/Params",
-  is(o: any): o is Params {
-    return o && (o.$typeUrl === Params.typeUrl || Timeout.is(o.upgradeTimeout));
-  },
-  isSDK(o: any): o is ParamsSDKType {
-    return o && (o.$typeUrl === Params.typeUrl || Timeout.isSDK(o.upgrade_timeout));
-  },
-  isAmino(o: any): o is ParamsAmino {
-    return o && (o.$typeUrl === Params.typeUrl || Timeout.isAmino(o.upgrade_timeout));
-  },
-  encode(message: Params, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
-    if (message.upgradeTimeout !== undefined) {
-      Timeout.encode(message.upgradeTimeout, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-  decode(input: BinaryReader | Uint8Array, length?: number): Params {
-    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseParams();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.upgradeTimeout = Timeout.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-  fromPartial(object: Partial<Params>): Params {
-    const message = createBaseParams();
-    message.upgradeTimeout = object.upgradeTimeout !== undefined && object.upgradeTimeout !== null ? Timeout.fromPartial(object.upgradeTimeout) : undefined;
-    return message;
-  },
-  fromAmino(object: ParamsAmino): Params {
-    const message = createBaseParams();
-    if (object.upgrade_timeout !== undefined && object.upgrade_timeout !== null) {
-      message.upgradeTimeout = Timeout.fromAmino(object.upgrade_timeout);
-    }
-    return message;
-  },
-  toAmino(message: Params): ParamsAmino {
-    const obj: any = {};
-    obj.upgrade_timeout = message.upgradeTimeout ? Timeout.toAmino(message.upgradeTimeout) : undefined;
-    return obj;
-  },
-  fromAminoMsg(object: ParamsAminoMsg): Params {
-    return Params.fromAmino(object.value);
-  },
-  toAminoMsg(message: Params): ParamsAminoMsg {
-    return {
-      type: "cosmos-sdk/Params",
-      value: Params.toAmino(message)
-    };
-  },
-  fromProtoMsg(message: ParamsProtoMsg): Params {
-    return Params.decode(message.value);
-  },
-  toProto(message: Params): Uint8Array {
-    return Params.encode(message).finish();
-  },
-  toProtoMsg(message: Params): ParamsProtoMsg {
-    return {
-      typeUrl: "/ibc.core.channel.v1.Params",
-      value: Params.encode(message).finish()
-    };
-  }
-};
-GlobalDecoderRegistry.register(Params.typeUrl, Params);
-GlobalDecoderRegistry.registerAminoProtoMapping(Params.aminoType, Params.typeUrl);

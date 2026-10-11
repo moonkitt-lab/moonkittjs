@@ -1,22 +1,14 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryGrantsRequest, QueryGrantsResponse, QueryGranterGrantsRequest, QueryGranterGrantsResponse, QueryGranteeGrantsRequest, QueryGranteeGrantsResponse } from "./query";
+import { QueryGrantsRequest, QueryGrantsResponse, QueryGranterGrantsRequest, QueryGranterGrantsResponse, QueryGranteeGrantsRequest, QueryGranteeGrantsResponse } from "./query.js";
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Returns list of `Authorization`, granted to the grantee by the granter. */
   grants(request: QueryGrantsRequest): Promise<QueryGrantsResponse>;
-  /**
-   * GranterGrants returns list of `GrantAuthorization`, granted by granter.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
+  /** GranterGrants returns list of `GrantAuthorization`, granted by granter. */
   granterGrants(request: QueryGranterGrantsRequest): Promise<QueryGranterGrantsResponse>;
-  /**
-   * GranteeGrants returns a list of `GrantAuthorization` by grantee.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
+  /** GranteeGrants returns a list of `GrantAuthorization` by grantee. */
   granteeGrants(request: QueryGranteeGrantsRequest): Promise<QueryGranteeGrantsResponse>;
 }
 export class QueryClientImpl implements Query {

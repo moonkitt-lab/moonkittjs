@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgCreateValidator, MsgEditValidator, MsgDelegate, MsgBeginRedelegate, MsgUndelegate, MsgCancelUnbondingDelegation, MsgUpdateParams } from "./tx";
+import { MsgCreateValidator, MsgEditValidator, MsgDelegate, MsgBeginRedelegate, MsgUndelegate, MsgCancelUnbondingDelegation, MsgUpdateParams } from "./tx.js";
 export const AminoConverter = {
   "/cosmos.staking.v1beta1.MsgCreateValidator": {
     aminoType: "cosmos-sdk/MsgCreateValidator",

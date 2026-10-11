@@ -1,7 +1,7 @@
-import { Any, AnyProtoMsg, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
-import { isSet, bytesFromBase64, base64FromBytes } from "../../../helpers";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Any, AnyProtoMsg, AnyAmino, AnySDKType } from "../../../google/protobuf/any.js";
+import { isSet, bytesFromBase64, base64FromBytes } from "../../../helpers.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 import { toUtf8, fromUtf8 } from "@cosmjs/encoding";
 /** AccessType permission types */
 export enum AccessType {
@@ -9,11 +9,6 @@ export enum AccessType {
   ACCESS_TYPE_UNSPECIFIED = 0,
   /** ACCESS_TYPE_NOBODY - AccessTypeNobody forbidden */
   ACCESS_TYPE_NOBODY = 1,
-  /**
-   * ACCESS_TYPE_ONLY_ADDRESS - AccessTypeOnlyAddress restricted to a single address
-   * Deprecated: use AccessTypeAnyOfAddresses instead
-   */
-  ACCESS_TYPE_ONLY_ADDRESS = 2,
   /** ACCESS_TYPE_EVERYBODY - AccessTypeEverybody unrestricted */
   ACCESS_TYPE_EVERYBODY = 3,
   /** ACCESS_TYPE_ANY_OF_ADDRESSES - AccessTypeAnyOfAddresses allow any of the addresses */
@@ -30,9 +25,6 @@ export function accessTypeFromJSON(object: any): AccessType {
     case 1:
     case "ACCESS_TYPE_NOBODY":
       return AccessType.ACCESS_TYPE_NOBODY;
-    case 2:
-    case "ACCESS_TYPE_ONLY_ADDRESS":
-      return AccessType.ACCESS_TYPE_ONLY_ADDRESS;
     case 3:
     case "ACCESS_TYPE_EVERYBODY":
       return AccessType.ACCESS_TYPE_EVERYBODY;
@@ -51,8 +43,6 @@ export function accessTypeToJSON(object: AccessType): string {
       return "ACCESS_TYPE_UNSPECIFIED";
     case AccessType.ACCESS_TYPE_NOBODY:
       return "ACCESS_TYPE_NOBODY";
-    case AccessType.ACCESS_TYPE_ONLY_ADDRESS:
-      return "ACCESS_TYPE_ONLY_ADDRESS";
     case AccessType.ACCESS_TYPE_EVERYBODY:
       return "ACCESS_TYPE_EVERYBODY";
     case AccessType.ACCESS_TYPE_ANY_OF_ADDRESSES:
@@ -119,7 +109,12 @@ export interface AccessTypeParamProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.AccessTypeParam";
   value: Uint8Array;
 }
-/** AccessTypeParam */
+/**
+ * AccessTypeParam
+ * @name AccessTypeParamAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.AccessTypeParam
+ */
 export interface AccessTypeParamAmino {
   value?: AccessType;
 }
@@ -134,25 +129,20 @@ export interface AccessTypeParamSDKType {
 /** AccessConfig access control type. */
 export interface AccessConfig {
   permission: AccessType;
-  /**
-   * Address
-   * Deprecated: replaced by addresses
-   */
-  address: string;
   addresses: string[];
 }
 export interface AccessConfigProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.AccessConfig";
   value: Uint8Array;
 }
-/** AccessConfig access control type. */
+/**
+ * AccessConfig access control type.
+ * @name AccessConfigAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.AccessConfig
+ */
 export interface AccessConfigAmino {
   permission?: AccessType;
-  /**
-   * Address
-   * Deprecated: replaced by addresses
-   */
-  address?: string;
   addresses?: string[];
 }
 export interface AccessConfigAminoMsg {
@@ -162,7 +152,6 @@ export interface AccessConfigAminoMsg {
 /** AccessConfig access control type. */
 export interface AccessConfigSDKType {
   permission: AccessType;
-  address: string;
   addresses: string[];
 }
 /** Params defines the set of wasm parameters. */
@@ -174,9 +163,14 @@ export interface ParamsProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.Params";
   value: Uint8Array;
 }
-/** Params defines the set of wasm parameters. */
+/**
+ * Params defines the set of wasm parameters.
+ * @name ParamsAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.Params
+ */
 export interface ParamsAmino {
-  code_upload_access?: AccessConfigAmino;
+  code_upload_access: AccessConfigAmino;
   instantiate_default_permission?: AccessType;
 }
 export interface ParamsAminoMsg {
@@ -201,14 +195,25 @@ export interface CodeInfoProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.CodeInfo";
   value: Uint8Array;
 }
-/** CodeInfo is data for the uploaded contract WASM code */
+/**
+ * CodeInfo is data for the uploaded contract WASM code
+ * @name CodeInfoAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.CodeInfo
+ */
 export interface CodeInfoAmino {
-  /** CodeHash is the unique identifier created by wasmvm */
+  /**
+   * CodeHash is the unique identifier created by wasmvm
+   */
   code_hash?: string;
-  /** Creator address who initially stored the code */
+  /**
+   * Creator address who initially stored the code
+   */
   creator?: string;
-  /** InstantiateConfig access control to apply on contract creation, optional */
-  instantiate_config?: AccessConfigAmino;
+  /**
+   * InstantiateConfig access control to apply on contract creation, optional
+   */
+  instantiate_config: AccessConfigAmino;
 }
 export interface CodeInfoAminoMsg {
   type: "wasm/CodeInfo";
@@ -250,17 +255,32 @@ export type ContractInfoEncoded = Omit<ContractInfo, "extension"> & {
    */
   extension?: AnyProtoMsg | undefined;
 };
-/** ContractInfo stores a WASM contract instance */
+/**
+ * ContractInfo stores a WASM contract instance
+ * @name ContractInfoAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.ContractInfo
+ */
 export interface ContractInfoAmino {
-  /** CodeID is the reference to the stored Wasm code */
+  /**
+   * CodeID is the reference to the stored Wasm code
+   */
   code_id?: string;
-  /** Creator address who initially instantiated the contract */
+  /**
+   * Creator address who initially instantiated the contract
+   */
   creator?: string;
-  /** Admin is an optional address that can execute migrations */
+  /**
+   * Admin is an optional address that can execute migrations
+   */
   admin?: string;
-  /** Label is optional metadata to be stored with a contract instance. */
+  /**
+   * Label is optional metadata to be stored with a contract instance.
+   */
   label?: string;
-  /** Created Tx position when the contract was instantiated. */
+  /**
+   * Created Tx position when the contract was instantiated.
+   */
   created?: AbsoluteTxPositionAmino;
   ibc_port_id?: string;
   /**
@@ -296,12 +316,21 @@ export interface ContractCodeHistoryEntryProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.ContractCodeHistoryEntry";
   value: Uint8Array;
 }
-/** ContractCodeHistoryEntry metadata to a contract. */
+/**
+ * ContractCodeHistoryEntry metadata to a contract.
+ * @name ContractCodeHistoryEntryAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.ContractCodeHistoryEntry
+ */
 export interface ContractCodeHistoryEntryAmino {
   operation?: ContractCodeHistoryOperationType;
-  /** CodeID is the reference to the stored WASM code */
+  /**
+   * CodeID is the reference to the stored WASM code
+   */
   code_id?: string;
-  /** Updated Tx position when the operation was executed. */
+  /**
+   * Updated Tx position when the operation was executed.
+   */
   updated?: AbsoluteTxPositionAmino;
   msg?: any;
 }
@@ -336,9 +365,14 @@ export interface AbsoluteTxPositionProtoMsg {
 /**
  * AbsoluteTxPosition is a unique transaction position that allows for global
  * ordering of transactions.
+ * @name AbsoluteTxPositionAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.AbsoluteTxPosition
  */
 export interface AbsoluteTxPositionAmino {
-  /** BlockHeight is the block the contract was created at */
+  /**
+   * BlockHeight is the block the contract was created at
+   */
   block_height?: string;
   /**
    * TxIndex is a monotonic counter within the block (actual transaction index,
@@ -369,11 +403,20 @@ export interface ModelProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.Model";
   value: Uint8Array;
 }
-/** Model is a struct that holds a KV pair */
+/**
+ * Model is a struct that holds a KV pair
+ * @name ModelAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.Model
+ */
 export interface ModelAmino {
-  /** hex-encode key to read it better (this is often ascii) */
+  /**
+   * hex-encode key to read it better (this is often ascii)
+   */
   key?: string;
-  /** base64-encode raw value */
+  /**
+   * base64-encode raw value
+   */
   value?: string;
 }
 export interface ModelAminoMsg {
@@ -469,7 +512,6 @@ GlobalDecoderRegistry.registerAminoProtoMapping(AccessTypeParam.aminoType, Acces
 function createBaseAccessConfig(): AccessConfig {
   return {
     permission: 0,
-    address: "",
     addresses: []
   };
 }
@@ -477,20 +519,17 @@ export const AccessConfig = {
   typeUrl: "/cosmwasm.wasm.v1.AccessConfig",
   aminoType: "wasm/AccessConfig",
   is(o: any): o is AccessConfig {
-    return o && (o.$typeUrl === AccessConfig.typeUrl || isSet(o.permission) && typeof o.address === "string" && Array.isArray(o.addresses) && (!o.addresses.length || typeof o.addresses[0] === "string"));
+    return o && (o.$typeUrl === AccessConfig.typeUrl || isSet(o.permission) && Array.isArray(o.addresses) && (!o.addresses.length || typeof o.addresses[0] === "string"));
   },
   isSDK(o: any): o is AccessConfigSDKType {
-    return o && (o.$typeUrl === AccessConfig.typeUrl || isSet(o.permission) && typeof o.address === "string" && Array.isArray(o.addresses) && (!o.addresses.length || typeof o.addresses[0] === "string"));
+    return o && (o.$typeUrl === AccessConfig.typeUrl || isSet(o.permission) && Array.isArray(o.addresses) && (!o.addresses.length || typeof o.addresses[0] === "string"));
   },
   isAmino(o: any): o is AccessConfigAmino {
-    return o && (o.$typeUrl === AccessConfig.typeUrl || isSet(o.permission) && typeof o.address === "string" && Array.isArray(o.addresses) && (!o.addresses.length || typeof o.addresses[0] === "string"));
+    return o && (o.$typeUrl === AccessConfig.typeUrl || isSet(o.permission) && Array.isArray(o.addresses) && (!o.addresses.length || typeof o.addresses[0] === "string"));
   },
   encode(message: AccessConfig, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.permission !== 0) {
       writer.uint32(8).int32(message.permission);
-    }
-    if (message.address !== "") {
-      writer.uint32(18).string(message.address);
     }
     for (const v of message.addresses) {
       writer.uint32(26).string(v!);
@@ -507,9 +546,6 @@ export const AccessConfig = {
         case 1:
           message.permission = reader.int32() as any;
           break;
-        case 2:
-          message.address = reader.string();
-          break;
         case 3:
           message.addresses.push(reader.string());
           break;
@@ -523,7 +559,6 @@ export const AccessConfig = {
   fromPartial(object: Partial<AccessConfig>): AccessConfig {
     const message = createBaseAccessConfig();
     message.permission = object.permission ?? 0;
-    message.address = object.address ?? "";
     message.addresses = object.addresses?.map(e => e) || [];
     return message;
   },
@@ -532,16 +567,12 @@ export const AccessConfig = {
     if (object.permission !== undefined && object.permission !== null) {
       message.permission = object.permission;
     }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
-    }
     message.addresses = object.addresses?.map(e => e) || [];
     return message;
   },
   toAmino(message: AccessConfig): AccessConfigAmino {
     const obj: any = {};
     obj.permission = message.permission === 0 ? undefined : message.permission;
-    obj.address = message.address === "" ? undefined : message.address;
     if (message.addresses) {
       obj.addresses = message.addresses.map(e => e);
     } else {
@@ -638,7 +669,7 @@ export const Params = {
   },
   toAmino(message: Params): ParamsAmino {
     const obj: any = {};
-    obj.code_upload_access = message.codeUploadAccess ? AccessConfig.toAmino(message.codeUploadAccess) : undefined;
+    obj.code_upload_access = message.codeUploadAccess ? AccessConfig.toAmino(message.codeUploadAccess) : AccessConfig.toAmino(AccessConfig.fromPartial({}));
     obj.instantiate_default_permission = message.instantiateDefaultPermission === 0 ? undefined : message.instantiateDefaultPermission;
     return obj;
   },
@@ -744,7 +775,7 @@ export const CodeInfo = {
     const obj: any = {};
     obj.code_hash = message.codeHash ? base64FromBytes(message.codeHash) : undefined;
     obj.creator = message.creator === "" ? undefined : message.creator;
-    obj.instantiate_config = message.instantiateConfig ? AccessConfig.toAmino(message.instantiateConfig) : undefined;
+    obj.instantiate_config = message.instantiateConfig ? AccessConfig.toAmino(message.instantiateConfig) : AccessConfig.toAmino(AccessConfig.fromPartial({}));
     return obj;
   },
   fromAminoMsg(object: CodeInfoAminoMsg): CodeInfo {

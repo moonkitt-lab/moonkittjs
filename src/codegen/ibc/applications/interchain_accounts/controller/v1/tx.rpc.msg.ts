@@ -1,6 +1,6 @@
-import { Rpc } from "../../../../../helpers";
-import { BinaryReader } from "../../../../../binary";
-import { MsgRegisterInterchainAccount, MsgRegisterInterchainAccountResponse, MsgSendTx, MsgSendTxResponse, MsgUpdateParams, MsgUpdateParamsResponse } from "./tx";
+import { Rpc } from "../../../../../helpers.js";
+import { BinaryReader } from "../../../../../binary.js";
+import { MsgRegisterInterchainAccount, MsgRegisterInterchainAccountResponse, MsgSendTx, MsgSendTxResponse, MsgUpdateParams, MsgUpdateParamsResponse } from "./tx.js";
 /** Msg defines the 27-interchain-accounts/controller Msg service. */
 export interface Msg {
   /** RegisterInterchainAccount defines a rpc handler for MsgRegisterInterchainAccount. */

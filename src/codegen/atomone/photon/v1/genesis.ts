@@ -1,6 +1,6 @@
-import { Params, ParamsAmino, ParamsSDKType } from "./photon";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Params, ParamsAmino, ParamsSDKType } from "./photon.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** GenesisState defines the x/photon module's genesis state. */
 export interface GenesisState {
   params: Params;
@@ -9,7 +9,12 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/atomone.photon.v1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the x/photon module's genesis state. */
+/**
+ * GenesisState defines the x/photon module's genesis state.
+ * @name GenesisStateAmino
+ * @package atomone.photon.v1
+ * @see proto type: atomone.photon.v1.GenesisState
+ */
 export interface GenesisStateAmino {
   params: ParamsAmino;
 }

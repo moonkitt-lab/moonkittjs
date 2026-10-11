@@ -1,6 +1,6 @@
-import { setPaginationParams } from "../../../helpers";
+import { setPaginationParams } from "../../../helpers.js";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryContractInfoRequest, QueryContractInfoResponseSDKType, QueryContractHistoryRequest, QueryContractHistoryResponseSDKType, QueryContractsByCodeRequest, QueryContractsByCodeResponseSDKType, QueryAllContractStateRequest, QueryAllContractStateResponseSDKType, QueryRawContractStateRequest, QueryRawContractStateResponseSDKType, QuerySmartContractStateRequest, QuerySmartContractStateResponseSDKType, QueryCodeRequest, QueryCodeResponseSDKType, QueryCodesRequest, QueryCodesResponseSDKType, QueryPinnedCodesRequest, QueryPinnedCodesResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryContractsByCreatorRequest, QueryContractsByCreatorResponseSDKType } from "./query";
+import { QueryContractInfoRequest, QueryContractInfoResponseSDKType, QueryContractHistoryRequest, QueryContractHistoryResponseSDKType, QueryContractsByCodeRequest, QueryContractsByCodeResponseSDKType, QueryAllContractStateRequest, QueryAllContractStateResponseSDKType, QueryRawContractStateRequest, QueryRawContractStateResponseSDKType, QuerySmartContractStateRequest, QuerySmartContractStateResponseSDKType, QueryCodeRequest, QueryCodeResponseSDKType, QueryCodesRequest, QueryCodesResponseSDKType, QueryCodeInfoRequest, QueryCodeInfoResponseSDKType, QueryPinnedCodesRequest, QueryPinnedCodesResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryContractsByCreatorRequest, QueryContractsByCreatorResponseSDKType, QueryWasmLimitsConfigRequest, QueryWasmLimitsConfigResponseSDKType, QueryBuildAddressRequest, QueryBuildAddressResponseSDKType } from "./query.js";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -17,9 +17,12 @@ export class LCDQueryClient {
     this.smartContractState = this.smartContractState.bind(this);
     this.code = this.code.bind(this);
     this.codes = this.codes.bind(this);
+    this.codeInfo = this.codeInfo.bind(this);
     this.pinnedCodes = this.pinnedCodes.bind(this);
     this.params = this.params.bind(this);
     this.contractsByCreator = this.contractsByCreator.bind(this);
+    this.wasmLimitsConfig = this.wasmLimitsConfig.bind(this);
+    this.buildAddress = this.buildAddress.bind(this);
   }
   /* ContractInfo gets the contract meta data */
   async contractInfo(params: QueryContractInfoRequest): Promise<QueryContractInfoResponseSDKType> {
@@ -69,7 +72,7 @@ export class LCDQueryClient {
     const endpoint = `cosmwasm/wasm/v1/contract/${params.address}/smart/${params.queryData}`;
     return await this.req.get<QuerySmartContractStateResponseSDKType>(endpoint);
   }
-  /* Code gets the binary code and metadata for a singe wasm code */
+  /* Code gets the binary code and metadata for a single wasm code */
   async code(params: QueryCodeRequest): Promise<QueryCodeResponseSDKType> {
     const endpoint = `cosmwasm/wasm/v1/code/${params.codeId}`;
     return await this.req.get<QueryCodeResponseSDKType>(endpoint);
@@ -86,6 +89,11 @@ export class LCDQueryClient {
     }
     const endpoint = `cosmwasm/wasm/v1/code`;
     return await this.req.get<QueryCodesResponseSDKType>(endpoint, options);
+  }
+  /* CodeInfo gets the metadata for a single wasm code */
+  async codeInfo(params: QueryCodeInfoRequest): Promise<QueryCodeInfoResponseSDKType> {
+    const endpoint = `cosmwasm/wasm/v1/code-info/${params.codeId}`;
+    return await this.req.get<QueryCodeInfoResponseSDKType>(endpoint);
   }
   /* PinnedCodes gets the pinned code ids */
   async pinnedCodes(params: QueryPinnedCodesRequest = {
@@ -115,5 +123,31 @@ export class LCDQueryClient {
     }
     const endpoint = `cosmwasm/wasm/v1/contracts/creator/${params.creatorAddress}`;
     return await this.req.get<QueryContractsByCreatorResponseSDKType>(endpoint, options);
+  }
+  /* WasmLimitsConfig gets the configured limits for static validation of Wasm
+   files, encoded in JSON. */
+  async wasmLimitsConfig(_params: QueryWasmLimitsConfigRequest = {}): Promise<QueryWasmLimitsConfigResponseSDKType> {
+    const endpoint = `cosmwasm/wasm/v1/wasm-limits-config`;
+    return await this.req.get<QueryWasmLimitsConfigResponseSDKType>(endpoint);
+  }
+  /* BuildAddress builds a contract address */
+  async buildAddress(params: QueryBuildAddressRequest): Promise<QueryBuildAddressResponseSDKType> {
+    const options: any = {
+      params: {}
+    };
+    if (typeof params?.codeHash !== "undefined") {
+      options.params.code_hash = params.codeHash;
+    }
+    if (typeof params?.creatorAddress !== "undefined") {
+      options.params.creator_address = params.creatorAddress;
+    }
+    if (typeof params?.salt !== "undefined") {
+      options.params.salt = params.salt;
+    }
+    if (typeof params?.initArgs !== "undefined") {
+      options.params.init_args = params.initArgs;
+    }
+    const endpoint = `cosmwasm/wasm/v1/contract/build_address`;
+    return await this.req.get<QueryBuildAddressResponseSDKType>(endpoint, options);
   }
 }

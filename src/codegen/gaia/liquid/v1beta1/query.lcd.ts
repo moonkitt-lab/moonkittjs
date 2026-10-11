@@ -1,6 +1,6 @@
-import { setPaginationParams } from "../../../helpers";
+import { setPaginationParams } from "../../../helpers.js";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryLiquidValidatorRequest, QueryLiquidValidatorResponseSDKType, QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponseSDKType, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponseSDKType, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponseSDKType, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponseSDKType, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponseSDKType, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponseSDKType, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponseSDKType, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryTokenizeShareRecordRewardRequest, QueryTokenizeShareRecordRewardResponseSDKType } from "./query";
+import { QueryLiquidValidatorsRequest, QueryLiquidValidatorsResponseSDKType, QueryLiquidValidatorRequest, QueryLiquidValidatorResponseSDKType, QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponseSDKType, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponseSDKType, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponseSDKType, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponseSDKType, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponseSDKType, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponseSDKType, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponseSDKType, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryTokenizeShareRecordRewardRequest, QueryTokenizeShareRecordRewardResponseSDKType } from "./query.js";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -9,6 +9,7 @@ export class LCDQueryClient {
     requestClient: LCDClient;
   }) {
     this.req = requestClient;
+    this.liquidValidators = this.liquidValidators.bind(this);
     this.liquidValidator = this.liquidValidator.bind(this);
     this.tokenizeShareRecordById = this.tokenizeShareRecordById.bind(this);
     this.tokenizeShareRecordByDenom = this.tokenizeShareRecordByDenom.bind(this);
@@ -20,6 +21,22 @@ export class LCDQueryClient {
     this.tokenizeShareLockInfo = this.tokenizeShareLockInfo.bind(this);
     this.params = this.params.bind(this);
     this.tokenizeShareRecordReward = this.tokenizeShareRecordReward.bind(this);
+  }
+  /* LiquidValidators queries all liquid validators.
+  
+   When called from another module, this query might consume a high amount of
+   gas if the pagination field is incorrectly set. */
+  async liquidValidators(params: QueryLiquidValidatorsRequest = {
+    pagination: undefined
+  }): Promise<QueryLiquidValidatorsResponseSDKType> {
+    const options: any = {
+      params: {}
+    };
+    if (typeof params?.pagination !== "undefined") {
+      setPaginationParams(options, params.pagination);
+    }
+    const endpoint = `gaia/liquid/v1beta1/liquid_validators`;
+    return await this.req.get<QueryLiquidValidatorsResponseSDKType>(endpoint, options);
   }
   /* Query for an individual liquid validator by validator address */
   async liquidValidator(params: QueryLiquidValidatorRequest): Promise<QueryLiquidValidatorResponseSDKType> {

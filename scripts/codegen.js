@@ -1,35 +1,20 @@
-// To be run with "yarn codegen"
+// To be run with "npm run codegen"
 
-// When we want to update a proto folder for a new version, we need to run:
-/**
- * git config -f .gitmodules submodule.cosmos-sdk.branch "v0.50.11-lsm"
- * cd cosmos
- * git fetch --tags
- * git checkout v0.50.11-lsm
- * cd ..
- * git add cosmos
- * git commit -m "Update cosmos-sdk submodule to v0.50.11-lsm"
- */
-
-// When we want to add a proto folder, we need to run:
-/**
- * git submodule add git@github.com:atomone-hub/atomone.git
- * cd atomone
- * git fetch --tags
- * git checkout v2.0.0-rc1
- * git sparse-checkout init
- * git sparse-checkout set proto
- * cd ..
- * git add .gitmodules atomone
- * git commit -m "Add atomone submodule at tag v2.0.0-rc1 with proto directory"
- */
+// The proto sources are git submodules (cosmos, ibc-go, ics23, atomone, gaia),
+// checked out sparsely (proto/ only), plus the vendored files in proto/.
+//   - after cloning the repo:      ./scripts/setup-proto.sh
+//   - to move to another version:  edit the refs in ./scripts/update-proto.sh, run it,
+//                                  update the branches in .gitmodules, then commit
+// The versions to use are the ones the gaia release pins in its go.mod.
 
 const { join } = require('path');
+const { cpSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } = require('fs');
+const { tmpdir } = require('os');
 const telescope = require('@cosmology/telescope').default;
 const rimraf = require('rimraf').rimrafSync;
 const { AMINO_MAP } = require('./aminos');
 
-const protoDirs = [
+const sourceProtoDirs = [
   join(__dirname, '/../proto'),
   join(__dirname, '/../cosmos/proto'),
   join(__dirname, '/../ics23/proto'),
@@ -37,13 +22,49 @@ const protoDirs = [
   join(__dirname, '/../atomone/proto'),
   join(__dirname, '/../gaia/proto'),
 ];
+
+// The telescope proto parser rejects empty statements (a lone ";"), which are
+// valid protobuf and present in cosmos-sdk v0.53 (cosmos/gov/v1). The protos
+// are staged in a temp directory and cleaned there, so the submodules stay
+// untouched.
+const stageProtoDir = (dir, index) => {
+  const staged = join(stagingRoot, String(index));
+  cpSync(dir, staged, { recursive: true });
+  for (const entry of readdirSync(staged, { recursive: true })) {
+    if (!entry.endsWith('.proto')) continue;
+    const file = join(staged, entry);
+    const content = readFileSync(file, 'utf8');
+    const cleaned = content.replace(/^[ \t]*;[ \t]*\r?\n/gm, '');
+    if (cleaned !== content) writeFileSync(file, cleaned);
+  }
+  return staged;
+};
+const stagingRoot = mkdtempSync(join(tmpdir(), 'moonkittjs-proto-'));
+const protoDirs = sourceProtoDirs.map(stageProtoDir);
 const outPath = join(__dirname, '../src/codegen');
 rimraf(outPath);
+
+// Fixes applied to the telescope output so that it runs unchanged in browsers
+// and Cloudflare Workers (no Node-only globals).
+const patchGeneratedCode = () => {
+  const helpers = join(outPath, 'helpers.ts');
+  const content = readFileSync(helpers, 'utf8');
+  const patched = content.replace(
+    /Buffer\.from\(pagination\.key\)\.toString\(\s*'base64'\s*\)/,
+    'base64FromBytes(pagination.key)'
+  );
+  if (patched === content) {
+    throw new Error('patchGeneratedCode: helpers.ts no longer matches, review the patch');
+  }
+  writeFileSync(helpers, patched);
+};
 
 telescope({
   protoDirs,
   outPath,
   options: {
+    // explicit extensions so that the ESM build is valid for Node, Vite and Workers
+    restoreImportExtension: '.js',
     tsDisable: {
       files: [
         'cosmos/authz/v1beta1/tx.amino.ts',
@@ -74,19 +95,23 @@ telescope({
           'cosmos.base.reflection.v1beta1',
           'cosmos.base.snapshots.v1beta1',
           'cosmos.base.store.v1beta1',
-          'cosmos.base.tendermint.v1beta1',
           'cosmos.crisis.v1beta1',
           'cosmos.evidence.v1beta1',
           'cosmos.genutil.v1beta1',
 
           'cosmos.autocli.v1',
 
+          // test-only modules of the cosmos-sdk repo
+          'cosmos.benchmark.v1',
+          'cosmos.benchmark.module.v1',
+          'cosmos.counter.v1',
+          'cosmos.counter.module.v1',
+
           'cosmos.msg.v1',
           'cosmos.nft.v1beta1',
           'cosmos.capability.v1beta1',
           'cosmos.orm.v1alpha1',
           'cosmos.orm.v1',
-          'cosmos.slashing.v1beta1',
           'google.api',
           'ibc.core.port.v1',
           'ibc.core.types.v1'
@@ -126,11 +151,15 @@ telescope({
     },
     rpcClients: {
       enabled: true,
-      camelCase: true
+      camelCase: true,
+      // cosmjs >= 0.38 removed Tendermint34Client: connect through connectComet
+      useConnectComet: true
     }
   }
 })
   .then(() => {
+    rimraf(stagingRoot);
+    patchGeneratedCode();
     console.log('✨ all done!');
   })
   .catch((e) => {

@@ -1,7 +1,7 @@
-import { DecCoin, DecCoinAmino, DecCoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { BinaryReader, BinaryWriter } from "../../../binary";
+import { DecCoin, DecCoinAmino, DecCoinSDKType } from "../../../cosmos/base/v1beta1/coin.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
 import { Decimal } from "@cosmjs/math";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /**
  * TokenizeShareLockStatus indicates whether the address is able to tokenize
  * shares
@@ -74,7 +74,12 @@ export interface ParamsProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.Params";
   value: Uint8Array;
 }
-/** Params defines the parameters for the x/liquid module. */
+/**
+ * Params defines the parameters for the x/liquid module.
+ * @name ParamsAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.Params
+ */
 export interface ParamsAmino {
   /**
    * global_liquid_staking_cap represents a cap on the portion of stake that
@@ -109,13 +114,22 @@ export interface TokenizeShareRecordProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.TokenizeShareRecord";
   value: Uint8Array;
 }
-/** TokenizeShareRecord represents a tokenized delegation */
+/**
+ * TokenizeShareRecord represents a tokenized delegation
+ * @name TokenizeShareRecordAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.TokenizeShareRecord
+ */
 export interface TokenizeShareRecordAmino {
   id?: string;
   owner?: string;
-  /** module account take the role of delegator */
+  /**
+   * module account take the role of delegator
+   */
   module_account?: string;
-  /** validator delegated to for tokenize share record creation */
+  /**
+   * validator delegated to for tokenize share record creation
+   */
   validator?: string;
 }
 export interface TokenizeShareRecordAminoMsg {
@@ -143,6 +157,9 @@ export interface PendingTokenizeShareAuthorizationsProtoMsg {
 /**
  * PendingTokenizeShareAuthorizations stores a list of addresses that have their
  * tokenize share enablement in progress
+ * @name PendingTokenizeShareAuthorizationsAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.PendingTokenizeShareAuthorizations
  */
 export interface PendingTokenizeShareAuthorizationsAmino {
   addresses?: string[];
@@ -167,7 +184,12 @@ export interface TokenizeShareRecordRewardProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.TokenizeShareRecordReward";
   value: Uint8Array;
 }
-/** TokenizeShareRecordReward represents the properties of tokenize share */
+/**
+ * TokenizeShareRecordReward represents the properties of tokenize share
+ * @name TokenizeShareRecordRewardAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.TokenizeShareRecordReward
+ */
 export interface TokenizeShareRecordRewardAmino {
   record_id?: string;
   reward?: DecCoinAmino[];
@@ -201,6 +223,9 @@ export interface LiquidValidatorProtoMsg {
 /**
  * LiquidValidator is the storage layout for details about a validator's liquid
  * stake.
+ * @name LiquidValidatorAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.LiquidValidator
  */
 export interface LiquidValidatorAmino {
   /**
@@ -208,7 +233,9 @@ export interface LiquidValidatorAmino {
    * encoded in JSON.
    */
   operator_address?: string;
-  /** Number of shares either tokenized or owned by a liquid staking provider */
+  /**
+   * Number of shares either tokenized or owned by a liquid staking provider
+   */
   liquid_shares?: string;
 }
 export interface LiquidValidatorAminoMsg {

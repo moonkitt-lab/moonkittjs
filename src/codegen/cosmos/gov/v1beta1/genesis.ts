@@ -1,6 +1,6 @@
-import { Deposit, DepositAmino, DepositSDKType, Vote, VoteAmino, VoteSDKType, Proposal, ProposalAmino, ProposalSDKType, DepositParams, DepositParamsAmino, DepositParamsSDKType, VotingParams, VotingParamsAmino, VotingParamsSDKType, TallyParams, TallyParamsAmino, TallyParamsSDKType } from "./gov";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Deposit, DepositAmino, DepositSDKType, Vote, VoteAmino, VoteSDKType, Proposal, ProposalAmino, ProposalSDKType, DepositParams, DepositParamsAmino, DepositParamsSDKType, VotingParams, VotingParamsAmino, VotingParamsSDKType, TallyParams, TallyParamsAmino, TallyParamsSDKType } from "./gov.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** GenesisState defines the gov module's genesis state. */
 export interface GenesisState {
   /** starting_proposal_id is the ID of the starting proposal. */
@@ -22,21 +22,40 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.gov.v1beta1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the gov module's genesis state. */
+/**
+ * GenesisState defines the gov module's genesis state.
+ * @name GenesisStateAmino
+ * @package cosmos.gov.v1beta1
+ * @see proto type: cosmos.gov.v1beta1.GenesisState
+ */
 export interface GenesisStateAmino {
-  /** starting_proposal_id is the ID of the starting proposal. */
+  /**
+   * starting_proposal_id is the ID of the starting proposal.
+   */
   starting_proposal_id?: string;
-  /** deposits defines all the deposits present at genesis. */
+  /**
+   * deposits defines all the deposits present at genesis.
+   */
   deposits: DepositAmino[];
-  /** votes defines all the votes present at genesis. */
+  /**
+   * votes defines all the votes present at genesis.
+   */
   votes: VoteAmino[];
-  /** proposals defines all the proposals present at genesis. */
+  /**
+   * proposals defines all the proposals present at genesis.
+   */
   proposals: ProposalAmino[];
-  /** deposit_params defines all the parameters related to deposit. */
+  /**
+   * deposit_params defines all the parameters related to deposit.
+   */
   deposit_params: DepositParamsAmino;
-  /** voting_params defines all the parameters related to voting. */
+  /**
+   * voting_params defines all the parameters related to voting.
+   */
   voting_params: VotingParamsAmino;
-  /** tally_params defines all the parameters related to tally. */
+  /**
+   * tally_params defines all the parameters related to tally.
+   */
   tally_params: TallyParamsAmino;
 }
 export interface GenesisStateAminoMsg {

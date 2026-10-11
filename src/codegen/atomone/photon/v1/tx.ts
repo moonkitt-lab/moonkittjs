@@ -1,7 +1,7 @@
-import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { Params, ParamsAmino, ParamsSDKType } from "./photon";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin.js";
+import { Params, ParamsAmino, ParamsSDKType } from "./photon.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** MsgMintPhoton defines an sdk.Msg for burning atone and minting photons. */
 export interface MsgMintPhoton {
   toAddress: string;
@@ -11,7 +11,12 @@ export interface MsgMintPhotonProtoMsg {
   typeUrl: "/atomone.photon.v1.MsgMintPhoton";
   value: Uint8Array;
 }
-/** MsgMintPhoton defines an sdk.Msg for burning atone and minting photons. */
+/**
+ * MsgMintPhoton defines an sdk.Msg for burning atone and minting photons.
+ * @name MsgMintPhotonAmino
+ * @package atomone.photon.v1
+ * @see proto type: atomone.photon.v1.MsgMintPhoton
+ */
 export interface MsgMintPhotonAmino {
   to_address?: string;
   amount: CoinAmino;
@@ -34,9 +39,16 @@ export interface MsgMintPhotonResponseProtoMsg {
   typeUrl: "/atomone.photon.v1.MsgMintPhotonResponse";
   value: Uint8Array;
 }
+/**
+ * @name MsgMintPhotonResponseAmino
+ * @package atomone.photon.v1
+ * @see proto type: atomone.photon.v1.MsgMintPhotonResponse
+ */
 export interface MsgMintPhotonResponseAmino {
   minted: CoinAmino;
-  /** conversion_rate represents the factor used to convert atone to photon. */
+  /**
+   * conversion_rate represents the factor used to convert atone to photon.
+   */
   conversion_rate?: string;
 }
 export interface MsgMintPhotonResponseAminoMsg {
@@ -65,7 +77,12 @@ export interface MsgUpdateParamsProtoMsg {
   typeUrl: "/atomone.photon.v1.MsgUpdateParams";
   value: Uint8Array;
 }
-/** MsgUpdateParams is the Msg/UpdateParams request type. */
+/**
+ * MsgUpdateParams is the Msg/UpdateParams request type.
+ * @name MsgUpdateParamsAmino
+ * @package atomone.photon.v1
+ * @see proto type: atomone.photon.v1.MsgUpdateParams
+ */
 export interface MsgUpdateParamsAmino {
   /**
    * authority is the address that controls the module (defaults to x/gov unless
@@ -100,6 +117,9 @@ export interface MsgUpdateParamsResponseProtoMsg {
 /**
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
+ * @name MsgUpdateParamsResponseAmino
+ * @package atomone.photon.v1
+ * @see proto type: atomone.photon.v1.MsgUpdateParamsResponse
  */
 export interface MsgUpdateParamsResponseAmino {}
 export interface MsgUpdateParamsResponseAminoMsg {

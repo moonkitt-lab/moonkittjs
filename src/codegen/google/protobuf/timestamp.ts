@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from "../../binary";
-import { fromJsonTimestamp, fromTimestamp } from "../../helpers";
-import { GlobalDecoderRegistry } from "../../registry";
+import { BinaryReader, BinaryWriter } from "../../binary.js";
+import { fromJsonTimestamp, fromTimestamp } from "../../helpers.js";
+import { GlobalDecoderRegistry } from "../../registry.js";
 /**
  * A Timestamp represents a point in time independent of any time zone or local
  * calendar, encoded as a count of seconds and fractions of seconds at
@@ -187,6 +187,9 @@ export interface TimestampProtoMsg {
  * the Joda Time's [`ISODateTimeFormat.dateTime()`](
  * http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D
  * ) to obtain a formatter capable of generating timestamps in this format.
+ * @name TimestampAmino
+ * @package google.protobuf
+ * @see proto type: google.protobuf.Timestamp
  */
 export type TimestampAmino = string;
 export interface TimestampAminoMsg {

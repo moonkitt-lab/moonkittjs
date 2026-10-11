@@ -1,5 +1,5 @@
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** Params defines the parameters for the x/photon module. */
 export interface Params {
   /** Allow to mint photon or not */
@@ -15,9 +15,16 @@ export interface ParamsProtoMsg {
   typeUrl: "/atomone.photon.v1.Params";
   value: Uint8Array;
 }
-/** Params defines the parameters for the x/photon module. */
+/**
+ * Params defines the parameters for the x/photon module.
+ * @name ParamsAmino
+ * @package atomone.photon.v1
+ * @see proto type: atomone.photon.v1.Params
+ */
 export interface ParamsAmino {
-  /** Allow to mint photon or not */
+  /**
+   * Allow to mint photon or not
+   */
   mint_disabled?: boolean;
   /**
    * tx_fee_exceptions holds the msg type urls that are allowed to use some

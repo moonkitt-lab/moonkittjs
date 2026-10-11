@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
 /** GenesisState defines 08-wasm's keeper genesis state */
 export interface GenesisState {
   /** uploaded light client wasm contracts */
@@ -10,9 +10,16 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines 08-wasm's keeper genesis state */
+/**
+ * GenesisState defines 08-wasm's keeper genesis state
+ * @name GenesisStateAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.GenesisState
+ */
 export interface GenesisStateAmino {
-  /** uploaded light client wasm contracts */
+  /**
+   * uploaded light client wasm contracts
+   */
   contracts?: ContractAmino[];
 }
 export interface GenesisStateAminoMsg {
@@ -32,9 +39,16 @@ export interface ContractProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.Contract";
   value: Uint8Array;
 }
-/** Contract stores contract code */
+/**
+ * Contract stores contract code
+ * @name ContractAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.Contract
+ */
 export interface ContractAmino {
-  /** contract byte code */
+  /**
+   * contract byte code
+   */
   code_bytes?: string;
 }
 export interface ContractAminoMsg {

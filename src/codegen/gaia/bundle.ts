@@ -1,42 +1,42 @@
-import * as _182 from "./liquid/module/v1/module";
-import * as _183 from "./liquid/v1beta1/genesis";
-import * as _184 from "./liquid/v1beta1/liquid";
-import * as _185 from "./liquid/v1beta1/query";
-import * as _186 from "./liquid/v1beta1/tx";
-import * as _187 from "./metaprotocols/extensions";
-import * as _318 from "./liquid/v1beta1/tx.amino";
-import * as _319 from "./liquid/v1beta1/tx.registry";
-import * as _320 from "./liquid/v1beta1/query.lcd";
-import * as _321 from "./liquid/v1beta1/query.rpc.Query";
-import * as _322 from "./liquid/v1beta1/tx.rpc.msg";
-import * as _335 from "./lcd";
-import * as _336 from "./rpc.query";
-import * as _337 from "./rpc.tx";
+import * as _203 from "./liquid/module/v1/module.js";
+import * as _204 from "./liquid/v1beta1/genesis.js";
+import * as _205 from "./liquid/v1beta1/liquid.js";
+import * as _206 from "./liquid/v1beta1/query.js";
+import * as _207 from "./liquid/v1beta1/tx.js";
+import * as _208 from "./metaprotocols/extensions.js";
+import * as _362 from "./liquid/v1beta1/tx.amino.js";
+import * as _363 from "./liquid/v1beta1/tx.registry.js";
+import * as _364 from "./liquid/v1beta1/query.lcd.js";
+import * as _365 from "./liquid/v1beta1/query.rpc.Query.js";
+import * as _366 from "./liquid/v1beta1/tx.rpc.msg.js";
+import * as _379 from "./lcd.js";
+import * as _380 from "./rpc.query.js";
+import * as _381 from "./rpc.tx.js";
 export namespace gaia {
   export namespace liquid {
     export namespace module {
       export const v1 = {
-        ..._182
+        ..._203
       };
     }
     export const v1beta1 = {
-      ..._183,
-      ..._184,
-      ..._185,
-      ..._186,
-      ..._318,
-      ..._319,
-      ..._320,
-      ..._321,
-      ..._322
+      ..._204,
+      ..._205,
+      ..._206,
+      ..._207,
+      ..._362,
+      ..._363,
+      ..._364,
+      ..._365,
+      ..._366
     };
   }
   export const metaprotocols = {
-    ..._187
+    ..._208
   };
   export const ClientFactory = {
-    ..._335,
-    ..._336,
-    ..._337
+    ..._379,
+    ..._380,
+    ..._381
   };
 }

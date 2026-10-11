@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgSubmitProposal, MsgVote, MsgVoteWeighted, MsgDeposit } from "./tx";
+import { MsgSubmitProposal, MsgVote, MsgVoteWeighted, MsgDeposit } from "./tx.js";
 export const AminoConverter = {
   "/atomone.gov.v1beta1.MsgSubmitProposal": {
     aminoType: "atomone/MsgSubmitProposal",

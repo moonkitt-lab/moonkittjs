@@ -1,6 +1,6 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
-import { MsgMintPhoton, MsgMintPhotonResponse, MsgUpdateParams, MsgUpdateParamsResponse } from "./tx";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
+import { MsgMintPhoton, MsgMintPhotonResponse, MsgUpdateParams, MsgUpdateParamsResponse } from "./tx.js";
 /** Msg defines the Msg service. */
 export interface Msg {
   /** MintPhoton defines a method to burn atone and mint photons. */

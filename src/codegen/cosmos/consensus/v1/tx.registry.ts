@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgUpdateParams } from "./tx";
+import { MsgUpdateParams } from "./tx.js";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/cosmos.consensus.v1.MsgUpdateParams", MsgUpdateParams]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {

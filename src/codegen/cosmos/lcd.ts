@@ -29,6 +29,11 @@ export const createLCDClient = async ({
           v1beta1: new (await import("./base/node/v1beta1/query.lcd")).LCDQueryClient({
             requestClient
           })
+        },
+        tendermint: {
+          v1beta1: new (await import("./base/tendermint/v1beta1/query.lcd")).LCDQueryClient({
+            requestClient
+          })
         }
       },
       circuit: {
@@ -43,6 +48,11 @@ export const createLCDClient = async ({
       },
       distribution: {
         v1beta1: new (await import("./distribution/v1beta1/query.lcd")).LCDQueryClient({
+          requestClient
+        })
+      },
+      epochs: {
+        v1beta1: new (await import("./epochs/v1beta1/query.lcd")).LCDQueryClient({
           requestClient
         })
       },
@@ -71,6 +81,16 @@ export const createLCDClient = async ({
       },
       params: {
         v1beta1: new (await import("./params/v1beta1/query.lcd")).LCDQueryClient({
+          requestClient
+        })
+      },
+      protocolpool: {
+        v1: new (await import("./protocolpool/v1/query.lcd")).LCDQueryClient({
+          requestClient
+        })
+      },
+      slashing: {
+        v1beta1: new (await import("./slashing/v1beta1/query.lcd")).LCDQueryClient({
           requestClient
         })
       },

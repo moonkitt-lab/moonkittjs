@@ -1,6 +1,6 @@
-import { Deposit, DepositAmino, DepositSDKType, Vote, VoteAmino, VoteSDKType, Proposal, ProposalAmino, ProposalSDKType, DepositParams, DepositParamsAmino, DepositParamsSDKType, VotingParams, VotingParamsAmino, VotingParamsSDKType, TallyParams, TallyParamsAmino, TallyParamsSDKType, Params, ParamsAmino, ParamsSDKType } from "./gov";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Deposit, DepositAmino, DepositSDKType, Vote, VoteAmino, VoteSDKType, Proposal, ProposalAmino, ProposalSDKType, DepositParams, DepositParamsAmino, DepositParamsSDKType, VotingParams, VotingParamsAmino, VotingParamsSDKType, TallyParams, TallyParamsAmino, TallyParamsSDKType, Params, ParamsAmino, ParamsSDKType } from "./gov.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** GenesisState defines the gov module's genesis state. */
 export interface GenesisState {
   /** starting_proposal_id is the ID of the starting proposal. */
@@ -29,19 +29,13 @@ export interface GenesisState {
    */
   /** @deprecated */
   tallyParams?: TallyParams;
-  /**
-   * params defines all the paramaters of x/gov module.
-   * 
-   * Since: cosmos-sdk 0.47
-   */
+  /** params defines all the paramaters of x/gov module. */
   params?: Params;
   /**
    * The constitution allows builders to lay a foundation and define purpose.
    * This is an immutable string set in genesis.
    * There are no amendments, to go outside of scope, just fork.
    * constitution is an immutable string in genesis for a chain builder to lay out their vision, ideas and ideals.
-   * 
-   * Since: cosmos-sdk 0.50
    */
   constitution: string;
 }
@@ -49,38 +43,49 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.gov.v1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the gov module's genesis state. */
+/**
+ * GenesisState defines the gov module's genesis state.
+ * @name GenesisStateAmino
+ * @package cosmos.gov.v1
+ * @see proto type: cosmos.gov.v1.GenesisState
+ */
 export interface GenesisStateAmino {
-  /** starting_proposal_id is the ID of the starting proposal. */
+  /**
+   * starting_proposal_id is the ID of the starting proposal.
+   */
   starting_proposal_id?: string;
-  /** deposits defines all the deposits present at genesis. */
+  /**
+   * deposits defines all the deposits present at genesis.
+   */
   deposits?: DepositAmino[];
-  /** votes defines all the votes present at genesis. */
+  /**
+   * votes defines all the votes present at genesis.
+   */
   votes?: VoteAmino[];
-  /** proposals defines all the proposals present at genesis. */
+  /**
+   * proposals defines all the proposals present at genesis.
+   */
   proposals?: ProposalAmino[];
   /**
    * Deprecated: Prefer to use `params` instead.
    * deposit_params defines all the paramaters of related to deposit.
+   * @deprecated
    */
-  /** @deprecated */
   deposit_params?: DepositParamsAmino;
   /**
    * Deprecated: Prefer to use `params` instead.
    * voting_params defines all the paramaters of related to voting.
+   * @deprecated
    */
-  /** @deprecated */
   voting_params?: VotingParamsAmino;
   /**
    * Deprecated: Prefer to use `params` instead.
    * tally_params defines all the paramaters of related to tally.
+   * @deprecated
    */
-  /** @deprecated */
   tally_params?: TallyParamsAmino;
   /**
    * params defines all the paramaters of x/gov module.
-   * 
-   * Since: cosmos-sdk 0.47
    */
   params?: ParamsAmino;
   /**
@@ -88,8 +93,6 @@ export interface GenesisStateAmino {
    * This is an immutable string set in genesis.
    * There are no amendments, to go outside of scope, just fork.
    * constitution is an immutable string in genesis for a chain builder to lay out their vision, ideas and ideals.
-   * 
-   * Since: cosmos-sdk 0.50
    */
   constitution?: string;
 }

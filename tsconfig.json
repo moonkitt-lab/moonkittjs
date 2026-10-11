@@ -12,7 +12,7 @@
             "es2022",
             "DOM"
         ],
-        "sourceMap": true,
+        "sourceMap": false,
         "isolatedModules": true,
         "allowJs": true,
         "downlevelIteration": true,

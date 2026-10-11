@@ -1,7 +1,7 @@
-import { IdentifiedClientState, IdentifiedClientStateAmino, IdentifiedClientStateSDKType, ClientConsensusStates, ClientConsensusStatesAmino, ClientConsensusStatesSDKType, Params, ParamsAmino, ParamsSDKType } from "./client";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { IdentifiedClientState, IdentifiedClientStateAmino, IdentifiedClientStateSDKType, ClientConsensusStates, ClientConsensusStatesAmino, ClientConsensusStatesSDKType, Params, ParamsAmino, ParamsSDKType } from "./client.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
 /** GenesisState defines the ibc client submodule's genesis state. */
 export interface GenesisState {
   /** client states with their corresponding identifiers */
@@ -24,22 +24,35 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/ibc.core.client.v1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the ibc client submodule's genesis state. */
+/**
+ * GenesisState defines the ibc client submodule's genesis state.
+ * @name GenesisStateAmino
+ * @package ibc.core.client.v1
+ * @see proto type: ibc.core.client.v1.GenesisState
+ */
 export interface GenesisStateAmino {
-  /** client states with their corresponding identifiers */
+  /**
+   * client states with their corresponding identifiers
+   */
   clients?: IdentifiedClientStateAmino[];
-  /** consensus states from each client */
+  /**
+   * consensus states from each client
+   */
   clients_consensus?: ClientConsensusStatesAmino[];
-  /** metadata from each client */
+  /**
+   * metadata from each client
+   */
   clients_metadata?: IdentifiedGenesisMetadataAmino[];
   params?: ParamsAmino;
   /**
    * Deprecated: create_localhost has been deprecated.
    * The localhost client is automatically created at genesis.
+   * @deprecated
    */
-  /** @deprecated */
   create_localhost?: boolean;
-  /** the sequence for the next generated client identifier */
+  /**
+   * the sequence for the next generated client identifier
+   */
   next_client_sequence?: string;
 }
 export interface GenesisStateAminoMsg {
@@ -57,8 +70,8 @@ export interface GenesisStateSDKType {
   next_client_sequence: bigint;
 }
 /**
- * GenesisMetadata defines the genesis type for metadata that clients may return
- * with ExportMetadata
+ * GenesisMetadata defines the genesis type for metadata that will be used
+ * to export all client store keys that are not client or consensus states.
  */
 export interface GenesisMetadata {
   /** store key of metadata without clientID-prefix */
@@ -71,13 +84,20 @@ export interface GenesisMetadataProtoMsg {
   value: Uint8Array;
 }
 /**
- * GenesisMetadata defines the genesis type for metadata that clients may return
- * with ExportMetadata
+ * GenesisMetadata defines the genesis type for metadata that will be used
+ * to export all client store keys that are not client or consensus states.
+ * @name GenesisMetadataAmino
+ * @package ibc.core.client.v1
+ * @see proto type: ibc.core.client.v1.GenesisMetadata
  */
 export interface GenesisMetadataAmino {
-  /** store key of metadata without clientID-prefix */
+  /**
+   * store key of metadata without clientID-prefix
+   */
   key?: string;
-  /** metadata value */
+  /**
+   * metadata value
+   */
   value?: string;
 }
 export interface GenesisMetadataAminoMsg {
@@ -85,8 +105,8 @@ export interface GenesisMetadataAminoMsg {
   value: GenesisMetadataAmino;
 }
 /**
- * GenesisMetadata defines the genesis type for metadata that clients may return
- * with ExportMetadata
+ * GenesisMetadata defines the genesis type for metadata that will be used
+ * to export all client store keys that are not client or consensus states.
  */
 export interface GenesisMetadataSDKType {
   key: Uint8Array;
@@ -107,6 +127,9 @@ export interface IdentifiedGenesisMetadataProtoMsg {
 /**
  * IdentifiedGenesisMetadata has the client metadata with the corresponding
  * client id.
+ * @name IdentifiedGenesisMetadataAmino
+ * @package ibc.core.client.v1
+ * @see proto type: ibc.core.client.v1.IdentifiedGenesisMetadata
  */
 export interface IdentifiedGenesisMetadataAmino {
   client_id?: string;

@@ -1,5 +1,5 @@
-import { BinaryReader, BinaryWriter } from "../../binary";
-import { GlobalDecoderRegistry } from "../../registry";
+import { BinaryReader, BinaryWriter } from "../../binary.js";
+import { GlobalDecoderRegistry } from "../../registry.js";
 /**
  * App includes the protocol and software version for the application.
  * This information is included in ResponseInfo. The App.Protocol can be
@@ -17,6 +17,9 @@ export interface AppProtoMsg {
  * App includes the protocol and software version for the application.
  * This information is included in ResponseInfo. The App.Protocol can be
  * updated in ResponseEndBlock.
+ * @name AppAmino
+ * @package tendermint.version
+ * @see proto type: tendermint.version.App
  */
 export interface AppAmino {
   protocol?: string;
@@ -52,6 +55,9 @@ export interface ConsensusProtoMsg {
  * Consensus captures the consensus rules for processing a block in the blockchain,
  * including all blockchain data structures and the rules of the application's
  * state transition machine.
+ * @name ConsensusAmino
+ * @package tendermint.version
+ * @see proto type: tendermint.version.Consensus
  */
 export interface ConsensusAmino {
   block?: string;

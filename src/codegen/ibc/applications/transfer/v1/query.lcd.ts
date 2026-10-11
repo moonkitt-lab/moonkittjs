@@ -1,6 +1,6 @@
-import { setPaginationParams } from "../../../../helpers";
+import { setPaginationParams } from "../../../../helpers.js";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryDenomTracesRequest, QueryDenomTracesResponseSDKType, QueryDenomTraceRequest, QueryDenomTraceResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomHashRequest, QueryDenomHashResponseSDKType, QueryEscrowAddressRequest, QueryEscrowAddressResponseSDKType, QueryTotalEscrowForDenomRequest, QueryTotalEscrowForDenomResponseSDKType } from "./query";
+import { QueryParamsRequest, QueryParamsResponseSDKType, QueryDenomsRequest, QueryDenomsResponseSDKType, QueryDenomRequest, QueryDenomResponseSDKType, QueryDenomHashRequest, QueryDenomHashResponseSDKType, QueryEscrowAddressRequest, QueryEscrowAddressResponseSDKType, QueryTotalEscrowForDenomRequest, QueryTotalEscrowForDenomResponseSDKType } from "./query.js";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -9,41 +9,41 @@ export class LCDQueryClient {
     requestClient: LCDClient;
   }) {
     this.req = requestClient;
-    this.denomTraces = this.denomTraces.bind(this);
-    this.denomTrace = this.denomTrace.bind(this);
     this.params = this.params.bind(this);
+    this.denoms = this.denoms.bind(this);
+    this.denom = this.denom.bind(this);
     this.denomHash = this.denomHash.bind(this);
     this.escrowAddress = this.escrowAddress.bind(this);
     this.totalEscrowForDenom = this.totalEscrowForDenom.bind(this);
   }
-  /* DenomTraces queries all denomination traces. */
-  async denomTraces(params: QueryDenomTracesRequest = {
+  /* Params queries all parameters of the ibc-transfer module. */
+  async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
+    const endpoint = `ibc/apps/transfer/v1/params`;
+    return await this.req.get<QueryParamsResponseSDKType>(endpoint);
+  }
+  /* Denoms queries all denominations */
+  async denoms(params: QueryDenomsRequest = {
     pagination: undefined
-  }): Promise<QueryDenomTracesResponseSDKType> {
+  }): Promise<QueryDenomsResponseSDKType> {
     const options: any = {
       params: {}
     };
     if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
-    const endpoint = `ibc/apps/transfer/v1/denom_traces`;
-    return await this.req.get<QueryDenomTracesResponseSDKType>(endpoint, options);
+    const endpoint = `ibc/apps/transfer/v1/denoms`;
+    return await this.req.get<QueryDenomsResponseSDKType>(endpoint, options);
   }
-  /* DenomTrace queries a denomination trace information. */
-  async denomTrace(params: QueryDenomTraceRequest): Promise<QueryDenomTraceResponseSDKType> {
+  /* Denom queries a denomination */
+  async denom(params: QueryDenomRequest): Promise<QueryDenomResponseSDKType> {
     const options: any = {
       params: {}
     };
     if (typeof params?.hash !== "undefined") {
       options.params.hash = params.hash;
     }
-    const endpoint = `ibc/apps/transfer/v1/denom_traces/${params.hash}`;
-    return await this.req.get<QueryDenomTraceResponseSDKType>(endpoint, options);
-  }
-  /* Params queries all parameters of the ibc-transfer module. */
-  async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
-    const endpoint = `ibc/apps/transfer/v1/params`;
-    return await this.req.get<QueryParamsResponseSDKType>(endpoint);
+    const endpoint = `ibc/apps/transfer/v1/denoms/${params.hash}`;
+    return await this.req.get<QueryDenomResponseSDKType>(endpoint, options);
   }
   /* DenomHash queries a denomination hash information. */
   async denomHash(params: QueryDenomHashRequest): Promise<QueryDenomHashResponseSDKType> {
@@ -69,7 +69,7 @@ export class LCDQueryClient {
     if (typeof params?.denom !== "undefined") {
       options.params.denom = params.denom;
     }
-    const endpoint = `ibc/apps/transfer/v1/denoms/${params.denom}/total_escrow`;
+    const endpoint = `ibc/apps/transfer/v1/total_escrow/${params.denom}`;
     return await this.req.get<QueryTotalEscrowForDenomResponseSDKType>(endpoint, options);
   }
 }

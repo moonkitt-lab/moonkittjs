@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgStoreCode, MsgRemoveChecksum, MsgMigrateContract } from "./tx";
+import { MsgStoreCode, MsgRemoveChecksum, MsgMigrateContract } from "./tx.js";
 export const AminoConverter = {
   "/ibc.lightclients.wasm.v1.MsgStoreCode": {
     aminoType: "cosmos-sdk/MsgStoreCode",

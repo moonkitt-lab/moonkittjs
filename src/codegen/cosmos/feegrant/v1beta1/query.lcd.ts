@@ -1,6 +1,6 @@
-import { setPaginationParams } from "../../../helpers";
+import { setPaginationParams } from "../../../helpers.js";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryAllowanceRequest, QueryAllowanceResponseSDKType, QueryAllowancesRequest, QueryAllowancesResponseSDKType, QueryAllowancesByGranterRequest, QueryAllowancesByGranterResponseSDKType } from "./query";
+import { QueryAllowanceRequest, QueryAllowanceResponseSDKType, QueryAllowancesRequest, QueryAllowancesResponseSDKType, QueryAllowancesByGranterRequest, QueryAllowancesByGranterResponseSDKType } from "./query.js";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({
@@ -29,9 +29,7 @@ export class LCDQueryClient {
     const endpoint = `cosmos/feegrant/v1beta1/allowances/${params.grantee}`;
     return await this.req.get<QueryAllowancesResponseSDKType>(endpoint, options);
   }
-  /* AllowancesByGranter returns all the grants given by an address
-  
-   Since: cosmos-sdk 0.46 */
+  /* AllowancesByGranter returns all the grants given by an address */
   async allowancesByGranter(params: QueryAllowancesByGranterRequest): Promise<QueryAllowancesByGranterResponseSDKType> {
     const options: any = {
       params: {}

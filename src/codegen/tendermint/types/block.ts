@@ -1,7 +1,7 @@
-import { Header, HeaderAmino, HeaderSDKType, Data, DataAmino, DataSDKType, Commit, CommitAmino, CommitSDKType } from "./types";
-import { EvidenceList, EvidenceListAmino, EvidenceListSDKType } from "./evidence";
-import { BinaryReader, BinaryWriter } from "../../binary";
-import { GlobalDecoderRegistry } from "../../registry";
+import { Header, HeaderAmino, HeaderSDKType, Data, DataAmino, DataSDKType, Commit, CommitAmino, CommitSDKType } from "./types.js";
+import { EvidenceList, EvidenceListAmino, EvidenceListSDKType } from "./evidence.js";
+import { BinaryReader, BinaryWriter } from "../../binary.js";
+import { GlobalDecoderRegistry } from "../../registry.js";
 export interface Block {
   header: Header;
   data: Data;
@@ -12,6 +12,11 @@ export interface BlockProtoMsg {
   typeUrl: "/tendermint.types.Block";
   value: Uint8Array;
 }
+/**
+ * @name BlockAmino
+ * @package tendermint.types
+ * @see proto type: tendermint.types.Block
+ */
 export interface BlockAmino {
   header?: HeaderAmino;
   data?: DataAmino;

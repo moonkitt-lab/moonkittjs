@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgConnectionOpenInit, MsgConnectionOpenTry, MsgConnectionOpenAck, MsgConnectionOpenConfirm, MsgUpdateParams } from "./tx";
+import { MsgConnectionOpenInit, MsgConnectionOpenTry, MsgConnectionOpenAck, MsgConnectionOpenConfirm, MsgUpdateParams } from "./tx.js";
 export const AminoConverter = {
   "/ibc.core.connection.v1.MsgConnectionOpenInit": {
     aminoType: "cosmos-sdk/MsgConnectionOpenInit",

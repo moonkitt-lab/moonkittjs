@@ -1,18 +1,18 @@
-import * as _2 from "./wasm/v1/authz";
-import * as _3 from "./wasm/v1/genesis";
-import * as _4 from "./wasm/v1/ibc";
-import * as _5 from "./wasm/v1/proposal";
-import * as _6 from "./wasm/v1/query";
-import * as _7 from "./wasm/v1/tx";
-import * as _8 from "./wasm/v1/types";
-import * as _188 from "./wasm/v1/tx.amino";
-import * as _189 from "./wasm/v1/tx.registry";
-import * as _190 from "./wasm/v1/query.lcd";
-import * as _191 from "./wasm/v1/query.rpc.Query";
-import * as _192 from "./wasm/v1/tx.rpc.msg";
-import * as _323 from "./lcd";
-import * as _324 from "./rpc.query";
-import * as _325 from "./rpc.tx";
+import * as _2 from "./wasm/v1/authz.js";
+import * as _3 from "./wasm/v1/genesis.js";
+import * as _4 from "./wasm/v1/ibc.js";
+import * as _5 from "./wasm/v1/proposal_legacy.js";
+import * as _6 from "./wasm/v1/query.js";
+import * as _7 from "./wasm/v1/tx.js";
+import * as _8 from "./wasm/v1/types.js";
+import * as _209 from "./wasm/v1/tx.amino.js";
+import * as _210 from "./wasm/v1/tx.registry.js";
+import * as _211 from "./wasm/v1/query.lcd.js";
+import * as _212 from "./wasm/v1/query.rpc.Query.js";
+import * as _213 from "./wasm/v1/tx.rpc.msg.js";
+import * as _367 from "./lcd.js";
+import * as _368 from "./rpc.query.js";
+import * as _369 from "./rpc.tx.js";
 export namespace cosmwasm {
   export namespace wasm {
     export const v1 = {
@@ -23,16 +23,16 @@ export namespace cosmwasm {
       ..._6,
       ..._7,
       ..._8,
-      ..._188,
-      ..._189,
-      ..._190,
-      ..._191,
-      ..._192
+      ..._209,
+      ..._210,
+      ..._211,
+      ..._212,
+      ..._213
     };
   }
   export const ClientFactory = {
-    ..._323,
-    ..._324,
-    ..._325
+    ..._367,
+    ..._368,
+    ..._369
   };
 }

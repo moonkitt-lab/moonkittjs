@@ -1,9 +1,16 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryLiquidValidatorRequest, QueryLiquidValidatorResponse, QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponse, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponse, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponse, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponse, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponse, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponse, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponse, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponse, QueryParamsRequest, QueryParamsResponse, QueryTokenizeShareRecordRewardRequest, QueryTokenizeShareRecordRewardResponse } from "./query";
+import { QueryLiquidValidatorsRequest, QueryLiquidValidatorsResponse, QueryLiquidValidatorRequest, QueryLiquidValidatorResponse, QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponse, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponse, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponse, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponse, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponse, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponse, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponse, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponse, QueryParamsRequest, QueryParamsResponse, QueryTokenizeShareRecordRewardRequest, QueryTokenizeShareRecordRewardResponse } from "./query.js";
 /** Query defines the gRPC querier service. */
 export interface Query {
+  /**
+   * LiquidValidators queries all liquid validators.
+   * 
+   * When called from another module, this query might consume a high amount of
+   * gas if the pagination field is incorrectly set.
+   */
+  liquidValidators(request?: QueryLiquidValidatorsRequest): Promise<QueryLiquidValidatorsResponse>;
   /** Query for an individual liquid validator by validator address */
   liquidValidator(request: QueryLiquidValidatorRequest): Promise<QueryLiquidValidatorResponse>;
   /** Query for individual tokenize share record information by share by id */
@@ -34,6 +41,7 @@ export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
   constructor(rpc: Rpc) {
     this.rpc = rpc;
+    this.liquidValidators = this.liquidValidators.bind(this);
     this.liquidValidator = this.liquidValidator.bind(this);
     this.tokenizeShareRecordById = this.tokenizeShareRecordById.bind(this);
     this.tokenizeShareRecordByDenom = this.tokenizeShareRecordByDenom.bind(this);
@@ -45,6 +53,13 @@ export class QueryClientImpl implements Query {
     this.tokenizeShareLockInfo = this.tokenizeShareLockInfo.bind(this);
     this.params = this.params.bind(this);
     this.tokenizeShareRecordReward = this.tokenizeShareRecordReward.bind(this);
+  }
+  liquidValidators(request: QueryLiquidValidatorsRequest = {
+    pagination: undefined
+  }): Promise<QueryLiquidValidatorsResponse> {
+    const data = QueryLiquidValidatorsRequest.encode(request).finish();
+    const promise = this.rpc.request("gaia.liquid.v1beta1.Query", "LiquidValidators", data);
+    return promise.then(data => QueryLiquidValidatorsResponse.decode(new BinaryReader(data)));
   }
   liquidValidator(request: QueryLiquidValidatorRequest): Promise<QueryLiquidValidatorResponse> {
     const data = QueryLiquidValidatorRequest.encode(request).finish();
@@ -108,6 +123,9 @@ export const createRpcQueryExtension = (base: QueryClient) => {
   const rpc = createProtobufRpcClient(base);
   const queryService = new QueryClientImpl(rpc);
   return {
+    liquidValidators(request?: QueryLiquidValidatorsRequest): Promise<QueryLiquidValidatorsResponse> {
+      return queryService.liquidValidators(request);
+    },
     liquidValidator(request: QueryLiquidValidatorRequest): Promise<QueryLiquidValidatorResponse> {
       return queryService.liquidValidator(request);
     },

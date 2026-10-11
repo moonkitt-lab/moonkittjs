@@ -1,10 +1,10 @@
-import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
-import { Timestamp } from "../../../google/protobuf/timestamp";
-import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
-import { isSet, toTimestamp, fromTimestamp } from "../../../helpers";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin.js";
+import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any.js";
+import { Timestamp } from "../../../google/protobuf/timestamp.js";
+import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration.js";
+import { isSet, toTimestamp, fromTimestamp } from "../../../helpers.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** VoteOption enumerates the valid vote options for a given governance proposal. */
 export enum VoteOption {
   /** VOTE_OPTION_UNSPECIFIED - VOTE_OPTION_UNSPECIFIED defines a no-op vote option. */
@@ -146,14 +146,21 @@ export interface WeightedVoteOptionProtoMsg {
   typeUrl: "/atomone.gov.v1.WeightedVoteOption";
   value: Uint8Array;
 }
-/** WeightedVoteOption defines a unit of vote for vote split. */
+/**
+ * WeightedVoteOption defines a unit of vote for vote split.
+ * @name WeightedVoteOptionAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.WeightedVoteOption
+ */
 export interface WeightedVoteOptionAmino {
   /**
    * option defines the valid vote options, it must not contain duplicate vote
    * options.
    */
   option?: VoteOption;
-  /** weight is the vote weight associated with the vote option. */
+  /**
+   * weight is the vote weight associated with the vote option.
+   */
   weight?: string;
 }
 export interface WeightedVoteOptionAminoMsg {
@@ -184,13 +191,22 @@ export interface DepositProtoMsg {
 /**
  * Deposit defines an amount deposited by an account address to an active
  * proposal.
+ * @name DepositAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.Deposit
  */
 export interface DepositAmino {
-  /** proposal_id defines the unique id of the proposal. */
+  /**
+   * proposal_id defines the unique id of the proposal.
+   */
   proposal_id?: string;
-  /** depositor defines the deposit addresses from the proposals. */
+  /**
+   * depositor defines the deposit addresses from the proposals.
+   */
   depositor?: string;
-  /** amount to be deposited by depositor. */
+  /**
+   * amount to be deposited by depositor.
+   */
   amount: CoinAmino[];
 }
 export interface DepositAminoMsg {
@@ -255,13 +271,24 @@ export interface ProposalProtoMsg {
   typeUrl: "/atomone.gov.v1.Proposal";
   value: Uint8Array;
 }
-/** Proposal defines the core field members of a governance proposal. */
+/**
+ * Proposal defines the core field members of a governance proposal.
+ * @name ProposalAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.Proposal
+ */
 export interface ProposalAmino {
-  /** id defines the unique id of the proposal. */
+  /**
+   * id defines the unique id of the proposal.
+   */
   id?: string;
-  /** messages are the arbitrary messages to be executed if the proposal passes. */
+  /**
+   * messages are the arbitrary messages to be executed if the proposal passes.
+   */
   messages?: AnyAmino[];
-  /** status defines the proposal status. */
+  /**
+   * status defines the proposal status.
+   */
   status?: ProposalStatus;
   /**
    * final_tally_result is the final tally result of the proposal. When
@@ -269,17 +296,29 @@ export interface ProposalAmino {
    * proposal's voting period has ended.
    */
   final_tally_result?: TallyResultAmino;
-  /** submit_time is the time of proposal submission. */
+  /**
+   * submit_time is the time of proposal submission.
+   */
   submit_time?: string;
-  /** deposit_end_time is the end time for deposition. */
+  /**
+   * deposit_end_time is the end time for deposition.
+   */
   deposit_end_time?: string;
-  /** total_deposit is the total deposit on the proposal. */
+  /**
+   * total_deposit is the total deposit on the proposal.
+   */
   total_deposit: CoinAmino[];
-  /** voting_start_time is the starting time to vote on a proposal. */
+  /**
+   * voting_start_time is the starting time to vote on a proposal.
+   */
   voting_start_time?: string;
-  /** voting_end_time is the end time of voting on a proposal. */
+  /**
+   * voting_end_time is the end time of voting on a proposal.
+   */
   voting_end_time?: string;
-  /** metadata is any arbitrary metadata attached to the proposal. */
+  /**
+   * metadata is any arbitrary metadata attached to the proposal.
+   */
   metadata?: string;
   /**
    * title is the title of the proposal
@@ -333,13 +372,24 @@ export interface TallyResultProtoMsg {
   typeUrl: "/atomone.gov.v1.TallyResult";
   value: Uint8Array;
 }
-/** TallyResult defines a standard tally for a governance proposal. */
+/**
+ * TallyResult defines a standard tally for a governance proposal.
+ * @name TallyResultAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.TallyResult
+ */
 export interface TallyResultAmino {
-  /** yes_count is the number of yes votes on a proposal. */
+  /**
+   * yes_count is the number of yes votes on a proposal.
+   */
   yes_count?: string;
-  /** abstain_count is the number of abstain votes on a proposal. */
+  /**
+   * abstain_count is the number of abstain votes on a proposal.
+   */
   abstain_count?: string;
-  /** no_count is the number of no votes on a proposal. */
+  /**
+   * no_count is the number of no votes on a proposal.
+   */
   no_count?: string;
 }
 export interface TallyResultAminoMsg {
@@ -373,15 +423,26 @@ export interface VoteProtoMsg {
 /**
  * Vote defines a vote on a governance proposal.
  * A Vote consists of a proposal ID, the voter, and the vote option.
+ * @name VoteAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.Vote
  */
 export interface VoteAmino {
-  /** proposal_id defines the unique id of the proposal. */
+  /**
+   * proposal_id defines the unique id of the proposal.
+   */
   proposal_id?: string;
-  /** voter is the voter address of the proposal. */
+  /**
+   * voter is the voter address of the proposal.
+   */
   voter?: string;
-  /** options is the weighted vote options. */
+  /**
+   * options is the weighted vote options.
+   */
   options?: WeightedVoteOptionAmino[];
-  /** metadata is any  arbitrary metadata to attached to the vote. */
+  /**
+   * metadata is any  arbitrary metadata to attached to the vote.
+   */
   metadata?: string;
 }
 export interface VoteAminoMsg {
@@ -418,7 +479,12 @@ export interface QuorumCheckQueueEntryProtoMsg {
   typeUrl: "/atomone.gov.v1.QuorumCheckQueueEntry";
   value: Uint8Array;
 }
-/** QuorumCheckQueueEntry defines a quorum check queue entry. */
+/**
+ * QuorumCheckQueueEntry defines a quorum check queue entry.
+ * @name QuorumCheckQueueEntryAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.QuorumCheckQueueEntry
+ */
 export interface QuorumCheckQueueEntryAmino {
   /**
    * quorum_timeout_time is the time after which quorum checks start happening
@@ -431,7 +497,9 @@ export interface QuorumCheckQueueEntryAmino {
    * proposal is initially added to the queue.
    */
   quorum_check_count?: string;
-  /** quorum_checks_done is the number of quorum checks that have been done. */
+  /**
+   * quorum_checks_done is the number of quorum checks that have been done.
+   */
   quorum_checks_done?: string;
 }
 export interface QuorumCheckQueueEntryAminoMsg {
@@ -458,9 +526,16 @@ export interface DepositParamsProtoMsg {
   typeUrl: "/atomone.gov.v1.DepositParams";
   value: Uint8Array;
 }
-/** DepositParams defines the params for deposits on governance proposals. */
+/**
+ * DepositParams defines the params for deposits on governance proposals.
+ * @name DepositParamsAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.DepositParams
+ */
 export interface DepositParamsAmino {
-  /** Minimum deposit for a proposal to enter voting period. */
+  /**
+   * Minimum deposit for a proposal to enter voting period.
+   */
   min_deposit?: CoinAmino[];
   /**
    * Maximum period for Atom holders to deposit on a proposal. Initial value: 2
@@ -486,9 +561,16 @@ export interface VotingParamsProtoMsg {
   typeUrl: "/atomone.gov.v1.VotingParams";
   value: Uint8Array;
 }
-/** VotingParams defines the params for voting on governance proposals. */
+/**
+ * VotingParams defines the params for voting on governance proposals.
+ * @name VotingParamsAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.VotingParams
+ */
 export interface VotingParamsAmino {
-  /** Duration of the voting period. */
+  /**
+   * Duration of the voting period.
+   */
   voting_period?: DurationAmino;
 }
 export interface VotingParamsAminoMsg {
@@ -521,22 +603,37 @@ export interface TallyParamsProtoMsg {
   typeUrl: "/atomone.gov.v1.TallyParams";
   value: Uint8Array;
 }
-/** TallyParams defines the params for tallying votes on governance proposals. */
+/**
+ * TallyParams defines the params for tallying votes on governance proposals.
+ * @name TallyParamsAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.TallyParams
+ */
 export interface TallyParamsAmino {
   /**
    * Minimum percentage of total stake needed to vote for a result to be
    * considered valid.
    */
   quorum?: string;
-  /** Minimum proportion of Yes votes for proposal to pass. Default value: 2/3. */
+  /**
+   * Minimum proportion of Yes votes for proposal to pass. Default value: 2/3.
+   */
   threshold?: string;
-  /** quorum for constitution amendment proposals */
+  /**
+   * quorum for constitution amendment proposals
+   */
   constitution_amendment_quorum?: string;
-  /** Minimum proportion of Yes votes for a Constitution Amendment proposal to pass. Default value: 0.9. */
+  /**
+   * Minimum proportion of Yes votes for a Constitution Amendment proposal to pass. Default value: 0.9.
+   */
   constitution_amendment_threshold?: string;
-  /** quorum for law proposals */
+  /**
+   * quorum for law proposals
+   */
   law_quorum?: string;
-  /** Minimum proportion of Yes votes for a Law proposal to pass. Default value: 0.9. */
+  /**
+   * Minimum proportion of Yes votes for a Law proposal to pass. Default value: 0.9.
+   */
   law_threshold?: string;
 }
 export interface TallyParamsAminoMsg {
@@ -622,29 +719,44 @@ export interface ParamsProtoMsg {
  * Params defines the parameters for the x/gov module.
  * 
  * Since: cosmos-sdk 0.47
+ * @name ParamsAmino
+ * @package atomone.gov.v1
+ * @see proto type: atomone.gov.v1.Params
  */
 export interface ParamsAmino {
-  /** Minimum deposit for a proposal to enter voting period. */
+  /**
+   * Minimum deposit for a proposal to enter voting period.
+   */
   min_deposit: CoinAmino[];
   /**
    * Maximum period for Atom holders to deposit on a proposal. Initial value: 2
    * months.
    */
   max_deposit_period?: DurationAmino;
-  /** Duration of the voting period. */
+  /**
+   * Duration of the voting period.
+   */
   voting_period?: DurationAmino;
   /**
    * Minimum percentage of total stake needed to vote for a result to be
    *  considered valid. Default value: 0.25.
    */
   quorum?: string;
-  /** Minimum proportion of Yes votes for proposal to pass. Default value: 2/3. */
+  /**
+   * Minimum proportion of Yes votes for proposal to pass. Default value: 2/3.
+   */
   threshold?: string;
-  /** The ratio representing the proportion of the deposit value that must be paid at proposal submission. */
+  /**
+   * The ratio representing the proportion of the deposit value that must be paid at proposal submission.
+   */
   min_initial_deposit_ratio?: string;
-  /** burn deposits if a proposal does not meet quorum */
+  /**
+   * burn deposits if a proposal does not meet quorum
+   */
   burn_vote_quorum?: boolean;
-  /** burn deposits if the proposal does not enter voting period */
+  /**
+   * burn deposits if the proposal does not enter voting period
+   */
   burn_proposal_deposit_prevote?: boolean;
   /**
    * The ratio representing the proportion of the deposit value minimum that
@@ -656,13 +768,21 @@ export interface ParamsAmino {
    * NOTE: backported from v50 (https://github.com/cosmos/cosmos-sdk/pull/18146)
    */
   min_deposit_ratio?: string;
-  /** quorum for constitution amendment proposals */
+  /**
+   * quorum for constitution amendment proposals
+   */
   constitution_amendment_quorum?: string;
-  /** Minimum proportion of Yes votes for a Constitution Amendment proposal to pass. Default value: 0.9. */
+  /**
+   * Minimum proportion of Yes votes for a Constitution Amendment proposal to pass. Default value: 0.9.
+   */
   constitution_amendment_threshold?: string;
-  /** quorum for law proposals */
+  /**
+   * quorum for law proposals
+   */
   law_quorum?: string;
-  /** Minimum proportion of Yes votes for a Law proposal to pass. Default value: 0.9. */
+  /**
+   * Minimum proportion of Yes votes for a Law proposal to pass. Default value: 0.9.
+   */
   law_threshold?: string;
   /**
    * Duration of time after a proposal enters the voting period, during which quorum

@@ -1,6 +1,6 @@
-import { setPaginationParams } from "../../../../helpers";
+import { setPaginationParams } from "../../../../helpers.js";
 import { LCDClient } from "@cosmology/lcd";
-import { QueryChecksumsRequest, QueryChecksumsResponseSDKType, QueryCodeRequest, QueryCodeResponseSDKType } from "./query";
+import { QueryChecksumsRequest, QueryChecksumsResponseSDKType, QueryCodeRequest, QueryCodeResponseSDKType } from "./query.js";
 export class LCDQueryClient {
   req: LCDClient;
   constructor({

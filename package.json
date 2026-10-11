@@ -1,13 +1,26 @@
 {
   "name": "moonkittjs",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "MoonkittJS",
   "author": "arlai <arlai@moonkitt.com>",
   "homepage": "https://github.com/moonkitt-lab/moonkittjs#readme",
   "license": "SEE LICENSE IN LICENSE",
   "main": "dist/index.js",
-  "module": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js"
+    },
+    "./dist/codegen/*": {
+      "types": "./dist/codegen/*.d.ts",
+      "import": "./dist/esm/codegen/*.js",
+      "require": "./dist/codegen/*.js"
+    },
+    "./package.json": "./package.json"
+  },
   "directories": {
     "lib": "src"
   },
@@ -16,19 +29,18 @@
     "!CHANGELOG.md"
   ],
   "scripts": {
-    "build:cjs": "yarn tsc -p tsconfig.json --outDir dist --module commonjs || true",
-    "build:mjs": "yarn tsc -p tsconfig.json --outDir mjs --module es2022 --declaration false || true",
-    "clean:mjs": "rimraf mjs",
-    "clean:dist": "rimraf dist",
-    "clean": "npm run clean:mjs && npm run clean:dist",
-    "build:rename": "publish-scripts --cmd rename --srcDir mjs --outDir dist --findExt js --replaceExt mjs --no-rmDir",
-    "build": "npm run clean && npm run build:cjs && npm run build:mjs && npm run build:rename",
+    "build:cjs": "tsc -p tsconfig.json --outDir dist --module commonjs",
+    "build:esm": "tsc -p tsconfig.json --outDir dist/esm --module es2022 --declaration false && node scripts/esm-package.js",
+    "clean": "rimraf dist mjs",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm",
     "codegen": "node scripts/codegen.js",
     "prepare": "npm run build",
     "lint": "eslint src --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "test:rpc": "node scripts/rpc-check.mjs",
+    "size": "node scripts/bundle-size.mjs"
   },
   "publishConfig": {
     "access": "public"
@@ -42,7 +54,7 @@
     "url": "https://github.com/moonkitt-lab/moonkittjs/issues"
   },
   "devDependencies": {
-    "@cosmology/telescope": "^1.12.3",
+    "@cosmology/telescope": "^1.12.21",
     "@protobufs/confio": "^0.0.6",
     "@protobufs/cosmos_proto": "^0.0.10",
     "@protobufs/cosmwasm": "^0.1.1",
@@ -51,22 +63,24 @@
     "@protobufs/ibc": "^0.1.0",
     "@protobufs/tendermint": "^0.0.10",
     "@types/jest": "^29.5.13",
+    "esbuild": "^0.25.0",
     "eslint": "9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "jest": "^29.7.0",
     "jest-in-case": "^1.0.2",
     "prettier": "^3.3.3",
-    "publish-scripts": "1.10.0",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5",
     "typescript": "^5.6.2"
   },
   "dependencies": {
-    "@cosmjs/amino": "^0.32.4",
-    "@cosmjs/proto-signing": "^0.32.4",
-    "@cosmjs/stargate": "^0.32.4",
-    "@cosmjs/tendermint-rpc": "^0.32.4",
+    "@cosmjs/amino": "^0.38.1",
+    "@cosmjs/encoding": "^0.38.1",
+    "@cosmjs/math": "^0.38.1",
+    "@cosmjs/proto-signing": "^0.38.1",
+    "@cosmjs/stargate": "^0.38.1",
+    "@cosmjs/tendermint-rpc": "^0.38.1",
     "@cosmology/lcd": "^0.14.0"
   }
 }

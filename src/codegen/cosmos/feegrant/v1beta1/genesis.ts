@@ -1,6 +1,6 @@
-import { Grant, GrantAmino, GrantSDKType } from "./feegrant";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Grant, GrantAmino, GrantSDKType } from "./feegrant.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** GenesisState contains a set of fee allowances, persisted from the store */
 export interface GenesisState {
   allowances: Grant[];
@@ -9,7 +9,12 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.feegrant.v1beta1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState contains a set of fee allowances, persisted from the store */
+/**
+ * GenesisState contains a set of fee allowances, persisted from the store
+ * @name GenesisStateAmino
+ * @package cosmos.feegrant.v1beta1
+ * @see proto type: cosmos.feegrant.v1beta1.GenesisState
+ */
 export interface GenesisStateAmino {
   allowances: GrantAmino[];
 }

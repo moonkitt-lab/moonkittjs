@@ -1,12 +1,12 @@
 import { GeneratedType, Registry, OfflineSigner } from "@cosmjs/proto-signing";
 import { defaultRegistryTypes, AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
 import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
-import * as atomoneGovV1TxRegistry from "./gov/v1/tx.registry";
-import * as atomoneGovV1beta1TxRegistry from "./gov/v1beta1/tx.registry";
-import * as atomonePhotonV1TxRegistry from "./photon/v1/tx.registry";
-import * as atomoneGovV1TxAmino from "./gov/v1/tx.amino";
-import * as atomoneGovV1beta1TxAmino from "./gov/v1beta1/tx.amino";
-import * as atomonePhotonV1TxAmino from "./photon/v1/tx.amino";
+import * as atomoneGovV1TxRegistry from "./gov/v1/tx.registry.js";
+import * as atomoneGovV1beta1TxRegistry from "./gov/v1beta1/tx.registry.js";
+import * as atomonePhotonV1TxRegistry from "./photon/v1/tx.registry.js";
+import * as atomoneGovV1TxAmino from "./gov/v1/tx.amino.js";
+import * as atomoneGovV1beta1TxAmino from "./gov/v1beta1/tx.amino.js";
+import * as atomonePhotonV1TxAmino from "./photon/v1/tx.amino.js";
 export const atomoneAminoConverters = {
   ...atomoneGovV1TxAmino.AminoConverter,
   ...atomoneGovV1beta1TxAmino.AminoConverter,
