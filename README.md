@@ -104,13 +104,13 @@ distribution and gaia liquid) against a node. The default endpoint is
 
 ### Composing Messages
 
-Import the `moonkitt` object from `moonkittjs`.
+Import the `gaia` object from `moonkittjs`.
 
 ```js
-import { moonkitt } from "moonkittjs";
+import { gaia } from "moonkittjs";
 
-const { createSpotLimitOrder, createSpotMarketOrder, deposit } =
-  moonkitt.exchange.v1beta1.MessageComposer.withTypeUrl;
+const { tokenizeShares, redeemTokensForShares, transferTokenizeShareRecord } =
+  gaia.liquid.v1beta1.MessageComposer.withTypeUrl;
 ```
 
 #### CosmWasm Messages
@@ -164,18 +164,16 @@ const { deposit, submitProposal, vote, voteWeighted } =
 
 ## Connecting with Wallets and Signing Messages
 
-⚡️ For web interfaces, we recommend using [cosmos-kit](https://github.com/cosmology-tech/cosmos-kit). Continue below to see how to manually construct signers and clients.
-
-Here are the docs on [creating signers](https://github.com/cosmology-tech/cosmos-kit/tree/main/packages/react#signing-clients) in cosmos-kit that can be used with Keplr and other wallets.
+`moonkittjs` signs through cosmjs: any wallet or library that gives you a cosmjs `OfflineSigner` works. Continue below to see how to construct signers and clients.
 
 ### Initializing the Stargate Client
 
-Use `getSigningmoonkittClient` to get your `SigningStargateClient`, with the proto/amino messages full-loaded. No need to manually add amino types, just require and initialize the client:
+Use `getSigningGaiaClient` to get your `SigningStargateClient`, with the proto/amino messages full-loaded. No need to manually add amino types, just require and initialize the client:
 
 ```js
-import { getSigningmoonkittClient } from "moonkittjs";
+import { getSigningGaiaClient } from "moonkittjs";
 
-const stargateClient = await getSigningmoonkittClient({
+const stargateClient = await getSigningGaiaClient({
   rpcEndpoint,
   signer, // OfflineSigner
 });
@@ -185,8 +183,7 @@ const stargateClient = await getSigningmoonkittClient({
 
 To broadcast messages, you can create signers with a variety of options:
 
-- [cosmos-kit](https://github.com/cosmology-tech/cosmos-kit/tree/main/packages/react#signing-clients) (recommended)
-- [keplr](https://docs.keplr.app/api/cosmjs.html)
+- [keplr](https://docs.keplr.app/api/use-with/cosmjs)
 - [cosmjs](https://gist.github.com/webmaster128/8444d42a7eceeda2544c8a59fbd7e1d9)
 
 ### Amino Signer
@@ -194,28 +191,24 @@ To broadcast messages, you can create signers with a variety of options:
 Likely you'll want to use the Amino, so unless you need proto, you should use this one:
 
 ```js
-import { getOfflineSignerAmino as getOfflineSigner } from "cosmjs-utils";
+import { Secp256k1HdWallet } from "@cosmjs/amino";
+
+const signer = await Secp256k1HdWallet.fromMnemonic(mnemonic, {
+  prefix: "cosmos",
+});
 ```
 
 ### Proto Signer
 
 ```js
-import { getOfflineSignerProto as getOfflineSigner } from "cosmjs-utils";
+import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+
+const signer = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
+  prefix: "cosmos",
+});
 ```
 
 WARNING: NOT RECOMMENDED TO USE PLAIN-TEXT MNEMONICS. Please take care of your security and use best practices such as AES encryption and/or methods from 12factor applications.
-
-```js
-import { chains } from "chain-registry";
-
-const mnemonic =
-  "unfold client turtle either pilot stock floor glow toward bullet car science";
-const chain = chains.find(({ chain_name }) => chain_name === "moonkitt");
-const signer = await getOfflineSigner({
-  mnemonic,
-  chain,
-});
-```
 
 ### Broadcasting Messages
 
@@ -227,7 +220,7 @@ const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
 const msg = send({
   amount: [
     {
-      denom: "coin",
+      denom: "uatom",
       amount: "1000",
     },
   ],
@@ -238,7 +231,7 @@ const msg = send({
 const fee: StdFee = {
   amount: [
     {
-      denom: "coin",
+      denom: "uatom",
       amount: "864",
     },
   ],
@@ -262,25 +255,25 @@ import {
     cosmwasmProtoRegistry,
     ibcProtoRegistry,
     ibcAminoConverters,
-    moonkittAminoConverters,
-    moonkittProtoRegistry
+    gaiaAminoConverters,
+    gaiaProtoRegistry
 } from 'moonkittjs';
 
 const signer: OfflineSigner = /* create your signer (see above)  */
-const rpcEndpint = 'https://rpc.cosmos.directory/moonkitt'; // or another URL
+const rpcEndpoint = 'https://rpc.cosmos.directory/cosmoshub'; // or another URL
 
 const protoRegistry: ReadonlyArray<[string, GeneratedType]> = [
     ...cosmosProtoRegistry,
     ...cosmwasmProtoRegistry,
     ...ibcProtoRegistry,
-    ...moonkittProtoRegistry
+    ...gaiaProtoRegistry
 ];
 
 const aminoConverters = {
     ...cosmosAminoConverters,
     ...cosmwasmAminoConverters,
     ...ibcAminoConverters,
-    ...moonkittAminoConverters
+    ...gaiaAminoConverters
 };
 
 const registry = new Registry(protoRegistry);
@@ -331,17 +324,16 @@ npm publish
 
 Checkout these related projects:
 
-- [@cosmology/telescope](https://github.com/cosmology-tech/telescope) Your Frontend Companion for Building with TypeScript with Cosmos SDK Modules.
-- [@cosmwasm/ts-codegen](https://github.com/CosmWasm/ts-codegen) Convert your CosmWasm smart contracts into dev-friendly TypeScript classes.
-- [chain-registry](https://github.com/cosmology-tech/chain-registry) Everything from token symbols, logos, and IBC denominations for all assets you want to support in your application.
-- [cosmos-kit](https://github.com/cosmology-tech/cosmos-kit) Experience the convenience of connecting with a variety of web3 wallets through a single, streamlined interface.
-- [create-cosmos-app](https://github.com/cosmology-tech/create-cosmos-app) Set up a modern Cosmos app by running one command.
-- [interchain-ui](https://github.com/cosmology-tech/interchain-ui) The Interchain Design System, empowering developers with a flexible, easy-to-use UI kit.
-- [starship](https://github.com/cosmology-tech/starship) Unified Testing and Development for the Interchain.
+- [@cosmology/telescope](https://github.com/hyperweb-io/telescope) Your Frontend Companion for Building with TypeScript with Cosmos SDK Modules.
+- [@cosmwasm/ts-codegen](https://github.com/hyperweb-io/ts-codegen) Convert your CosmWasm smart contracts into dev-friendly TypeScript classes.
+- [chain-registry](https://github.com/hyperweb-io/chain-registry) Everything from token symbols, logos, and IBC denominations for all assets you want to support in your application.
+- [create-cosmos-app](https://github.com/hyperweb-io/create-cosmos-app) Set up a modern Cosmos app by running one command.
+- [interchain-ui](https://github.com/hyperweb-io/interchain-ui) The Interchain Design System, empowering developers with a flexible, easy-to-use UI kit.
+- [starship](https://github.com/hyperweb-io/starship) Unified Testing and Development for the Interchain.
 
 ## Credits
 
-🛠 Built by Cosmology — if you like our tools, please consider delegating to [our validator ⚛️](https://cosmology.zone/validator)
+🛠 Built by Cosmology — if you like our tools, please consider delegating to [our validator ⚛️](https://hyperweb.io/validator)
 
 ## Disclaimer
 
