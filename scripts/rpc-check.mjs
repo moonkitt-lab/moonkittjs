@@ -57,7 +57,14 @@ try {
       tokens: v.tokens
     }))
   );
-  show('distribution.communityPool (first coin)', (await distribution.communityPool()).pool[0]);
+  // Chains that moved the community pool to x/protocolpool (Fetch.ai) reject
+  // this query: skip it there, but still fail on a transport error.
+  try {
+    show('distribution.communityPool (first coin)', (await distribution.communityPool()).pool[0]);
+  } catch (error) {
+    if (!error.message.startsWith('Query failed with')) throw error;
+    console.warn(`distribution.communityPool skipped: ${error.message}`);
+  }
 
   show('liquid.params', (await liquid.params()).params);
   show('liquid.lastTokenizeShareRecordId', await liquid.lastTokenizeShareRecordId());
