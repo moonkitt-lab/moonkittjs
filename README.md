@@ -14,6 +14,7 @@ npm install moonkittjs
   - [Install](#install)
   - [Table of contents](#table-of-contents)
 - [Usage](#usage)
+  - [Generated from](#generated-from)
   - [RPC Clients](#rpc-clients)
   - [Composing Messages](#composing-messages)
     - Cosmos, CosmWasm, and IBC
@@ -30,19 +31,77 @@ npm install moonkittjs
 
 ## Usage
 
+### Generated from
+
+`moonkittjs` 0.4.0 is generated for the Cosmos Hub, from the versions that gaia pins in its `go.mod`:
+
+| Source     | Version                                             |
+| ---------- | --------------------------------------------------- |
+| gaia       | v28.3.1 (protos identical to v28.0.0)               |
+| cosmos-sdk | v0.53.4                                             |
+| ibc-go     | v10.7.0                                             |
+| wasmd      | v0.60.9                                             |
+| ics23      | commit `a324422` (unchanged)                        |
+| atomone    | commit `bcd87ec`, v2.0.0 + 2 commits (unchanged)    |
+
+It requires `@cosmjs/*` ^0.38.1. See [CHANGELOG.md](./CHANGELOG.md) for what changed since 0.3.0.
+
 ### RPC Clients
 
-```js
-import { moonkitt } from "moonkittjs";
+Queries go over the CometBFT RPC (`abci_query`), through the Comet client of cosmjs 0.38.
+The code runs unchanged in Node, in a browser bundle and in a Cloudflare Worker.
 
-const { createRPCQueryClient } = moonkitt.ClientFactory;
-const client = await createRPCQueryClient({ rpcEndpoint: RPC_ENDPOINT });
+#### Per-module clients (recommended: small bundles)
 
-// now you can query the cosmos modules
-const balance = await client.cosmos.bank.v1beta1.allBalances({
-  address: "cosmos1addresshere",
-});
+Import the query client of each module you need from its own file. One connection
+is shared by all the clients, and a bundler only includes the modules you import.
+
+```ts
+import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
+import { connectComet } from "@cosmjs/tendermint-rpc";
+import { QueryClientImpl as BankQuery } from "moonkittjs/dist/codegen/cosmos/bank/v1beta1/query.rpc.Query";
+import { QueryClientImpl as StakingQuery } from "moonkittjs/dist/codegen/cosmos/staking/v1beta1/query.rpc.Query";
+import { QueryClientImpl as DistributionQuery } from "moonkittjs/dist/codegen/cosmos/distribution/v1beta1/query.rpc.Query";
+import { QueryClientImpl as LiquidQuery } from "moonkittjs/dist/codegen/gaia/liquid/v1beta1/query.rpc.Query";
+import type { TokenizeShareRecord } from "moonkittjs/dist/codegen/gaia/liquid/v1beta1/liquid";
+
+const comet = await connectComet(RPC_ENDPOINT);
+const rpc = createProtobufRpcClient(new QueryClient(comet));
+
+const bank = new BankQuery(rpc);
+const liquid = new LiquidQuery(rpc);
+
+const { balances } = await bank.allBalances({ address: "cosmos1addresshere", resolveDenom: false });
+const { records } = await liquid.tokenizeShareRecordsOwned({ owner: "cosmos1addresshere" });
+const { params } = await liquid.params();
+
+comet.disconnect();
 ```
+
+Measured with `npm run size` (esbuild, minified): the liquid, bank, staking and
+distribution query clients together add 457 kB (53 kB gzip) to an app that
+already ships `@cosmjs/stargate`.
+
+#### All modules at once
+
+`createRPCQueryClient` builds a client for every module (each one is loaded with a
+dynamic `import()`). It is convenient, but it brings the code of all the modules
+into the bundle, so prefer the per-module clients in an application.
+
+```js
+import { gaia } from "moonkittjs";
+
+const client = await gaia.ClientFactory.createRPCQueryClient({ rpcEndpoint: RPC_ENDPOINT });
+
+const balance = await client.cosmos.bank.v1beta1.allBalances({ address: "cosmos1addresshere" });
+const lsmParams = await client.gaia.liquid.v1beta1.params();
+```
+
+#### Checking a node
+
+`npm run test:rpc -- <rpcEndpoint>` runs a few read-only queries (bank, staking,
+distribution and gaia liquid) against a node. The default endpoint is
+`http://127.0.0.1:26657`. It sends no transaction.
 
 ### Composing Messages
 
@@ -239,25 +298,34 @@ const stargateClient = await SigningStargateClient.connectWithSigner(rpcEndpoint
 When first cloning the repo:
 
 ```
-yarn
-yarn build
+./scripts/setup-proto.sh   # checks out the proto submodules (proto/ only)
+npm install
+npm run build
+npm test
 ```
 
 ### Codegen
 
-Contract schemas live in `./contracts`, and protos in `./proto`. Look inside of `scripts/codegen.js` and configure the settings for bundling your SDK and contracts into `moonkittjs`:
+The protos come from the git submodules (`cosmos`, `ibc-go`, `ics23`, `atomone`, `gaia`) and from the vendored files in `./proto`. To generate for another gaia release, take the versions from its `go.mod`, set them in `scripts/update-proto.sh`, run it, then:
 
 ```
-yarn codegen
+npm run codegen
+npm run build
+npm test
 ```
+
+The settings are in `scripts/codegen.js`.
+
+### Build output
+
+`npm run build` writes CommonJS and the type declarations in `dist/`, and ES modules in `dist/esm/`. The `exports` field of `package.json` maps `moonkittjs` and `moonkittjs/dist/codegen/*` to the right one, so the import paths are the same for both.
 
 ### Publishing
 
-Build the types and then publish:
-
 ```
-yarn build
-yarn publish
+npm run build
+npm test
+npm publish
 ```
 
 ## Related
