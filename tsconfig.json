@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
         "rootDir": "src",
         "skipLibCheck": true,
+        "strict": false,
         "emitDeclarationOnly": false,
         "declaration": true,
         "esModuleInterop": true,
@@ -15,8 +15,7 @@
         "sourceMap": false,
         "isolatedModules": true,
         "allowJs": true,
-        "downlevelIteration": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true
     },
     "include": [

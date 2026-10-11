@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0
+## 1.0.0
 
 Generated for the current Cosmos Hub: gaia v28.3.1 (mainnet runs v28.3.0; the
 protos are identical to v28.0.0), with the versions pinned in its `go.mod`:
@@ -22,17 +22,18 @@ cosmos-sdk v0.53.4, ibc-go v10.7.0, wasmd v0.60.9.
 
 ### Changed
 
-- `@cosmjs/*` ^0.32.4 -> ^0.38.1. `@cosmjs/encoding` and `@cosmjs/math` are now
+- `@cosmjs/*` ^0.32.4 -> ^0.39.0. `@cosmjs/encoding` and `@cosmjs/math` are now
   declared dependencies (they were used but not declared).
 - `createRPCQueryClient` connects with `connectComet` (it detects the CometBFT
   version) instead of `Tendermint34Client`, which cosmjs 0.38 removed.
 - The LCD pagination helper no longer uses the Node `Buffer`.
 - Generated with `@cosmology/telescope` 1.12.21 (was 1.12.3).
 - The package no longer ships source maps.
+- `@cosmjs/amino` is no longer a direct dependency (it was not imported).
 
 ### Breaking
 
-- cosmjs 0.38 is required. A consumer still on cosmjs 0.32 - 0.37 would get two
+- cosmjs 0.39 is required. A consumer still on cosmjs 0.32 - 0.38 would get two
   copies of cosmjs: upgrade the application first.
 - Only the paths `moonkittjs`, `moonkittjs/dist/codegen/*` and
   `moonkittjs/package.json` can be imported. `moonkittjs/dist/codegen/...` paths
@@ -52,6 +53,11 @@ cosmos-sdk v0.53.4, ibc-go v10.7.0, wasmd v0.60.9.
   - `ibc.core.client.v1`: `ClientUpdateProposal` and `UpgradeProposal`.
   - `ibc.core.commitment.v1`: `MerklePath` moved to `ibc.core.commitment.v2`.
 - Removed with cosmos-sdk v0.53: `cosmos.orm.query.v1alpha1`.
+- Removed: the LCD (REST) clients (`createLCDClient`, the `LCDQueryClient`
+  classes and the `*.lcd` files), and with them the `@cosmology/lcd` and `axios`
+  dependencies. Queries go over RPC.
+- Removed: the `atomone` modules (`atomone.gov.v1`, `atomone.gov.v1beta1`,
+  `atomone.photon.v1`). `moonkittjs` only targets the Cosmos Hub now.
 - `cosmwasm.wasm.v1`: the `proposal` file is now `proposal_legacy` (wasmd v0.60).
 
 No type or field changed in `gaia.liquid.v1beta1`, nor in the bank, staking and

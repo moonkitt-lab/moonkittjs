@@ -1,6 +1,6 @@
 // To be run with "npm run codegen"
 
-// The proto sources are git submodules (cosmos, ibc-go, ics23, atomone, gaia),
+// The proto sources are git submodules (cosmos, ibc-go, ics23, gaia),
 // checked out sparsely (proto/ only), plus the vendored files in proto/.
 //   - after cloning the repo:      ./scripts/setup-proto.sh
 //   - to move to another version:  edit the refs in ./scripts/update-proto.sh, run it,
@@ -19,7 +19,6 @@ const sourceProtoDirs = [
   join(__dirname, '/../cosmos/proto'),
   join(__dirname, '/../ics23/proto'),
   join(__dirname, '/../ibc-go/proto'),
-  join(__dirname, '/../atomone/proto'),
   join(__dirname, '/../gaia/proto'),
 ];
 
@@ -147,7 +146,7 @@ telescope({
       exceptions: AMINO_MAP
     },
     lcdClients: {
-      enabled: true
+      enabled: false
     },
     rpcClients: {
       enabled: true,

@@ -8,7 +8,7 @@
 git submodule update --init --recursive
 
 # Set up sparse-checkout for each submodule
-for submodule in cosmos ics23 ibc-go atomone gaia; do
+for submodule in cosmos ics23 ibc-go gaia; do
   echo "Setting up sparse-checkout for $submodule..."
   (cd $submodule && 
    git sparse-checkout init &&

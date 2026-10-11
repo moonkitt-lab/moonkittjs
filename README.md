@@ -33,7 +33,7 @@ npm install moonkittjs
 
 ### Generated from
 
-`moonkittjs` 0.4.0 is generated for the Cosmos Hub, from the versions that gaia pins in its `go.mod`:
+`moonkittjs` 1.0.0 is generated for the Cosmos Hub, from the versions that gaia pins in its `go.mod`:
 
 | Source     | Version                                             |
 | ---------- | --------------------------------------------------- |
@@ -42,13 +42,12 @@ npm install moonkittjs
 | ibc-go     | v10.7.0                                             |
 | wasmd      | v0.60.9                                             |
 | ics23      | commit `a324422` (unchanged)                        |
-| atomone    | commit `bcd87ec`, v2.0.0 + 2 commits (unchanged)    |
 
-It requires `@cosmjs/*` ^0.38.1. See [CHANGELOG.md](./CHANGELOG.md) for what changed since 0.3.0.
+It requires `@cosmjs/*` ^0.39.0. See [CHANGELOG.md](./CHANGELOG.md) for what changed since 0.3.0.
 
 ### RPC Clients
 
-Queries go over the CometBFT RPC (`abci_query`), through the Comet client of cosmjs 0.38.
+Queries go over the CometBFT RPC (`abci_query`), through the Comet client of cosmjs.
 The code runs unchanged in Node, in a browser bundle and in a Cloudflare Worker.
 
 #### Per-module clients (recommended: small bundles)
@@ -306,7 +305,7 @@ npm test
 
 ### Codegen
 
-The protos come from the git submodules (`cosmos`, `ibc-go`, `ics23`, `atomone`, `gaia`) and from the vendored files in `./proto`. To generate for another gaia release, take the versions from its `go.mod`, set them in `scripts/update-proto.sh`, run it, then:
+The protos come from the git submodules (`cosmos`, `ibc-go`, `ics23`, `gaia`) and from the vendored files in `./proto`. To generate for another gaia release, take the versions from its `go.mod`, set them in `scripts/update-proto.sh`, run it, then:
 
 ```
 npm run codegen

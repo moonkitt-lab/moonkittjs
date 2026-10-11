@@ -16,8 +16,6 @@ export * from "./cosmos/client.js";
 export * from "./tendermint/bundle.js";
 export * from "./ibc/bundle.js";
 export * from "./ibc/client.js";
-export * from "./atomone/bundle.js";
-export * from "./atomone/client.js";
 export * from "./gaia/bundle.js";
 export * from "./gaia/client.js";
 export * from "./varint.js";
