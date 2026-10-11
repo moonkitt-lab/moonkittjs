@@ -1,6 +1,6 @@
-import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** Params defines the parameters for the bank module. */
 export interface Params {
   /**
@@ -18,7 +18,12 @@ export interface ParamsProtoMsg {
   typeUrl: "/cosmos.bank.v1beta1.Params";
   value: Uint8Array;
 }
-/** Params defines the parameters for the bank module. */
+/**
+ * Params defines the parameters for the bank module.
+ * @name ParamsAmino
+ * @package cosmos.bank.v1beta1
+ * @see proto type: cosmos.bank.v1beta1.Params
+ */
 export interface ParamsAmino {
   /**
    * Deprecated: Use of SendEnabled in params is deprecated.
@@ -26,8 +31,8 @@ export interface ParamsAmino {
    * Storage, lookup, and manipulation of this information is now in the keeper.
    * 
    * As of cosmos-sdk 0.47, this only exists for backwards compatibility of genesis files.
+   * @deprecated
    */
-  /** @deprecated */
   send_enabled?: SendEnabledAmino[];
   default_send_enabled?: boolean;
 }
@@ -56,6 +61,9 @@ export interface SendEnabledProtoMsg {
 /**
  * SendEnabled maps coin denom to a send_enabled status (whether a denom is
  * sendable).
+ * @name SendEnabledAmino
+ * @package cosmos.bank.v1beta1
+ * @see proto type: cosmos.bank.v1beta1.SendEnabled
  */
 export interface SendEnabledAmino {
   denom?: string;
@@ -82,7 +90,12 @@ export interface InputProtoMsg {
   typeUrl: "/cosmos.bank.v1beta1.Input";
   value: Uint8Array;
 }
-/** Input models transaction input. */
+/**
+ * Input models transaction input.
+ * @name InputAmino
+ * @package cosmos.bank.v1beta1
+ * @see proto type: cosmos.bank.v1beta1.Input
+ */
 export interface InputAmino {
   address?: string;
   coins: CoinAmino[];
@@ -105,7 +118,12 @@ export interface OutputProtoMsg {
   typeUrl: "/cosmos.bank.v1beta1.Output";
   value: Uint8Array;
 }
-/** Output models transaction outputs. */
+/**
+ * Output models transaction outputs.
+ * @name OutputAmino
+ * @package cosmos.bank.v1beta1
+ * @see proto type: cosmos.bank.v1beta1.Output
+ */
 export interface OutputAmino {
   address?: string;
   coins: CoinAmino[];
@@ -137,8 +155,11 @@ export interface SupplyProtoMsg {
  * Supply represents a struct that passively keeps track of the total supply
  * amounts in the network.
  * This message is deprecated now that supply is indexed by denom.
+ * @name SupplyAmino
+ * @package cosmos.bank.v1beta1
+ * @see proto type: cosmos.bank.v1beta1.Supply
+ * @deprecated
  */
-/** @deprecated */
 export interface SupplyAmino {
   total: CoinAmino[];
 }
@@ -181,9 +202,14 @@ export interface DenomUnitProtoMsg {
 /**
  * DenomUnit represents a struct that describes a given
  * denomination unit of the basic token.
+ * @name DenomUnitAmino
+ * @package cosmos.bank.v1beta1
+ * @see proto type: cosmos.bank.v1beta1.DenomUnit
  */
 export interface DenomUnitAmino {
-  /** denom represents the string name of the given denom unit (e.g uatom). */
+  /**
+   * denom represents the string name of the given denom unit (e.g uatom).
+   */
   denom?: string;
   /**
    * exponent represents power of 10 exponent that one must
@@ -193,7 +219,9 @@ export interface DenomUnitAmino {
    * exponent = 6, thus: 1 atom = 10^6 uatom).
    */
   exponent?: number;
-  /** aliases is a list of string aliases for the given denom */
+  /**
+   * aliases is a list of string aliases for the given denom
+   */
   aliases?: string[];
 }
 export interface DenomUnitAminoMsg {
@@ -224,30 +252,18 @@ export interface Metadata {
    * displayed in clients.
    */
   display: string;
-  /**
-   * name defines the name of the token (eg: Cosmos Atom)
-   * 
-   * Since: cosmos-sdk 0.43
-   */
+  /** name defines the name of the token (eg: Cosmos Atom) */
   name: string;
   /**
    * symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
    * be the same as the display.
-   * 
-   * Since: cosmos-sdk 0.43
    */
   symbol: string;
-  /**
-   * URI to a document (on or off-chain) that contains additional information. Optional.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
+  /** URI to a document (on or off-chain) that contains additional information. Optional. */
   uri: string;
   /**
    * URIHash is a sha256 hash of a document pointed by URI. It's used to verify that
    * the document didn't change. Optional.
-   * 
-   * Since: cosmos-sdk 0.46
    */
   uriHash: string;
 }
@@ -258,12 +274,19 @@ export interface MetadataProtoMsg {
 /**
  * Metadata represents a struct that describes
  * a basic token.
+ * @name MetadataAmino
+ * @package cosmos.bank.v1beta1
+ * @see proto type: cosmos.bank.v1beta1.Metadata
  */
 export interface MetadataAmino {
   description?: string;
-  /** denom_units represents the list of DenomUnit's for a given coin */
+  /**
+   * denom_units represents the list of DenomUnit's for a given coin
+   */
   denom_units?: DenomUnitAmino[];
-  /** base represents the base denom (should be the DenomUnit with exponent = 0). */
+  /**
+   * base represents the base denom (should be the DenomUnit with exponent = 0).
+   */
   base?: string;
   /**
    * display indicates the suggested denom that should be
@@ -272,28 +295,20 @@ export interface MetadataAmino {
   display?: string;
   /**
    * name defines the name of the token (eg: Cosmos Atom)
-   * 
-   * Since: cosmos-sdk 0.43
    */
   name?: string;
   /**
    * symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
    * be the same as the display.
-   * 
-   * Since: cosmos-sdk 0.43
    */
   symbol?: string;
   /**
    * URI to a document (on or off-chain) that contains additional information. Optional.
-   * 
-   * Since: cosmos-sdk 0.46
    */
   uri?: string;
   /**
    * URIHash is a sha256 hash of a document pointed by URI. It's used to verify that
    * the document didn't change. Optional.
-   * 
-   * Since: cosmos-sdk 0.46
    */
   uri_hash?: string;
 }

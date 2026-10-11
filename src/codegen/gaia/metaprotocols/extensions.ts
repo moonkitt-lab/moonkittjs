@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from "../../binary";
-import { bytesFromBase64, base64FromBytes } from "../../helpers";
-import { GlobalDecoderRegistry } from "../../registry";
+import { BinaryReader, BinaryWriter } from "../../binary.js";
+import { bytesFromBase64, base64FromBytes } from "../../helpers.js";
+import { GlobalDecoderRegistry } from "../../registry.js";
 /** ExtensionData is a data structure that can be used in transaction extensions. */
 export interface ExtensionData {
   /**
@@ -23,7 +23,12 @@ export interface ExtensionDataProtoMsg {
   typeUrl: "/gaia.metaprotocols.ExtensionData";
   value: Uint8Array;
 }
-/** ExtensionData is a data structure that can be used in transaction extensions. */
+/**
+ * ExtensionData is a data structure that can be used in transaction extensions.
+ * @name ExtensionDataAmino
+ * @package gaia.metaprotocols
+ * @see proto type: gaia.metaprotocols.ExtensionData
+ */
 export interface ExtensionDataAmino {
   /**
    * protocol_id is the identifier of the protocol

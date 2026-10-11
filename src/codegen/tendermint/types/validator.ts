@@ -1,7 +1,7 @@
-import { PublicKey, PublicKeyAmino, PublicKeySDKType } from "../crypto/keys";
-import { BinaryReader, BinaryWriter } from "../../binary";
-import { GlobalDecoderRegistry } from "../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../helpers";
+import { PublicKey, PublicKeyAmino, PublicKeySDKType } from "../crypto/keys.js";
+import { BinaryReader, BinaryWriter } from "../../binary.js";
+import { GlobalDecoderRegistry } from "../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../helpers.js";
 /** BlockIdFlag indicates which BlockID the signature is for */
 export enum BlockIDFlag {
   /** BLOCK_ID_FLAG_UNKNOWN - indicates an error condition */
@@ -59,6 +59,11 @@ export interface ValidatorSetProtoMsg {
   typeUrl: "/tendermint.types.ValidatorSet";
   value: Uint8Array;
 }
+/**
+ * @name ValidatorSetAmino
+ * @package tendermint.types
+ * @see proto type: tendermint.types.ValidatorSet
+ */
 export interface ValidatorSetAmino {
   validators?: ValidatorAmino[];
   proposer?: ValidatorAmino;
@@ -83,6 +88,11 @@ export interface ValidatorProtoMsg {
   typeUrl: "/tendermint.types.Validator";
   value: Uint8Array;
 }
+/**
+ * @name ValidatorAmino
+ * @package tendermint.types
+ * @see proto type: tendermint.types.Validator
+ */
 export interface ValidatorAmino {
   address?: string;
   pub_key?: PublicKeyAmino;
@@ -107,6 +117,11 @@ export interface SimpleValidatorProtoMsg {
   typeUrl: "/tendermint.types.SimpleValidator";
   value: Uint8Array;
 }
+/**
+ * @name SimpleValidatorAmino
+ * @package tendermint.types
+ * @see proto type: tendermint.types.SimpleValidator
+ */
 export interface SimpleValidatorAmino {
   pub_key?: PublicKeyAmino;
   voting_power?: string;

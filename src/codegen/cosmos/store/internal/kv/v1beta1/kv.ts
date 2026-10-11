@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from "../../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../../../helpers.js";
 /** Pairs defines a repeated slice of Pair objects. */
 export interface Pairs {
   pairs: Pair[];
@@ -9,7 +9,12 @@ export interface PairsProtoMsg {
   typeUrl: "/cosmos.store.internal.kv.v1beta1.Pairs";
   value: Uint8Array;
 }
-/** Pairs defines a repeated slice of Pair objects. */
+/**
+ * Pairs defines a repeated slice of Pair objects.
+ * @name PairsAmino
+ * @package cosmos.store.internal.kv.v1beta1
+ * @see proto type: cosmos.store.internal.kv.v1beta1.Pairs
+ */
 export interface PairsAmino {
   pairs?: PairAmino[];
 }
@@ -30,7 +35,12 @@ export interface PairProtoMsg {
   typeUrl: "/cosmos.store.internal.kv.v1beta1.Pair";
   value: Uint8Array;
 }
-/** Pair defines a key/value bytes tuple. */
+/**
+ * Pair defines a key/value bytes tuple.
+ * @name PairAmino
+ * @package cosmos.store.internal.kv.v1beta1
+ * @see proto type: cosmos.store.internal.kv.v1beta1.Pair
+ */
 export interface PairAmino {
   key?: string;
   value?: string;

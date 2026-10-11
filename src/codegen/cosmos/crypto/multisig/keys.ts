@@ -1,6 +1,6 @@
-import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /**
  * LegacyAminoPubKey specifies a public key type
  * which nests multiple public keys and a threshold,
@@ -18,6 +18,9 @@ export interface LegacyAminoPubKeyProtoMsg {
  * LegacyAminoPubKey specifies a public key type
  * which nests multiple public keys and a threshold,
  * it uses legacy amino address rules.
+ * @name LegacyAminoPubKeyAmino
+ * @package cosmos.crypto.multisig
+ * @see proto type: cosmos.crypto.multisig.LegacyAminoPubKey
  */
 export interface LegacyAminoPubKeyAmino {
   threshold?: number;

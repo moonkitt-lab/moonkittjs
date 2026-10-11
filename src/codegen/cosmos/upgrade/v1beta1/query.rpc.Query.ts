@@ -1,7 +1,7 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryCurrentPlanRequest, QueryCurrentPlanResponse, QueryAppliedPlanRequest, QueryAppliedPlanResponse, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponse, QueryModuleVersionsRequest, QueryModuleVersionsResponse, QueryAuthorityRequest, QueryAuthorityResponse } from "./query";
+import { QueryCurrentPlanRequest, QueryCurrentPlanResponse, QueryAppliedPlanRequest, QueryAppliedPlanResponse, QueryUpgradedConsensusStateRequest, QueryUpgradedConsensusStateResponse, QueryModuleVersionsRequest, QueryModuleVersionsResponse, QueryAuthorityRequest, QueryAuthorityResponse } from "./query.js";
 /** Query defines the gRPC upgrade querier service. */
 export interface Query {
   /** CurrentPlan queries the current upgrade plan. */
@@ -17,17 +17,9 @@ export interface Query {
    * (https://github.com/cosmos/ibc-go/blob/2c880a22e9f9cc75f62b527ca94aa75ce1106001/proto/ibc/core/client/v1/query.proto#L54)
    */
   upgradedConsensusState(request: QueryUpgradedConsensusStateRequest): Promise<QueryUpgradedConsensusStateResponse>;
-  /**
-   * ModuleVersions queries the list of module versions from state.
-   * 
-   * Since: cosmos-sdk 0.43
-   */
+  /** ModuleVersions queries the list of module versions from state. */
   moduleVersions(request: QueryModuleVersionsRequest): Promise<QueryModuleVersionsResponse>;
-  /**
-   * Returns the account with authority to conduct upgrades
-   * 
-   * Since: cosmos-sdk 0.46
-   */
+  /** Returns the account with authority to conduct upgrades */
   authority(request?: QueryAuthorityRequest): Promise<QueryAuthorityResponse>;
 }
 export class QueryClientImpl implements Query {

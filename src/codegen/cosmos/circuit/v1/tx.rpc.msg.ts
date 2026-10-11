@@ -1,6 +1,6 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
-import { MsgAuthorizeCircuitBreaker, MsgAuthorizeCircuitBreakerResponse, MsgTripCircuitBreaker, MsgTripCircuitBreakerResponse, MsgResetCircuitBreaker, MsgResetCircuitBreakerResponse } from "./tx";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
+import { MsgAuthorizeCircuitBreaker, MsgAuthorizeCircuitBreakerResponse, MsgTripCircuitBreaker, MsgTripCircuitBreakerResponse, MsgResetCircuitBreaker, MsgResetCircuitBreakerResponse } from "./tx.js";
 /** Msg defines the circuit Msg service. */
 export interface Msg {
   /**

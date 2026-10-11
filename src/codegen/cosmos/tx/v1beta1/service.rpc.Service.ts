@@ -1,7 +1,7 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { SimulateRequest, SimulateResponse, GetTxRequest, GetTxResponse, BroadcastTxRequest, BroadcastTxResponse, GetTxsEventRequest, GetTxsEventResponse, GetBlockWithTxsRequest, GetBlockWithTxsResponse, TxDecodeRequest, TxDecodeResponse, TxEncodeRequest, TxEncodeResponse, TxEncodeAminoRequest, TxEncodeAminoResponse, TxDecodeAminoRequest, TxDecodeAminoResponse } from "./service";
+import { SimulateRequest, SimulateResponse, GetTxRequest, GetTxResponse, BroadcastTxRequest, BroadcastTxResponse, GetTxsEventRequest, GetTxsEventResponse, GetBlockWithTxsRequest, GetBlockWithTxsResponse, TxDecodeRequest, TxDecodeResponse, TxEncodeRequest, TxEncodeResponse, TxEncodeAminoRequest, TxEncodeAminoResponse, TxDecodeAminoRequest, TxDecodeAminoResponse } from "./service.js";
 /** Service defines a gRPC service for interacting with transactions. */
 export interface Service {
   /** Simulate simulates executing a transaction for estimating gas usage. */
@@ -12,35 +12,15 @@ export interface Service {
   broadcastTx(request: BroadcastTxRequest): Promise<BroadcastTxResponse>;
   /** GetTxsEvent fetches txs by event. */
   getTxsEvent(request: GetTxsEventRequest): Promise<GetTxsEventResponse>;
-  /**
-   * GetBlockWithTxs fetches a block with decoded txs.
-   * 
-   * Since: cosmos-sdk 0.45.2
-   */
+  /** GetBlockWithTxs fetches a block with decoded txs. */
   getBlockWithTxs(request: GetBlockWithTxsRequest): Promise<GetBlockWithTxsResponse>;
-  /**
-   * TxDecode decodes the transaction.
-   * 
-   * Since: cosmos-sdk 0.47
-   */
+  /** TxDecode decodes the transaction. */
   txDecode(request: TxDecodeRequest): Promise<TxDecodeResponse>;
-  /**
-   * TxEncode encodes the transaction.
-   * 
-   * Since: cosmos-sdk 0.47
-   */
+  /** TxEncode encodes the transaction. */
   txEncode(request: TxEncodeRequest): Promise<TxEncodeResponse>;
-  /**
-   * TxEncodeAmino encodes an Amino transaction from JSON to encoded bytes.
-   * 
-   * Since: cosmos-sdk 0.47
-   */
+  /** TxEncodeAmino encodes an Amino transaction from JSON to encoded bytes. */
   txEncodeAmino(request: TxEncodeAminoRequest): Promise<TxEncodeAminoResponse>;
-  /**
-   * TxDecodeAmino decodes an Amino transaction from encoded bytes to JSON.
-   * 
-   * Since: cosmos-sdk 0.47
-   */
+  /** TxDecodeAmino decodes an Amino transaction from encoded bytes to JSON. */
   txDecodeAmino(request: TxDecodeAminoRequest): Promise<TxDecodeAminoResponse>;
 }
 export class ServiceClientImpl implements Service {

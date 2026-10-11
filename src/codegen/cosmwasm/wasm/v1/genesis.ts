@@ -1,7 +1,7 @@
-import { Params, ParamsAmino, ParamsSDKType, CodeInfo, CodeInfoAmino, CodeInfoSDKType, ContractInfo, ContractInfoAmino, ContractInfoSDKType, Model, ModelAmino, ModelSDKType, ContractCodeHistoryEntry, ContractCodeHistoryEntryAmino, ContractCodeHistoryEntrySDKType } from "./types";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../helpers";
+import { Params, ParamsAmino, ParamsSDKType, CodeInfo, CodeInfoAmino, CodeInfoSDKType, ContractInfo, ContractInfoAmino, ContractInfoSDKType, Model, ModelAmino, ModelSDKType, ContractCodeHistoryEntry, ContractCodeHistoryEntryAmino, ContractCodeHistoryEntrySDKType } from "./types.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../helpers.js";
 /** GenesisState - genesis state of x/wasm */
 export interface GenesisState {
   params: Params;
@@ -13,9 +13,14 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState - genesis state of x/wasm */
+/**
+ * GenesisState - genesis state of x/wasm
+ * @name GenesisStateAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.GenesisState
+ */
 export interface GenesisStateAmino {
-  params?: ParamsAmino;
+  params: ParamsAmino;
   codes?: CodeAmino[];
   contracts?: ContractAmino[];
   sequences?: SequenceAmino[];
@@ -43,12 +48,19 @@ export interface CodeProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.Code";
   value: Uint8Array;
 }
-/** Code struct encompasses CodeInfo and CodeBytes */
+/**
+ * Code struct encompasses CodeInfo and CodeBytes
+ * @name CodeAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.Code
+ */
 export interface CodeAmino {
   code_id?: string;
-  code_info?: CodeInfoAmino;
+  code_info: CodeInfoAmino;
   code_bytes?: string;
-  /** Pinned to wasmvm cache */
+  /**
+   * Pinned to wasmvm cache
+   */
   pinned?: boolean;
 }
 export interface CodeAminoMsg {
@@ -73,12 +85,17 @@ export interface ContractProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.Contract";
   value: Uint8Array;
 }
-/** Contract struct encompasses ContractAddress, ContractInfo, and ContractState */
+/**
+ * Contract struct encompasses ContractAddress, ContractInfo, and ContractState
+ * @name ContractAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.Contract
+ */
 export interface ContractAmino {
   contract_address?: string;
-  contract_info?: ContractInfoAmino;
-  contract_state?: ModelAmino[];
-  contract_code_history?: ContractCodeHistoryEntryAmino[];
+  contract_info: ContractInfoAmino;
+  contract_state: ModelAmino[];
+  contract_code_history: ContractCodeHistoryEntryAmino[];
 }
 export interface ContractAminoMsg {
   type: "wasm/Contract";
@@ -100,7 +117,12 @@ export interface SequenceProtoMsg {
   typeUrl: "/cosmwasm.wasm.v1.Sequence";
   value: Uint8Array;
 }
-/** Sequence key and value of an id generation counter */
+/**
+ * Sequence key and value of an id generation counter
+ * @name SequenceAmino
+ * @package cosmwasm.wasm.v1
+ * @see proto type: cosmwasm.wasm.v1.Sequence
+ */
 export interface SequenceAmino {
   id_key?: string;
   value?: string;
@@ -195,7 +217,7 @@ export const GenesisState = {
   },
   toAmino(message: GenesisState): GenesisStateAmino {
     const obj: any = {};
-    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    obj.params = message.params ? Params.toAmino(message.params) : Params.toAmino(Params.fromPartial({}));
     if (message.codes) {
       obj.codes = message.codes.map(e => e ? Code.toAmino(e) : undefined);
     } else {
@@ -325,7 +347,7 @@ export const Code = {
   toAmino(message: Code): CodeAmino {
     const obj: any = {};
     obj.code_id = message.codeId !== BigInt(0) ? message.codeId?.toString() : undefined;
-    obj.code_info = message.codeInfo ? CodeInfo.toAmino(message.codeInfo) : undefined;
+    obj.code_info = message.codeInfo ? CodeInfo.toAmino(message.codeInfo) : CodeInfo.toAmino(CodeInfo.fromPartial({}));
     obj.code_bytes = message.codeBytes ? base64FromBytes(message.codeBytes) : undefined;
     obj.pinned = message.pinned === false ? undefined : message.pinned;
     return obj;
@@ -438,7 +460,7 @@ export const Contract = {
   toAmino(message: Contract): ContractAmino {
     const obj: any = {};
     obj.contract_address = message.contractAddress === "" ? undefined : message.contractAddress;
-    obj.contract_info = message.contractInfo ? ContractInfo.toAmino(message.contractInfo) : undefined;
+    obj.contract_info = message.contractInfo ? ContractInfo.toAmino(message.contractInfo) : ContractInfo.toAmino(ContractInfo.fromPartial({}));
     if (message.contractState) {
       obj.contract_state = message.contractState.map(e => e ? Model.toAmino(e) : undefined);
     } else {

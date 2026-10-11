@@ -1,8 +1,8 @@
-import { Params, ParamsAmino, ParamsSDKType, TokenizeShareRecord, TokenizeShareRecordAmino, TokenizeShareRecordSDKType } from "./liquid";
-import { Timestamp } from "../../../google/protobuf/timestamp";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
-import { bytesFromBase64, base64FromBytes, toTimestamp, fromTimestamp } from "../../../helpers";
+import { Params, ParamsAmino, ParamsSDKType, TokenizeShareRecord, TokenizeShareRecordAmino, TokenizeShareRecordSDKType } from "./liquid.js";
+import { Timestamp } from "../../../google/protobuf/timestamp.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
+import { bytesFromBase64, base64FromBytes, toTimestamp, fromTimestamp } from "../../../helpers.js";
 /** GenesisState defines the liquid module's genesis state. */
 export interface GenesisState {
   /** params defines all the parameters of related to deposit. */
@@ -20,17 +20,32 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the liquid module's genesis state. */
+/**
+ * GenesisState defines the liquid module's genesis state.
+ * @name GenesisStateAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.GenesisState
+ */
 export interface GenesisStateAmino {
-  /** params defines all the parameters of related to deposit. */
+  /**
+   * params defines all the parameters of related to deposit.
+   */
   params: ParamsAmino;
-  /** store tokenize share records to provide reward to record owners */
+  /**
+   * store tokenize share records to provide reward to record owners
+   */
   tokenize_share_records?: TokenizeShareRecordAmino[];
-  /** last tokenize share record id, used for next share record id calculation */
+  /**
+   * last tokenize share record id, used for next share record id calculation
+   */
   last_tokenize_share_record_id?: string;
-  /** total number of liquid staked tokens at genesis */
+  /**
+   * total number of liquid staked tokens at genesis
+   */
   total_liquid_staked_tokens?: string;
-  /** tokenize shares locks at genesis */
+  /**
+   * tokenize shares locks at genesis
+   */
   tokenize_share_locks?: TokenizeShareLockAmino[];
 }
 export interface GenesisStateAminoMsg {
@@ -58,13 +73,24 @@ export interface TokenizeShareLockProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.TokenizeShareLock";
   value: Uint8Array;
 }
-/** TokenizeSharesLock required for specifying account locks at genesis */
+/**
+ * TokenizeSharesLock required for specifying account locks at genesis
+ * @name TokenizeShareLockAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.TokenizeShareLock
+ */
 export interface TokenizeShareLockAmino {
-  /** Address of the account that is locked */
+  /**
+   * Address of the account that is locked
+   */
   address?: string;
-  /** Status of the lock (LOCKED or LOCK_EXPIRING) */
+  /**
+   * Status of the lock (LOCKED or LOCK_EXPIRING)
+   */
   status?: string;
-  /** Completion time if the lock is expiring */
+  /**
+   * Completion time if the lock is expiring
+   */
   completion_time?: string;
 }
 export interface TokenizeShareLockAminoMsg {

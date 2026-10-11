@@ -1,13 +1,11 @@
-import { ResponseCommit, ResponseCommitAmino, ResponseCommitSDKType, RequestFinalizeBlock, RequestFinalizeBlockAmino, RequestFinalizeBlockSDKType, ResponseFinalizeBlock, ResponseFinalizeBlockAmino, ResponseFinalizeBlockSDKType } from "../../../tendermint/abci/types";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { bytesFromBase64, base64FromBytes } from "../../../helpers";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { ResponseCommit, ResponseCommitAmino, ResponseCommitSDKType, RequestFinalizeBlock, RequestFinalizeBlockAmino, RequestFinalizeBlockSDKType, ResponseFinalizeBlock, ResponseFinalizeBlockAmino, ResponseFinalizeBlockSDKType } from "../../../tendermint/abci/types.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { bytesFromBase64, base64FromBytes } from "../../../helpers.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /**
  * StoreKVPair is a KVStore KVPair used for listening to state changes (Sets and Deletes)
  * It optionally includes the StoreKey for the originating KVStore and a Boolean flag to distinguish between Sets and
  * Deletes
- * 
- * Since: cosmos-sdk 0.43
  */
 export interface StoreKVPair {
   /** the store key for the KVStore this pair originates from */
@@ -25,13 +23,18 @@ export interface StoreKVPairProtoMsg {
  * StoreKVPair is a KVStore KVPair used for listening to state changes (Sets and Deletes)
  * It optionally includes the StoreKey for the originating KVStore and a Boolean flag to distinguish between Sets and
  * Deletes
- * 
- * Since: cosmos-sdk 0.43
+ * @name StoreKVPairAmino
+ * @package cosmos.store.v1beta1
+ * @see proto type: cosmos.store.v1beta1.StoreKVPair
  */
 export interface StoreKVPairAmino {
-  /** the store key for the KVStore this pair originates from */
+  /**
+   * the store key for the KVStore this pair originates from
+   */
   store_key?: string;
-  /** true indicates a delete operation, false indicates a set operation */
+  /**
+   * true indicates a delete operation, false indicates a set operation
+   */
   delete?: boolean;
   key?: string;
   value?: string;
@@ -44,8 +47,6 @@ export interface StoreKVPairAminoMsg {
  * StoreKVPair is a KVStore KVPair used for listening to state changes (Sets and Deletes)
  * It optionally includes the StoreKey for the originating KVStore and a Boolean flag to distinguish between Sets and
  * Deletes
- * 
- * Since: cosmos-sdk 0.43
  */
 export interface StoreKVPairSDKType {
   store_key: string;
@@ -70,11 +71,16 @@ export interface BlockMetadataProtoMsg {
 /**
  * BlockMetadata contains all the abci event data of a block
  * the file streamer dump them into files together with the state changes.
+ * @name BlockMetadataAmino
+ * @package cosmos.store.v1beta1
+ * @see proto type: cosmos.store.v1beta1.BlockMetadata
  */
 export interface BlockMetadataAmino {
   response_commit?: ResponseCommitAmino;
   request_finalize_block?: RequestFinalizeBlockAmino;
-  /** TODO: should we renumber this? */
+  /**
+   * TODO: should we renumber this?
+   */
   response_finalize_block?: ResponseFinalizeBlockAmino;
 }
 export interface BlockMetadataAminoMsg {

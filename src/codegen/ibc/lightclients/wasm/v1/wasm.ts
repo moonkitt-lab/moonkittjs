@@ -1,7 +1,7 @@
-import { Height, HeightAmino, HeightSDKType } from "../../../core/client/v1/client";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { Height, HeightAmino, HeightSDKType } from "../../../core/client/v1/client.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
 /** Wasm light client's Client state */
 export interface ClientState {
   /**
@@ -16,7 +16,12 @@ export interface ClientStateProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.ClientState";
   value: Uint8Array;
 }
-/** Wasm light client's Client state */
+/**
+ * Wasm light client's Client state
+ * @name ClientStateAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.ClientState
+ */
 export interface ClientStateAmino {
   /**
    * bytes encoding the client state of the underlying light client
@@ -48,7 +53,12 @@ export interface ConsensusStateProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.ConsensusState";
   value: Uint8Array;
 }
-/** Wasm light client's ConsensusState */
+/**
+ * Wasm light client's ConsensusState
+ * @name ConsensusStateAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.ConsensusState
+ */
 export interface ConsensusStateAmino {
   /**
    * bytes encoding the consensus state of the underlying light client
@@ -72,7 +82,12 @@ export interface ClientMessageProtoMsg {
   typeUrl: "/ibc.lightclients.wasm.v1.ClientMessage";
   value: Uint8Array;
 }
-/** Wasm light client message (either header(s) or misbehaviour) */
+/**
+ * Wasm light client message (either header(s) or misbehaviour)
+ * @name ClientMessageAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.ClientMessage
+ */
 export interface ClientMessageAmino {
   data?: string;
 }
@@ -103,8 +118,11 @@ export interface ChecksumsProtoMsg {
  * 
  * Deprecated: This message is deprecated in favor of storing the checksums
  * using a Collections.KeySet.
+ * @name ChecksumsAmino
+ * @package ibc.lightclients.wasm.v1
+ * @see proto type: ibc.lightclients.wasm.v1.Checksums
+ * @deprecated
  */
-/** @deprecated */
 export interface ChecksumsAmino {
   checksums?: string[];
 }

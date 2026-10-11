@@ -1,6 +1,6 @@
-import { GrantAuthorization, GrantAuthorizationAmino, GrantAuthorizationSDKType } from "./authz";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { GrantAuthorization, GrantAuthorizationAmino, GrantAuthorizationSDKType } from "./authz.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** GenesisState defines the authz module's genesis state. */
 export interface GenesisState {
   authorization: GrantAuthorization[];
@@ -9,7 +9,12 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.authz.v1beta1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the authz module's genesis state. */
+/**
+ * GenesisState defines the authz module's genesis state.
+ * @name GenesisStateAmino
+ * @package cosmos.authz.v1beta1
+ * @see proto type: cosmos.authz.v1beta1.GenesisState
+ */
 export interface GenesisStateAmino {
   authorization: GrantAuthorizationAmino[];
 }

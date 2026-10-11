@@ -1,8 +1,8 @@
-import { MemberRequest, MemberRequestAmino, MemberRequestSDKType, VoteOption, ProposalExecutorResult, ThresholdDecisionPolicy, ThresholdDecisionPolicyProtoMsg, ThresholdDecisionPolicySDKType, PercentageDecisionPolicy, PercentageDecisionPolicyProtoMsg, PercentageDecisionPolicySDKType } from "./types";
-import { Any, AnyProtoMsg, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
-import { isSet } from "../../../helpers";
+import { MemberRequest, MemberRequestAmino, MemberRequestSDKType, VoteOption, ProposalExecutorResult, ThresholdDecisionPolicy, ThresholdDecisionPolicyProtoMsg, ThresholdDecisionPolicySDKType, PercentageDecisionPolicy, PercentageDecisionPolicyProtoMsg, PercentageDecisionPolicySDKType } from "./types.js";
+import { Any, AnyProtoMsg, AnyAmino, AnySDKType } from "../../../google/protobuf/any.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
+import { isSet } from "../../../helpers.js";
 /** Exec defines modes of execution of a proposal on creation or on new vote. */
 export enum Exec {
   /**
@@ -59,13 +59,24 @@ export interface MsgCreateGroupProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgCreateGroup";
   value: Uint8Array;
 }
-/** MsgCreateGroup is the Msg/CreateGroup request type. */
+/**
+ * MsgCreateGroup is the Msg/CreateGroup request type.
+ * @name MsgCreateGroupAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgCreateGroup
+ */
 export interface MsgCreateGroupAmino {
-  /** admin is the account address of the group admin. */
+  /**
+   * admin is the account address of the group admin.
+   */
   admin?: string;
-  /** members defines the group members. */
+  /**
+   * members defines the group members.
+   */
   members: MemberRequestAmino[];
-  /** metadata is any arbitrary metadata to attached to the group. */
+  /**
+   * metadata is any arbitrary metadata to attached to the group.
+   */
   metadata?: string;
 }
 export interface MsgCreateGroupAminoMsg {
@@ -87,9 +98,16 @@ export interface MsgCreateGroupResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgCreateGroupResponse";
   value: Uint8Array;
 }
-/** MsgCreateGroupResponse is the Msg/CreateGroup response type. */
+/**
+ * MsgCreateGroupResponse is the Msg/CreateGroup response type.
+ * @name MsgCreateGroupResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgCreateGroupResponse
+ */
 export interface MsgCreateGroupResponseAmino {
-  /** group_id is the unique ID of the newly created group. */
+  /**
+   * group_id is the unique ID of the newly created group.
+   */
   group_id?: string;
 }
 export interface MsgCreateGroupResponseAminoMsg {
@@ -116,11 +134,20 @@ export interface MsgUpdateGroupMembersProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupMembers";
   value: Uint8Array;
 }
-/** MsgUpdateGroupMembers is the Msg/UpdateGroupMembers request type. */
+/**
+ * MsgUpdateGroupMembers is the Msg/UpdateGroupMembers request type.
+ * @name MsgUpdateGroupMembersAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupMembers
+ */
 export interface MsgUpdateGroupMembersAmino {
-  /** admin is the account address of the group admin. */
+  /**
+   * admin is the account address of the group admin.
+   */
   admin?: string;
-  /** group_id is the unique ID of the group. */
+  /**
+   * group_id is the unique ID of the group.
+   */
   group_id?: string;
   /**
    * member_updates is the list of members to update,
@@ -144,7 +171,12 @@ export interface MsgUpdateGroupMembersResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupMembersResponse";
   value: Uint8Array;
 }
-/** MsgUpdateGroupMembersResponse is the Msg/UpdateGroupMembers response type. */
+/**
+ * MsgUpdateGroupMembersResponse is the Msg/UpdateGroupMembers response type.
+ * @name MsgUpdateGroupMembersResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupMembersResponse
+ */
 export interface MsgUpdateGroupMembersResponseAmino {}
 export interface MsgUpdateGroupMembersResponseAminoMsg {
   type: "cosmos-sdk/MsgUpdateGroupMembersResponse";
@@ -165,13 +197,24 @@ export interface MsgUpdateGroupAdminProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupAdmin";
   value: Uint8Array;
 }
-/** MsgUpdateGroupAdmin is the Msg/UpdateGroupAdmin request type. */
+/**
+ * MsgUpdateGroupAdmin is the Msg/UpdateGroupAdmin request type.
+ * @name MsgUpdateGroupAdminAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupAdmin
+ */
 export interface MsgUpdateGroupAdminAmino {
-  /** admin is the current account address of the group admin. */
+  /**
+   * admin is the current account address of the group admin.
+   */
   admin?: string;
-  /** group_id is the unique ID of the group. */
+  /**
+   * group_id is the unique ID of the group.
+   */
   group_id?: string;
-  /** new_admin is the group new admin account address. */
+  /**
+   * new_admin is the group new admin account address.
+   */
   new_admin?: string;
 }
 export interface MsgUpdateGroupAdminAminoMsg {
@@ -190,7 +233,12 @@ export interface MsgUpdateGroupAdminResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupAdminResponse";
   value: Uint8Array;
 }
-/** MsgUpdateGroupAdminResponse is the Msg/UpdateGroupAdmin response type. */
+/**
+ * MsgUpdateGroupAdminResponse is the Msg/UpdateGroupAdmin response type.
+ * @name MsgUpdateGroupAdminResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupAdminResponse
+ */
 export interface MsgUpdateGroupAdminResponseAmino {}
 export interface MsgUpdateGroupAdminResponseAminoMsg {
   type: "cosmos-sdk/MsgUpdateGroupAdminResponse";
@@ -211,13 +259,24 @@ export interface MsgUpdateGroupMetadataProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupMetadata";
   value: Uint8Array;
 }
-/** MsgUpdateGroupMetadata is the Msg/UpdateGroupMetadata request type. */
+/**
+ * MsgUpdateGroupMetadata is the Msg/UpdateGroupMetadata request type.
+ * @name MsgUpdateGroupMetadataAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupMetadata
+ */
 export interface MsgUpdateGroupMetadataAmino {
-  /** admin is the account address of the group admin. */
+  /**
+   * admin is the account address of the group admin.
+   */
   admin?: string;
-  /** group_id is the unique ID of the group. */
+  /**
+   * group_id is the unique ID of the group.
+   */
   group_id?: string;
-  /** metadata is the updated group's metadata. */
+  /**
+   * metadata is the updated group's metadata.
+   */
   metadata?: string;
 }
 export interface MsgUpdateGroupMetadataAminoMsg {
@@ -236,7 +295,12 @@ export interface MsgUpdateGroupMetadataResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupMetadataResponse";
   value: Uint8Array;
 }
-/** MsgUpdateGroupMetadataResponse is the Msg/UpdateGroupMetadata response type. */
+/**
+ * MsgUpdateGroupMetadataResponse is the Msg/UpdateGroupMetadata response type.
+ * @name MsgUpdateGroupMetadataResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupMetadataResponse
+ */
 export interface MsgUpdateGroupMetadataResponseAmino {}
 export interface MsgUpdateGroupMetadataResponseAminoMsg {
   type: "cosmos-sdk/MsgUpdateGroupMetadataResponse";
@@ -262,15 +326,28 @@ export interface MsgCreateGroupPolicyProtoMsg {
 export type MsgCreateGroupPolicyEncoded = Omit<MsgCreateGroupPolicy, "decisionPolicy"> & {
   /** decision_policy specifies the group policy's decision policy. */decisionPolicy?: ThresholdDecisionPolicyProtoMsg | PercentageDecisionPolicyProtoMsg | AnyProtoMsg | undefined;
 };
-/** MsgCreateGroupPolicy is the Msg/CreateGroupPolicy request type. */
+/**
+ * MsgCreateGroupPolicy is the Msg/CreateGroupPolicy request type.
+ * @name MsgCreateGroupPolicyAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgCreateGroupPolicy
+ */
 export interface MsgCreateGroupPolicyAmino {
-  /** admin is the account address of the group admin. */
+  /**
+   * admin is the account address of the group admin.
+   */
   admin?: string;
-  /** group_id is the unique ID of the group. */
+  /**
+   * group_id is the unique ID of the group.
+   */
   group_id?: string;
-  /** metadata is any arbitrary metadata attached to the group policy. */
+  /**
+   * metadata is any arbitrary metadata attached to the group policy.
+   */
   metadata?: string;
-  /** decision_policy specifies the group policy's decision policy. */
+  /**
+   * decision_policy specifies the group policy's decision policy.
+   */
   decision_policy?: AnyAmino;
 }
 export interface MsgCreateGroupPolicyAminoMsg {
@@ -293,9 +370,16 @@ export interface MsgCreateGroupPolicyResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgCreateGroupPolicyResponse";
   value: Uint8Array;
 }
-/** MsgCreateGroupPolicyResponse is the Msg/CreateGroupPolicy response type. */
+/**
+ * MsgCreateGroupPolicyResponse is the Msg/CreateGroupPolicy response type.
+ * @name MsgCreateGroupPolicyResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgCreateGroupPolicyResponse
+ */
 export interface MsgCreateGroupPolicyResponseAmino {
-  /** address is the account address of the newly created group policy. */
+  /**
+   * address is the account address of the newly created group policy.
+   */
   address?: string;
 }
 export interface MsgCreateGroupPolicyResponseAminoMsg {
@@ -319,13 +403,24 @@ export interface MsgUpdateGroupPolicyAdminProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyAdmin";
   value: Uint8Array;
 }
-/** MsgUpdateGroupPolicyAdmin is the Msg/UpdateGroupPolicyAdmin request type. */
+/**
+ * MsgUpdateGroupPolicyAdmin is the Msg/UpdateGroupPolicyAdmin request type.
+ * @name MsgUpdateGroupPolicyAdminAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupPolicyAdmin
+ */
 export interface MsgUpdateGroupPolicyAdminAmino {
-  /** admin is the account address of the group admin. */
+  /**
+   * admin is the account address of the group admin.
+   */
   admin?: string;
-  /** group_policy_address is the account address of the group policy. */
+  /**
+   * group_policy_address is the account address of the group policy.
+   */
   group_policy_address?: string;
-  /** new_admin is the new group policy admin. */
+  /**
+   * new_admin is the new group policy admin.
+   */
   new_admin?: string;
 }
 export interface MsgUpdateGroupPolicyAdminAminoMsg {
@@ -344,7 +439,12 @@ export interface MsgUpdateGroupPolicyAdminResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyAdminResponse";
   value: Uint8Array;
 }
-/** MsgUpdateGroupPolicyAdminResponse is the Msg/UpdateGroupPolicyAdmin response type. */
+/**
+ * MsgUpdateGroupPolicyAdminResponse is the Msg/UpdateGroupPolicyAdmin response type.
+ * @name MsgUpdateGroupPolicyAdminResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupPolicyAdminResponse
+ */
 export interface MsgUpdateGroupPolicyAdminResponseAmino {}
 export interface MsgUpdateGroupPolicyAdminResponseAminoMsg {
   type: "cosmos-sdk/MsgUpdateGroupPolicyAdminResponse";
@@ -377,22 +477,37 @@ export interface MsgCreateGroupWithPolicyProtoMsg {
 export type MsgCreateGroupWithPolicyEncoded = Omit<MsgCreateGroupWithPolicy, "decisionPolicy"> & {
   /** decision_policy specifies the group policy's decision policy. */decisionPolicy?: ThresholdDecisionPolicyProtoMsg | PercentageDecisionPolicyProtoMsg | AnyProtoMsg | undefined;
 };
-/** MsgCreateGroupWithPolicy is the Msg/CreateGroupWithPolicy request type. */
+/**
+ * MsgCreateGroupWithPolicy is the Msg/CreateGroupWithPolicy request type.
+ * @name MsgCreateGroupWithPolicyAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgCreateGroupWithPolicy
+ */
 export interface MsgCreateGroupWithPolicyAmino {
-  /** admin is the account address of the group and group policy admin. */
+  /**
+   * admin is the account address of the group and group policy admin.
+   */
   admin?: string;
-  /** members defines the group members. */
+  /**
+   * members defines the group members.
+   */
   members: MemberRequestAmino[];
-  /** group_metadata is any arbitrary metadata attached to the group. */
+  /**
+   * group_metadata is any arbitrary metadata attached to the group.
+   */
   group_metadata?: string;
-  /** group_policy_metadata is any arbitrary metadata attached to the group policy. */
+  /**
+   * group_policy_metadata is any arbitrary metadata attached to the group policy.
+   */
   group_policy_metadata?: string;
   /**
    * group_policy_as_admin is a boolean field, if set to true, the group policy account address will be used as group
    * and group policy admin.
    */
   group_policy_as_admin?: boolean;
-  /** decision_policy specifies the group policy's decision policy. */
+  /**
+   * decision_policy specifies the group policy's decision policy.
+   */
   decision_policy?: AnyAmino;
 }
 export interface MsgCreateGroupWithPolicyAminoMsg {
@@ -419,11 +534,20 @@ export interface MsgCreateGroupWithPolicyResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgCreateGroupWithPolicyResponse";
   value: Uint8Array;
 }
-/** MsgCreateGroupWithPolicyResponse is the Msg/CreateGroupWithPolicy response type. */
+/**
+ * MsgCreateGroupWithPolicyResponse is the Msg/CreateGroupWithPolicy response type.
+ * @name MsgCreateGroupWithPolicyResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgCreateGroupWithPolicyResponse
+ */
 export interface MsgCreateGroupWithPolicyResponseAmino {
-  /** group_id is the unique ID of the newly created group with policy. */
+  /**
+   * group_id is the unique ID of the newly created group with policy.
+   */
   group_id?: string;
-  /** group_policy_address is the account address of the newly created group policy. */
+  /**
+   * group_policy_address is the account address of the newly created group policy.
+   */
   group_policy_address?: string;
 }
 export interface MsgCreateGroupWithPolicyResponseAminoMsg {
@@ -451,13 +575,24 @@ export interface MsgUpdateGroupPolicyDecisionPolicyProtoMsg {
 export type MsgUpdateGroupPolicyDecisionPolicyEncoded = Omit<MsgUpdateGroupPolicyDecisionPolicy, "decisionPolicy"> & {
   /** decision_policy is the updated group policy's decision policy. */decisionPolicy?: ThresholdDecisionPolicyProtoMsg | PercentageDecisionPolicyProtoMsg | AnyProtoMsg | undefined;
 };
-/** MsgUpdateGroupPolicyDecisionPolicy is the Msg/UpdateGroupPolicyDecisionPolicy request type. */
+/**
+ * MsgUpdateGroupPolicyDecisionPolicy is the Msg/UpdateGroupPolicyDecisionPolicy request type.
+ * @name MsgUpdateGroupPolicyDecisionPolicyAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy
+ */
 export interface MsgUpdateGroupPolicyDecisionPolicyAmino {
-  /** admin is the account address of the group admin. */
+  /**
+   * admin is the account address of the group admin.
+   */
   admin?: string;
-  /** group_policy_address is the account address of group policy. */
+  /**
+   * group_policy_address is the account address of group policy.
+   */
   group_policy_address?: string;
-  /** decision_policy is the updated group policy's decision policy. */
+  /**
+   * decision_policy is the updated group policy's decision policy.
+   */
   decision_policy?: AnyAmino;
 }
 export interface MsgUpdateGroupPolicyDecisionPolicyAminoMsg {
@@ -476,7 +611,12 @@ export interface MsgUpdateGroupPolicyDecisionPolicyResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicyResponse";
   value: Uint8Array;
 }
-/** MsgUpdateGroupPolicyDecisionPolicyResponse is the Msg/UpdateGroupPolicyDecisionPolicy response type. */
+/**
+ * MsgUpdateGroupPolicyDecisionPolicyResponse is the Msg/UpdateGroupPolicyDecisionPolicy response type.
+ * @name MsgUpdateGroupPolicyDecisionPolicyResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicyResponse
+ */
 export interface MsgUpdateGroupPolicyDecisionPolicyResponseAmino {}
 export interface MsgUpdateGroupPolicyDecisionPolicyResponseAminoMsg {
   type: "cosmos-sdk/MsgUpdateGroupPolicyDecisionPolicyResponse";
@@ -497,13 +637,24 @@ export interface MsgUpdateGroupPolicyMetadataProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyMetadata";
   value: Uint8Array;
 }
-/** MsgUpdateGroupPolicyMetadata is the Msg/UpdateGroupPolicyMetadata request type. */
+/**
+ * MsgUpdateGroupPolicyMetadata is the Msg/UpdateGroupPolicyMetadata request type.
+ * @name MsgUpdateGroupPolicyMetadataAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupPolicyMetadata
+ */
 export interface MsgUpdateGroupPolicyMetadataAmino {
-  /** admin is the account address of the group admin. */
+  /**
+   * admin is the account address of the group admin.
+   */
   admin?: string;
-  /** group_policy_address is the account address of group policy. */
+  /**
+   * group_policy_address is the account address of group policy.
+   */
   group_policy_address?: string;
-  /** metadata is the group policy metadata to be updated. */
+  /**
+   * metadata is the group policy metadata to be updated.
+   */
   metadata?: string;
 }
 export interface MsgUpdateGroupPolicyMetadataAminoMsg {
@@ -522,7 +673,12 @@ export interface MsgUpdateGroupPolicyMetadataResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgUpdateGroupPolicyMetadataResponse";
   value: Uint8Array;
 }
-/** MsgUpdateGroupPolicyMetadataResponse is the Msg/UpdateGroupPolicyMetadata response type. */
+/**
+ * MsgUpdateGroupPolicyMetadataResponse is the Msg/UpdateGroupPolicyMetadata response type.
+ * @name MsgUpdateGroupPolicyMetadataResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgUpdateGroupPolicyMetadataResponse
+ */
 export interface MsgUpdateGroupPolicyMetadataResponseAmino {}
 export interface MsgUpdateGroupPolicyMetadataResponseAminoMsg {
   type: "cosmos-sdk/MsgUpdateGroupPolicyMetadataResponse";
@@ -549,35 +705,38 @@ export interface MsgSubmitProposal {
    * If so, proposers signatures are considered as Yes votes.
    */
   exec: Exec;
-  /**
-   * title is the title of the proposal.
-   * 
-   * Since: cosmos-sdk 0.47
-   */
+  /** title is the title of the proposal. */
   title: string;
-  /**
-   * summary is the summary of the proposal.
-   * 
-   * Since: cosmos-sdk 0.47
-   */
+  /** summary is the summary of the proposal. */
   summary: string;
 }
 export interface MsgSubmitProposalProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgSubmitProposal";
   value: Uint8Array;
 }
-/** MsgSubmitProposal is the Msg/SubmitProposal request type. */
+/**
+ * MsgSubmitProposal is the Msg/SubmitProposal request type.
+ * @name MsgSubmitProposalAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgSubmitProposal
+ */
 export interface MsgSubmitProposalAmino {
-  /** group_policy_address is the account address of group policy. */
+  /**
+   * group_policy_address is the account address of group policy.
+   */
   group_policy_address?: string;
   /**
    * proposers are the account addresses of the proposers.
    * Proposers signatures will be counted as yes votes.
    */
   proposers?: string[];
-  /** metadata is any arbitrary metadata attached to the proposal. */
+  /**
+   * metadata is any arbitrary metadata attached to the proposal.
+   */
   metadata?: string;
-  /** messages is a list of `sdk.Msg`s that will be executed if the proposal passes. */
+  /**
+   * messages is a list of `sdk.Msg`s that will be executed if the proposal passes.
+   */
   messages?: AnyAmino[];
   /**
    * exec defines the mode of execution of the proposal,
@@ -587,14 +746,10 @@ export interface MsgSubmitProposalAmino {
   exec?: Exec;
   /**
    * title is the title of the proposal.
-   * 
-   * Since: cosmos-sdk 0.47
    */
   title?: string;
   /**
    * summary is the summary of the proposal.
-   * 
-   * Since: cosmos-sdk 0.47
    */
   summary?: string;
 }
@@ -621,9 +776,16 @@ export interface MsgSubmitProposalResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgSubmitProposalResponse";
   value: Uint8Array;
 }
-/** MsgSubmitProposalResponse is the Msg/SubmitProposal response type. */
+/**
+ * MsgSubmitProposalResponse is the Msg/SubmitProposal response type.
+ * @name MsgSubmitProposalResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgSubmitProposalResponse
+ */
 export interface MsgSubmitProposalResponseAmino {
-  /** proposal is the unique ID of the proposal. */
+  /**
+   * proposal is the unique ID of the proposal.
+   */
   proposal_id?: string;
 }
 export interface MsgSubmitProposalResponseAminoMsg {
@@ -645,11 +807,20 @@ export interface MsgWithdrawProposalProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgWithdrawProposal";
   value: Uint8Array;
 }
-/** MsgWithdrawProposal is the Msg/WithdrawProposal request type. */
+/**
+ * MsgWithdrawProposal is the Msg/WithdrawProposal request type.
+ * @name MsgWithdrawProposalAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgWithdrawProposal
+ */
 export interface MsgWithdrawProposalAmino {
-  /** proposal is the unique ID of the proposal. */
+  /**
+   * proposal is the unique ID of the proposal.
+   */
   proposal_id?: string;
-  /** address is the admin of the group policy or one of the proposer of the proposal. */
+  /**
+   * address is the admin of the group policy or one of the proposer of the proposal.
+   */
   address?: string;
 }
 export interface MsgWithdrawProposalAminoMsg {
@@ -667,7 +838,12 @@ export interface MsgWithdrawProposalResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgWithdrawProposalResponse";
   value: Uint8Array;
 }
-/** MsgWithdrawProposalResponse is the Msg/WithdrawProposal response type. */
+/**
+ * MsgWithdrawProposalResponse is the Msg/WithdrawProposal response type.
+ * @name MsgWithdrawProposalResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgWithdrawProposalResponse
+ */
 export interface MsgWithdrawProposalResponseAmino {}
 export interface MsgWithdrawProposalResponseAminoMsg {
   type: "cosmos-sdk/MsgWithdrawProposalResponse";
@@ -695,15 +871,28 @@ export interface MsgVoteProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgVote";
   value: Uint8Array;
 }
-/** MsgVote is the Msg/Vote request type. */
+/**
+ * MsgVote is the Msg/Vote request type.
+ * @name MsgVoteAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgVote
+ */
 export interface MsgVoteAmino {
-  /** proposal is the unique ID of the proposal. */
+  /**
+   * proposal is the unique ID of the proposal.
+   */
   proposal_id?: string;
-  /** voter is the voter account address. */
+  /**
+   * voter is the voter account address.
+   */
   voter?: string;
-  /** option is the voter's choice on the proposal. */
+  /**
+   * option is the voter's choice on the proposal.
+   */
   option?: VoteOption;
-  /** metadata is any arbitrary metadata attached to the vote. */
+  /**
+   * metadata is any arbitrary metadata attached to the vote.
+   */
   metadata?: string;
   /**
    * exec defines whether the proposal should be executed
@@ -729,7 +918,12 @@ export interface MsgVoteResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgVoteResponse";
   value: Uint8Array;
 }
-/** MsgVoteResponse is the Msg/Vote response type. */
+/**
+ * MsgVoteResponse is the Msg/Vote response type.
+ * @name MsgVoteResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgVoteResponse
+ */
 export interface MsgVoteResponseAmino {}
 export interface MsgVoteResponseAminoMsg {
   type: "cosmos-sdk/MsgVoteResponse";
@@ -748,11 +942,20 @@ export interface MsgExecProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgExec";
   value: Uint8Array;
 }
-/** MsgExec is the Msg/Exec request type. */
+/**
+ * MsgExec is the Msg/Exec request type.
+ * @name MsgExecAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgExec
+ */
 export interface MsgExecAmino {
-  /** proposal is the unique ID of the proposal. */
+  /**
+   * proposal is the unique ID of the proposal.
+   */
   proposal_id?: string;
-  /** executor is the account address used to execute the proposal. */
+  /**
+   * executor is the account address used to execute the proposal.
+   */
   executor?: string;
 }
 export interface MsgExecAminoMsg {
@@ -773,9 +976,16 @@ export interface MsgExecResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgExecResponse";
   value: Uint8Array;
 }
-/** MsgExecResponse is the Msg/Exec request type. */
+/**
+ * MsgExecResponse is the Msg/Exec request type.
+ * @name MsgExecResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgExecResponse
+ */
 export interface MsgExecResponseAmino {
-  /** result is the final result of the proposal execution. */
+  /**
+   * result is the final result of the proposal execution.
+   */
   result?: ProposalExecutorResult;
 }
 export interface MsgExecResponseAminoMsg {
@@ -797,11 +1007,20 @@ export interface MsgLeaveGroupProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgLeaveGroup";
   value: Uint8Array;
 }
-/** MsgLeaveGroup is the Msg/LeaveGroup request type. */
+/**
+ * MsgLeaveGroup is the Msg/LeaveGroup request type.
+ * @name MsgLeaveGroupAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgLeaveGroup
+ */
 export interface MsgLeaveGroupAmino {
-  /** address is the account address of the group member. */
+  /**
+   * address is the account address of the group member.
+   */
   address?: string;
-  /** group_id is the unique ID of the group. */
+  /**
+   * group_id is the unique ID of the group.
+   */
   group_id?: string;
 }
 export interface MsgLeaveGroupAminoMsg {
@@ -819,7 +1038,12 @@ export interface MsgLeaveGroupResponseProtoMsg {
   typeUrl: "/cosmos.group.v1.MsgLeaveGroupResponse";
   value: Uint8Array;
 }
-/** MsgLeaveGroupResponse is the Msg/LeaveGroup response type. */
+/**
+ * MsgLeaveGroupResponse is the Msg/LeaveGroup response type.
+ * @name MsgLeaveGroupResponseAmino
+ * @package cosmos.group.v1
+ * @see proto type: cosmos.group.v1.MsgLeaveGroupResponse
+ */
 export interface MsgLeaveGroupResponseAmino {}
 export interface MsgLeaveGroupResponseAminoMsg {
   type: "cosmos-sdk/MsgLeaveGroupResponse";

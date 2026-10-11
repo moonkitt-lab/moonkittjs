@@ -1,11 +1,9 @@
-import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /**
  * SendAuthorization allows the grantee to spend up to spend_limit coins from
  * the granter's account.
- * 
- * Since: cosmos-sdk 0.43
  */
 export interface SendAuthorization {
   $typeUrl?: "/cosmos.bank.v1beta1.SendAuthorization";
@@ -13,8 +11,6 @@ export interface SendAuthorization {
   /**
    * allow_list specifies an optional list of addresses to whom the grantee can send tokens on behalf of the
    * granter. If omitted, any recipient is allowed.
-   * 
-   * Since: cosmos-sdk 0.47
    */
   allowList: string[];
 }
@@ -25,16 +21,15 @@ export interface SendAuthorizationProtoMsg {
 /**
  * SendAuthorization allows the grantee to spend up to spend_limit coins from
  * the granter's account.
- * 
- * Since: cosmos-sdk 0.43
+ * @name SendAuthorizationAmino
+ * @package cosmos.bank.v1beta1
+ * @see proto type: cosmos.bank.v1beta1.SendAuthorization
  */
 export interface SendAuthorizationAmino {
   spend_limit: CoinAmino[];
   /**
    * allow_list specifies an optional list of addresses to whom the grantee can send tokens on behalf of the
    * granter. If omitted, any recipient is allowed.
-   * 
-   * Since: cosmos-sdk 0.47
    */
   allow_list?: string[];
 }
@@ -45,8 +40,6 @@ export interface SendAuthorizationAminoMsg {
 /**
  * SendAuthorization allows the grantee to spend up to spend_limit coins from
  * the granter's account.
- * 
- * Since: cosmos-sdk 0.43
  */
 export interface SendAuthorizationSDKType {
   $typeUrl?: "/cosmos.bank.v1beta1.SendAuthorization";

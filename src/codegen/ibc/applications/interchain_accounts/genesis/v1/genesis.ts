@@ -1,11 +1,11 @@
-import { Params as Params1 } from "../../controller/v1/controller";
-import { ParamsAmino as Params1Amino } from "../../controller/v1/controller";
-import { ParamsSDKType as Params1SDKType } from "../../controller/v1/controller";
-import { Params as Params2 } from "../../host/v1/host";
-import { ParamsAmino as Params2Amino } from "../../host/v1/host";
-import { ParamsSDKType as Params2SDKType } from "../../host/v1/host";
-import { BinaryReader, BinaryWriter } from "../../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../../registry";
+import { Params as Params1 } from "../../controller/v1/controller.js";
+import { ParamsAmino as Params1Amino } from "../../controller/v1/controller.js";
+import { ParamsSDKType as Params1SDKType } from "../../controller/v1/controller.js";
+import { Params as Params2 } from "../../host/v1/host.js";
+import { ParamsAmino as Params2Amino } from "../../host/v1/host.js";
+import { ParamsSDKType as Params2SDKType } from "../../host/v1/host.js";
+import { BinaryReader, BinaryWriter } from "../../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../../registry.js";
 /** GenesisState defines the interchain accounts genesis state */
 export interface GenesisState {
   controllerGenesisState: ControllerGenesisState;
@@ -15,7 +15,12 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.genesis.v1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the interchain accounts genesis state */
+/**
+ * GenesisState defines the interchain accounts genesis state
+ * @name GenesisStateAmino
+ * @package ibc.applications.interchain_accounts.genesis.v1
+ * @see proto type: ibc.applications.interchain_accounts.genesis.v1.GenesisState
+ */
 export interface GenesisStateAmino {
   controller_genesis_state?: ControllerGenesisStateAmino;
   host_genesis_state?: HostGenesisStateAmino;
@@ -40,7 +45,12 @@ export interface ControllerGenesisStateProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.genesis.v1.ControllerGenesisState";
   value: Uint8Array;
 }
-/** ControllerGenesisState defines the interchain accounts controller genesis state */
+/**
+ * ControllerGenesisState defines the interchain accounts controller genesis state
+ * @name ControllerGenesisStateAmino
+ * @package ibc.applications.interchain_accounts.genesis.v1
+ * @see proto type: ibc.applications.interchain_accounts.genesis.v1.ControllerGenesisState
+ */
 export interface ControllerGenesisStateAmino {
   active_channels?: ActiveChannelAmino[];
   interchain_accounts?: RegisteredInterchainAccountAmino[];
@@ -69,7 +79,12 @@ export interface HostGenesisStateProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.genesis.v1.HostGenesisState";
   value: Uint8Array;
 }
-/** HostGenesisState defines the interchain accounts host genesis state */
+/**
+ * HostGenesisState defines the interchain accounts host genesis state
+ * @name HostGenesisStateAmino
+ * @package ibc.applications.interchain_accounts.genesis.v1
+ * @see proto type: ibc.applications.interchain_accounts.genesis.v1.HostGenesisState
+ */
 export interface HostGenesisStateAmino {
   active_channels?: ActiveChannelAmino[];
   interchain_accounts?: RegisteredInterchainAccountAmino[];
@@ -104,6 +119,9 @@ export interface ActiveChannelProtoMsg {
 /**
  * ActiveChannel contains a connection ID, port ID and associated active channel ID, as well as a boolean flag to
  * indicate if the channel is middleware enabled
+ * @name ActiveChannelAmino
+ * @package ibc.applications.interchain_accounts.genesis.v1
+ * @see proto type: ibc.applications.interchain_accounts.genesis.v1.ActiveChannel
  */
 export interface ActiveChannelAmino {
   connection_id?: string;
@@ -135,7 +153,12 @@ export interface RegisteredInterchainAccountProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.genesis.v1.RegisteredInterchainAccount";
   value: Uint8Array;
 }
-/** RegisteredInterchainAccount contains a connection ID, port ID and associated interchain account address */
+/**
+ * RegisteredInterchainAccount contains a connection ID, port ID and associated interchain account address
+ * @name RegisteredInterchainAccountAmino
+ * @package ibc.applications.interchain_accounts.genesis.v1
+ * @see proto type: ibc.applications.interchain_accounts.genesis.v1.RegisteredInterchainAccount
+ */
 export interface RegisteredInterchainAccountAmino {
   connection_id?: string;
   port_id?: string;

@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import { MsgUpdateParams, MsgTokenizeShares, MsgRedeemTokensForShares, MsgTransferTokenizeShareRecord, MsgDisableTokenizeShares, MsgEnableTokenizeShares, MsgWithdrawTokenizeShareRecordReward, MsgWithdrawAllTokenizeShareRecordReward } from "./tx";
+import { MsgUpdateParams, MsgTokenizeShares, MsgRedeemTokensForShares, MsgTransferTokenizeShareRecord, MsgDisableTokenizeShares, MsgEnableTokenizeShares, MsgWithdrawTokenizeShareRecordReward, MsgWithdrawAllTokenizeShareRecordReward } from "./tx.js";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/gaia.liquid.v1beta1.MsgUpdateParams", MsgUpdateParams], ["/gaia.liquid.v1beta1.MsgTokenizeShares", MsgTokenizeShares], ["/gaia.liquid.v1beta1.MsgRedeemTokensForShares", MsgRedeemTokensForShares], ["/gaia.liquid.v1beta1.MsgTransferTokenizeShareRecord", MsgTransferTokenizeShareRecord], ["/gaia.liquid.v1beta1.MsgDisableTokenizeShares", MsgDisableTokenizeShares], ["/gaia.liquid.v1beta1.MsgEnableTokenizeShares", MsgEnableTokenizeShares], ["/gaia.liquid.v1beta1.MsgWithdrawTokenizeShareRecordReward", MsgWithdrawTokenizeShareRecordReward], ["/gaia.liquid.v1beta1.MsgWithdrawAllTokenizeShareRecordReward", MsgWithdrawAllTokenizeShareRecordReward]];
 export const load = (protoRegistry: Registry) => {
   registry.forEach(([typeUrl, mod]) => {

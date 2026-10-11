@@ -1,5 +1,5 @@
-import { BinaryReader, BinaryWriter } from "../../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../../registry";
+import { BinaryReader, BinaryWriter } from "../../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../../registry.js";
 /**
  * Params defines the set of on-chain interchain accounts parameters.
  * The following parameters may be used to disable the controller submodule.
@@ -15,9 +15,14 @@ export interface ParamsProtoMsg {
 /**
  * Params defines the set of on-chain interchain accounts parameters.
  * The following parameters may be used to disable the controller submodule.
+ * @name ParamsAmino
+ * @package ibc.applications.interchain_accounts.controller.v1
+ * @see proto type: ibc.applications.interchain_accounts.controller.v1.Params
  */
 export interface ParamsAmino {
-  /** controller_enabled enables or disables the controller submodule. */
+  /**
+   * controller_enabled enables or disables the controller submodule.
+   */
   controller_enabled?: boolean;
 }
 export interface ParamsAminoMsg {

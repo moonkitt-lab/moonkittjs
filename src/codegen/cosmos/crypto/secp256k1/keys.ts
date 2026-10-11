@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { bytesFromBase64, base64FromBytes } from "../../../helpers";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { bytesFromBase64, base64FromBytes } from "../../../helpers.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /**
  * PubKey defines a secp256k1 public key
  * Key is the compressed form of the pubkey. The first byte depends is a 0x02 byte
@@ -21,6 +21,9 @@ export interface PubKeyProtoMsg {
  * if the y-coordinate is the lexicographically largest of the two associated with
  * the x-coordinate. Otherwise the first byte is a 0x03.
  * This prefix is followed with the x-coordinate.
+ * @name PubKeyAmino
+ * @package cosmos.crypto.secp256k1
+ * @see proto type: cosmos.crypto.secp256k1.PubKey
  */
 export interface PubKeyAmino {
   key?: string;
@@ -47,7 +50,12 @@ export interface PrivKeyProtoMsg {
   typeUrl: "/cosmos.crypto.secp256k1.PrivKey";
   value: Uint8Array;
 }
-/** PrivKey defines a secp256k1 private key. */
+/**
+ * PrivKey defines a secp256k1 private key.
+ * @name PrivKeyAmino
+ * @package cosmos.crypto.secp256k1
+ * @see proto type: cosmos.crypto.secp256k1.PrivKey
+ */
 export interface PrivKeyAmino {
   key?: string;
 }

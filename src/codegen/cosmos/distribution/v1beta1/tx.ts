@@ -1,7 +1,7 @@
-import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin";
-import { Params, ParamsAmino, ParamsSDKType } from "./distribution";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin.js";
+import { Params, ParamsAmino, ParamsSDKType } from "./distribution.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /**
  * MsgSetWithdrawAddress sets the withdraw address for
  * a delegator (or validator self-delegation).
@@ -17,6 +17,9 @@ export interface MsgSetWithdrawAddressProtoMsg {
 /**
  * MsgSetWithdrawAddress sets the withdraw address for
  * a delegator (or validator self-delegation).
+ * @name MsgSetWithdrawAddressAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgSetWithdrawAddress
  */
 export interface MsgSetWithdrawAddressAmino {
   delegator_address?: string;
@@ -46,6 +49,9 @@ export interface MsgSetWithdrawAddressResponseProtoMsg {
 /**
  * MsgSetWithdrawAddressResponse defines the Msg/SetWithdrawAddress response
  * type.
+ * @name MsgSetWithdrawAddressResponseAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse
  */
 export interface MsgSetWithdrawAddressResponseAmino {}
 export interface MsgSetWithdrawAddressResponseAminoMsg {
@@ -72,6 +78,9 @@ export interface MsgWithdrawDelegatorRewardProtoMsg {
 /**
  * MsgWithdrawDelegatorReward represents delegation withdrawal to a delegator
  * from a single validator.
+ * @name MsgWithdrawDelegatorRewardAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward
  */
 export interface MsgWithdrawDelegatorRewardAmino {
   delegator_address?: string;
@@ -94,7 +103,6 @@ export interface MsgWithdrawDelegatorRewardSDKType {
  * response type.
  */
 export interface MsgWithdrawDelegatorRewardResponse {
-  /** Since: cosmos-sdk 0.46 */
   amount: Coin[];
 }
 export interface MsgWithdrawDelegatorRewardResponseProtoMsg {
@@ -104,9 +112,11 @@ export interface MsgWithdrawDelegatorRewardResponseProtoMsg {
 /**
  * MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward
  * response type.
+ * @name MsgWithdrawDelegatorRewardResponseAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgWithdrawDelegatorRewardResponse
  */
 export interface MsgWithdrawDelegatorRewardResponseAmino {
-  /** Since: cosmos-sdk 0.46 */
   amount: CoinAmino[];
 }
 export interface MsgWithdrawDelegatorRewardResponseAminoMsg {
@@ -134,6 +144,9 @@ export interface MsgWithdrawValidatorCommissionProtoMsg {
 /**
  * MsgWithdrawValidatorCommission withdraws the full commission to the validator
  * address.
+ * @name MsgWithdrawValidatorCommissionAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission
  */
 export interface MsgWithdrawValidatorCommissionAmino {
   validator_address?: string;
@@ -154,7 +167,6 @@ export interface MsgWithdrawValidatorCommissionSDKType {
  * Msg/WithdrawValidatorCommission response type.
  */
 export interface MsgWithdrawValidatorCommissionResponse {
-  /** Since: cosmos-sdk 0.46 */
   amount: Coin[];
 }
 export interface MsgWithdrawValidatorCommissionResponseProtoMsg {
@@ -164,9 +176,11 @@ export interface MsgWithdrawValidatorCommissionResponseProtoMsg {
 /**
  * MsgWithdrawValidatorCommissionResponse defines the
  * Msg/WithdrawValidatorCommission response type.
+ * @name MsgWithdrawValidatorCommissionResponseAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse
  */
 export interface MsgWithdrawValidatorCommissionResponseAmino {
-  /** Since: cosmos-sdk 0.46 */
   amount: CoinAmino[];
 }
 export interface MsgWithdrawValidatorCommissionResponseAminoMsg {
@@ -195,6 +209,9 @@ export interface MsgFundCommunityPoolProtoMsg {
 /**
  * MsgFundCommunityPool allows an account to directly
  * fund the community pool.
+ * @name MsgFundCommunityPoolAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgFundCommunityPool
  */
 export interface MsgFundCommunityPoolAmino {
   amount: CoinAmino[];
@@ -218,7 +235,12 @@ export interface MsgFundCommunityPoolResponseProtoMsg {
   typeUrl: "/cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse";
   value: Uint8Array;
 }
-/** MsgFundCommunityPoolResponse defines the Msg/FundCommunityPool response type. */
+/**
+ * MsgFundCommunityPoolResponse defines the Msg/FundCommunityPool response type.
+ * @name MsgFundCommunityPoolResponseAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse
+ */
 export interface MsgFundCommunityPoolResponseAmino {}
 export interface MsgFundCommunityPoolResponseAminoMsg {
   type: "cosmos-sdk/MsgFundCommunityPoolResponse";
@@ -226,11 +248,7 @@ export interface MsgFundCommunityPoolResponseAminoMsg {
 }
 /** MsgFundCommunityPoolResponse defines the Msg/FundCommunityPool response type. */
 export interface MsgFundCommunityPoolResponseSDKType {}
-/**
- * MsgUpdateParams is the Msg/UpdateParams request type.
- * 
- * Since: cosmos-sdk 0.47
- */
+/** MsgUpdateParams is the Msg/UpdateParams request type. */
 export interface MsgUpdateParams {
   /** authority is the address that controls the module (defaults to x/gov unless overwritten). */
   authority: string;
@@ -247,11 +265,14 @@ export interface MsgUpdateParamsProtoMsg {
 }
 /**
  * MsgUpdateParams is the Msg/UpdateParams request type.
- * 
- * Since: cosmos-sdk 0.47
+ * @name MsgUpdateParamsAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgUpdateParams
  */
 export interface MsgUpdateParamsAmino {
-  /** authority is the address that controls the module (defaults to x/gov unless overwritten). */
+  /**
+   * authority is the address that controls the module (defaults to x/gov unless overwritten).
+   */
   authority?: string;
   /**
    * params defines the x/distribution parameters to update.
@@ -264,11 +285,7 @@ export interface MsgUpdateParamsAminoMsg {
   type: "cosmos-sdk/distribution/MsgUpdateParams";
   value: MsgUpdateParamsAmino;
 }
-/**
- * MsgUpdateParams is the Msg/UpdateParams request type.
- * 
- * Since: cosmos-sdk 0.47
- */
+/** MsgUpdateParams is the Msg/UpdateParams request type. */
 export interface MsgUpdateParamsSDKType {
   authority: string;
   params: ParamsSDKType;
@@ -276,8 +293,6 @@ export interface MsgUpdateParamsSDKType {
 /**
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
- * 
- * Since: cosmos-sdk 0.47
  */
 export interface MsgUpdateParamsResponse {}
 export interface MsgUpdateParamsResponseProtoMsg {
@@ -287,8 +302,9 @@ export interface MsgUpdateParamsResponseProtoMsg {
 /**
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
- * 
- * Since: cosmos-sdk 0.47
+ * @name MsgUpdateParamsResponseAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgUpdateParamsResponse
  */
 export interface MsgUpdateParamsResponseAmino {}
 export interface MsgUpdateParamsResponseAminoMsg {
@@ -298,16 +314,12 @@ export interface MsgUpdateParamsResponseAminoMsg {
 /**
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
- * 
- * Since: cosmos-sdk 0.47
  */
 export interface MsgUpdateParamsResponseSDKType {}
 /**
  * MsgCommunityPoolSpend defines a message for sending tokens from the community
  * pool to another account. This message is typically executed via a governance
  * proposal with the governance module being the executing authority.
- * 
- * Since: cosmos-sdk 0.47
  */
 export interface MsgCommunityPoolSpend {
   /** authority is the address that controls the module (defaults to x/gov unless overwritten). */
@@ -323,11 +335,14 @@ export interface MsgCommunityPoolSpendProtoMsg {
  * MsgCommunityPoolSpend defines a message for sending tokens from the community
  * pool to another account. This message is typically executed via a governance
  * proposal with the governance module being the executing authority.
- * 
- * Since: cosmos-sdk 0.47
+ * @name MsgCommunityPoolSpendAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgCommunityPoolSpend
  */
 export interface MsgCommunityPoolSpendAmino {
-  /** authority is the address that controls the module (defaults to x/gov unless overwritten). */
+  /**
+   * authority is the address that controls the module (defaults to x/gov unless overwritten).
+   */
   authority?: string;
   recipient?: string;
   amount: CoinAmino[];
@@ -340,8 +355,6 @@ export interface MsgCommunityPoolSpendAminoMsg {
  * MsgCommunityPoolSpend defines a message for sending tokens from the community
  * pool to another account. This message is typically executed via a governance
  * proposal with the governance module being the executing authority.
- * 
- * Since: cosmos-sdk 0.47
  */
 export interface MsgCommunityPoolSpendSDKType {
   authority: string;
@@ -351,8 +364,6 @@ export interface MsgCommunityPoolSpendSDKType {
 /**
  * MsgCommunityPoolSpendResponse defines the response to executing a
  * MsgCommunityPoolSpend message.
- * 
- * Since: cosmos-sdk 0.47
  */
 export interface MsgCommunityPoolSpendResponse {}
 export interface MsgCommunityPoolSpendResponseProtoMsg {
@@ -362,8 +373,9 @@ export interface MsgCommunityPoolSpendResponseProtoMsg {
 /**
  * MsgCommunityPoolSpendResponse defines the response to executing a
  * MsgCommunityPoolSpend message.
- * 
- * Since: cosmos-sdk 0.47
+ * @name MsgCommunityPoolSpendResponseAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgCommunityPoolSpendResponse
  */
 export interface MsgCommunityPoolSpendResponseAmino {}
 export interface MsgCommunityPoolSpendResponseAminoMsg {
@@ -373,15 +385,11 @@ export interface MsgCommunityPoolSpendResponseAminoMsg {
 /**
  * MsgCommunityPoolSpendResponse defines the response to executing a
  * MsgCommunityPoolSpend message.
- * 
- * Since: cosmos-sdk 0.47
  */
 export interface MsgCommunityPoolSpendResponseSDKType {}
 /**
  * DepositValidatorRewardsPool defines the request structure to provide
  * additional rewards to delegators from a specific validator.
- * 
- * Since: cosmos-sdk 0.50
  */
 export interface MsgDepositValidatorRewardsPool {
   depositor: string;
@@ -395,8 +403,9 @@ export interface MsgDepositValidatorRewardsPoolProtoMsg {
 /**
  * DepositValidatorRewardsPool defines the request structure to provide
  * additional rewards to delegators from a specific validator.
- * 
- * Since: cosmos-sdk 0.50
+ * @name MsgDepositValidatorRewardsPoolAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPool
  */
 export interface MsgDepositValidatorRewardsPoolAmino {
   depositor?: string;
@@ -410,8 +419,6 @@ export interface MsgDepositValidatorRewardsPoolAminoMsg {
 /**
  * DepositValidatorRewardsPool defines the request structure to provide
  * additional rewards to delegators from a specific validator.
- * 
- * Since: cosmos-sdk 0.50
  */
 export interface MsgDepositValidatorRewardsPoolSDKType {
   depositor: string;
@@ -421,8 +428,6 @@ export interface MsgDepositValidatorRewardsPoolSDKType {
 /**
  * MsgDepositValidatorRewardsPoolResponse defines the response to executing a
  * MsgDepositValidatorRewardsPool message.
- * 
- * Since: cosmos-sdk 0.50
  */
 export interface MsgDepositValidatorRewardsPoolResponse {}
 export interface MsgDepositValidatorRewardsPoolResponseProtoMsg {
@@ -432,8 +437,9 @@ export interface MsgDepositValidatorRewardsPoolResponseProtoMsg {
 /**
  * MsgDepositValidatorRewardsPoolResponse defines the response to executing a
  * MsgDepositValidatorRewardsPool message.
- * 
- * Since: cosmos-sdk 0.50
+ * @name MsgDepositValidatorRewardsPoolResponseAmino
+ * @package cosmos.distribution.v1beta1
+ * @see proto type: cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPoolResponse
  */
 export interface MsgDepositValidatorRewardsPoolResponseAmino {}
 export interface MsgDepositValidatorRewardsPoolResponseAminoMsg {
@@ -443,8 +449,6 @@ export interface MsgDepositValidatorRewardsPoolResponseAminoMsg {
 /**
  * MsgDepositValidatorRewardsPoolResponse defines the response to executing a
  * MsgDepositValidatorRewardsPool message.
- * 
- * Since: cosmos-sdk 0.50
  */
 export interface MsgDepositValidatorRewardsPoolResponseSDKType {}
 function createBaseMsgSetWithdrawAddress(): MsgSetWithdrawAddress {

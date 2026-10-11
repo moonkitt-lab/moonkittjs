@@ -1,9 +1,12 @@
-import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination";
-import { LiquidValidator, LiquidValidatorAmino, LiquidValidatorSDKType, Params, ParamsAmino, ParamsSDKType, TokenizeShareRecord, TokenizeShareRecordAmino, TokenizeShareRecordSDKType, TokenizeShareRecordReward, TokenizeShareRecordRewardAmino, TokenizeShareRecordRewardSDKType } from "./liquid";
-import { Coin, CoinAmino, CoinSDKType, DecCoin, DecCoinAmino, DecCoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
-/** QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator RPC method. */
+import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../cosmos/base/query/v1beta1/pagination.js";
+import { LiquidValidator, LiquidValidatorAmino, LiquidValidatorSDKType, Params, ParamsAmino, ParamsSDKType, TokenizeShareRecord, TokenizeShareRecordAmino, TokenizeShareRecordSDKType, TokenizeShareRecordReward, TokenizeShareRecordRewardAmino, TokenizeShareRecordRewardSDKType } from "./liquid.js";
+import { Coin, CoinAmino, CoinSDKType, DecCoin, DecCoinAmino, DecCoinSDKType } from "../../../cosmos/base/v1beta1/coin.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
+/**
+ * QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator
+ * RPC method.
+ */
 export interface QueryLiquidValidatorRequest {
   validatorAddr: string;
 }
@@ -11,7 +14,13 @@ export interface QueryLiquidValidatorRequestProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorRequest";
   value: Uint8Array;
 }
-/** QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator RPC method. */
+/**
+ * QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator
+ * RPC method.
+ * @name QueryLiquidValidatorRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryLiquidValidatorRequest
+ */
 export interface QueryLiquidValidatorRequestAmino {
   validator_addr?: string;
 }
@@ -19,11 +28,17 @@ export interface QueryLiquidValidatorRequestAminoMsg {
   type: "/gaia.liquid.v1beta1.QueryLiquidValidatorRequest";
   value: QueryLiquidValidatorRequestAmino;
 }
-/** QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator RPC method. */
+/**
+ * QueryLiquidValidatorRequest is the request type for the Query/LiquidValidator
+ * RPC method.
+ */
 export interface QueryLiquidValidatorRequestSDKType {
   validator_addr: string;
 }
-/** QueryLiquidValidatorResponse is the response type for the Query/LiquidValidator RPC method. */
+/**
+ * QueryLiquidValidatorResponse is the response type for the
+ * Query/LiquidValidator RPC method.
+ */
 export interface QueryLiquidValidatorResponse {
   liquidValidator: LiquidValidator;
 }
@@ -31,7 +46,13 @@ export interface QueryLiquidValidatorResponseProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorResponse";
   value: Uint8Array;
 }
-/** QueryLiquidValidatorResponse is the response type for the Query/LiquidValidator RPC method. */
+/**
+ * QueryLiquidValidatorResponse is the response type for the
+ * Query/LiquidValidator RPC method.
+ * @name QueryLiquidValidatorResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryLiquidValidatorResponse
+ */
 export interface QueryLiquidValidatorResponseAmino {
   liquid_validator: LiquidValidatorAmino;
 }
@@ -39,9 +60,87 @@ export interface QueryLiquidValidatorResponseAminoMsg {
   type: "/gaia.liquid.v1beta1.QueryLiquidValidatorResponse";
   value: QueryLiquidValidatorResponseAmino;
 }
-/** QueryLiquidValidatorResponse is the response type for the Query/LiquidValidator RPC method. */
+/**
+ * QueryLiquidValidatorResponse is the response type for the
+ * Query/LiquidValidator RPC method.
+ */
 export interface QueryLiquidValidatorResponseSDKType {
   liquid_validator: LiquidValidatorSDKType;
+}
+/**
+ * QueryLiquidValidatorsRequest is request type for the
+ * Query/QueryLiquidValidators RPC method.
+ */
+export interface QueryLiquidValidatorsRequest {
+  /** pagination defines an optional pagination for the request. */
+  pagination?: PageRequest;
+}
+export interface QueryLiquidValidatorsRequestProtoMsg {
+  typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorsRequest";
+  value: Uint8Array;
+}
+/**
+ * QueryLiquidValidatorsRequest is request type for the
+ * Query/QueryLiquidValidators RPC method.
+ * @name QueryLiquidValidatorsRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryLiquidValidatorsRequest
+ */
+export interface QueryLiquidValidatorsRequestAmino {
+  /**
+   * pagination defines an optional pagination for the request.
+   */
+  pagination?: PageRequestAmino;
+}
+export interface QueryLiquidValidatorsRequestAminoMsg {
+  type: "/gaia.liquid.v1beta1.QueryLiquidValidatorsRequest";
+  value: QueryLiquidValidatorsRequestAmino;
+}
+/**
+ * QueryLiquidValidatorsRequest is request type for the
+ * Query/QueryLiquidValidators RPC method.
+ */
+export interface QueryLiquidValidatorsRequestSDKType {
+  pagination?: PageRequestSDKType;
+}
+/**
+ * QueryLiquidValidatorsResponse is response type for the
+ * Query/QueryLiquidValidators RPC method.
+ */
+export interface QueryLiquidValidatorsResponse {
+  liquidValidators: LiquidValidator[];
+  /** pagination defines the pagination in the response. */
+  pagination?: PageResponse;
+}
+export interface QueryLiquidValidatorsResponseProtoMsg {
+  typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorsResponse";
+  value: Uint8Array;
+}
+/**
+ * QueryLiquidValidatorsResponse is response type for the
+ * Query/QueryLiquidValidators RPC method.
+ * @name QueryLiquidValidatorsResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryLiquidValidatorsResponse
+ */
+export interface QueryLiquidValidatorsResponseAmino {
+  liquid_validators: LiquidValidatorAmino[];
+  /**
+   * pagination defines the pagination in the response.
+   */
+  pagination?: PageResponseAmino;
+}
+export interface QueryLiquidValidatorsResponseAminoMsg {
+  type: "/gaia.liquid.v1beta1.QueryLiquidValidatorsResponse";
+  value: QueryLiquidValidatorsResponseAmino;
+}
+/**
+ * QueryLiquidValidatorsResponse is response type for the
+ * Query/QueryLiquidValidators RPC method.
+ */
+export interface QueryLiquidValidatorsResponseSDKType {
+  liquid_validators: LiquidValidatorSDKType[];
+  pagination?: PageResponseSDKType;
 }
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
@@ -49,7 +148,12 @@ export interface QueryParamsRequestProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.QueryParamsRequest";
   value: Uint8Array;
 }
-/** QueryParamsRequest is request type for the Query/Params RPC method. */
+/**
+ * QueryParamsRequest is request type for the Query/Params RPC method.
+ * @name QueryParamsRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryParamsRequest
+ */
 export interface QueryParamsRequestAmino {}
 export interface QueryParamsRequestAminoMsg {
   type: "/gaia.liquid.v1beta1.QueryParamsRequest";
@@ -66,9 +170,16 @@ export interface QueryParamsResponseProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.QueryParamsResponse";
   value: Uint8Array;
 }
-/** QueryParamsResponse is response type for the Query/Params RPC method. */
+/**
+ * QueryParamsResponse is response type for the Query/Params RPC method.
+ * @name QueryParamsResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryParamsResponse
+ */
 export interface QueryParamsResponseAmino {
-  /** params holds all the parameters of this module. */
+  /**
+   * params holds all the parameters of this module.
+   */
   params: ParamsAmino;
 }
 export interface QueryParamsResponseAminoMsg {
@@ -93,6 +204,9 @@ export interface QueryTokenizeShareRecordByIdRequestProtoMsg {
 /**
  * QueryTokenizeShareRecordByIdRequest is request type for the
  * Query/QueryTokenizeShareRecordById RPC method.
+ * @name QueryTokenizeShareRecordByIdRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareRecordByIdRequest
  */
 export interface QueryTokenizeShareRecordByIdRequestAmino {
   id?: string;
@@ -122,6 +236,9 @@ export interface QueryTokenizeShareRecordByIdResponseProtoMsg {
 /**
  * QueryTokenizeShareRecordByIdRequest is response type for the
  * Query/QueryTokenizeShareRecordById RPC method.
+ * @name QueryTokenizeShareRecordByIdResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareRecordByIdResponse
  */
 export interface QueryTokenizeShareRecordByIdResponseAmino {
   record?: TokenizeShareRecordAmino;
@@ -151,6 +268,9 @@ export interface QueryTokenizeShareRecordByDenomRequestProtoMsg {
 /**
  * QueryTokenizeShareRecordByDenomRequest is request type for the
  * Query/QueryTokenizeShareRecordByDenom RPC method.
+ * @name QueryTokenizeShareRecordByDenomRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareRecordByDenomRequest
  */
 export interface QueryTokenizeShareRecordByDenomRequestAmino {
   denom?: string;
@@ -180,6 +300,9 @@ export interface QueryTokenizeShareRecordByDenomResponseProtoMsg {
 /**
  * QueryTokenizeShareRecordByDenomResponse is response type for the
  * Query/QueryTokenizeShareRecordByDenom RPC method.
+ * @name QueryTokenizeShareRecordByDenomResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareRecordByDenomResponse
  */
 export interface QueryTokenizeShareRecordByDenomResponseAmino {
   record?: TokenizeShareRecordAmino;
@@ -209,6 +332,9 @@ export interface QueryTokenizeShareRecordsOwnedRequestProtoMsg {
 /**
  * QueryTokenizeShareRecordsOwnedRequest is request type for the
  * Query/QueryTokenizeShareRecordsOwned RPC method.
+ * @name QueryTokenizeShareRecordsOwnedRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareRecordsOwnedRequest
  */
 export interface QueryTokenizeShareRecordsOwnedRequestAmino {
   owner?: string;
@@ -238,6 +364,9 @@ export interface QueryTokenizeShareRecordsOwnedResponseProtoMsg {
 /**
  * QueryTokenizeShareRecordsOwnedResponse is response type for the
  * Query/QueryTokenizeShareRecordsOwned RPC method.
+ * @name QueryTokenizeShareRecordsOwnedResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareRecordsOwnedResponse
  */
 export interface QueryTokenizeShareRecordsOwnedResponseAmino {
   records?: TokenizeShareRecordAmino[];
@@ -268,9 +397,14 @@ export interface QueryAllTokenizeShareRecordsRequestProtoMsg {
 /**
  * QueryAllTokenizeShareRecordsRequest is request type for the
  * Query/QueryAllTokenizeShareRecords RPC method.
+ * @name QueryAllTokenizeShareRecordsRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryAllTokenizeShareRecordsRequest
  */
 export interface QueryAllTokenizeShareRecordsRequestAmino {
-  /** pagination defines an optional pagination for the request. */
+  /**
+   * pagination defines an optional pagination for the request.
+   */
   pagination?: PageRequestAmino;
 }
 export interface QueryAllTokenizeShareRecordsRequestAminoMsg {
@@ -300,10 +434,15 @@ export interface QueryAllTokenizeShareRecordsResponseProtoMsg {
 /**
  * QueryAllTokenizeShareRecordsResponse is response type for the
  * Query/QueryAllTokenizeShareRecords RPC method.
+ * @name QueryAllTokenizeShareRecordsResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryAllTokenizeShareRecordsResponse
  */
 export interface QueryAllTokenizeShareRecordsResponseAmino {
   records?: TokenizeShareRecordAmino[];
-  /** pagination defines the pagination in the response. */
+  /**
+   * pagination defines the pagination in the response.
+   */
   pagination?: PageResponseAmino;
 }
 export interface QueryAllTokenizeShareRecordsResponseAminoMsg {
@@ -330,6 +469,9 @@ export interface QueryLastTokenizeShareRecordIdRequestProtoMsg {
 /**
  * QueryLastTokenizeShareRecordIdRequest is request type for the
  * Query/QueryLastTokenizeShareRecordId RPC method.
+ * @name QueryLastTokenizeShareRecordIdRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryLastTokenizeShareRecordIdRequest
  */
 export interface QueryLastTokenizeShareRecordIdRequestAmino {}
 export interface QueryLastTokenizeShareRecordIdRequestAminoMsg {
@@ -355,6 +497,9 @@ export interface QueryLastTokenizeShareRecordIdResponseProtoMsg {
 /**
  * QueryLastTokenizeShareRecordIdResponse is response type for the
  * Query/QueryLastTokenizeShareRecordId RPC method.
+ * @name QueryLastTokenizeShareRecordIdResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryLastTokenizeShareRecordIdResponse
  */
 export interface QueryLastTokenizeShareRecordIdResponseAmino {
   id?: string;
@@ -382,6 +527,9 @@ export interface QueryTotalTokenizeSharedAssetsRequestProtoMsg {
 /**
  * QueryTotalTokenizeSharedAssetsRequest is request type for the
  * Query/QueryTotalTokenizeSharedAssets RPC method.
+ * @name QueryTotalTokenizeSharedAssetsRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTotalTokenizeSharedAssetsRequest
  */
 export interface QueryTotalTokenizeSharedAssetsRequestAmino {}
 export interface QueryTotalTokenizeSharedAssetsRequestAminoMsg {
@@ -407,6 +555,9 @@ export interface QueryTotalTokenizeSharedAssetsResponseProtoMsg {
 /**
  * QueryTotalTokenizeSharedAssetsResponse is response type for the
  * Query/QueryTotalTokenizeSharedAssets RPC method.
+ * @name QueryTotalTokenizeSharedAssetsResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTotalTokenizeSharedAssetsResponse
  */
 export interface QueryTotalTokenizeSharedAssetsResponseAmino {
   value?: CoinAmino;
@@ -434,6 +585,9 @@ export interface QueryTotalLiquidStakedProtoMsg {
 /**
  * QueryTotalLiquidStakedRequest is request type for the
  * Query/QueryQueryTotalLiquidStaked RPC method.
+ * @name QueryTotalLiquidStakedAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTotalLiquidStaked
  */
 export interface QueryTotalLiquidStakedAmino {}
 export interface QueryTotalLiquidStakedAminoMsg {
@@ -459,6 +613,9 @@ export interface QueryTotalLiquidStakedResponseProtoMsg {
 /**
  * QueryTotalLiquidStakedResponse is response type for the
  * Query/QueryQueryTotalLiquidStaked RPC method.
+ * @name QueryTotalLiquidStakedResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTotalLiquidStakedResponse
  */
 export interface QueryTotalLiquidStakedResponseAmino {
   tokens?: string;
@@ -488,6 +645,9 @@ export interface QueryTokenizeShareLockInfoProtoMsg {
 /**
  * QueryTokenizeShareLockInfo queries the tokenize share lock information
  * associated with given account
+ * @name QueryTokenizeShareLockInfoAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareLockInfo
  */
 export interface QueryTokenizeShareLockInfoAmino {
   address?: string;
@@ -518,6 +678,9 @@ export interface QueryTokenizeShareLockInfoResponseProtoMsg {
 /**
  * QueryTokenizeShareLockInfoResponse is the response from the
  * QueryTokenizeShareLockInfo query
+ * @name QueryTokenizeShareLockInfoResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareLockInfoResponse
  */
 export interface QueryTokenizeShareLockInfoResponseAmino {
   status?: string;
@@ -549,6 +712,9 @@ export interface QueryTokenizeShareRecordRewardRequestProtoMsg {
 /**
  * QueryTokenizeShareRecordRewardRequest is the request type for the
  * Query/TokenizeShareRecordReward RPC method.
+ * @name QueryTokenizeShareRecordRewardRequestAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareRecordRewardRequest
  */
 export interface QueryTokenizeShareRecordRewardRequestAmino {
   owner_address?: string;
@@ -581,11 +747,18 @@ export interface QueryTokenizeShareRecordRewardResponseProtoMsg {
 /**
  * QueryTokenizeShareRecordRewardResponse is the response type for the
  * Query/TokenizeShareRecordReward RPC method.
+ * @name QueryTokenizeShareRecordRewardResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.QueryTokenizeShareRecordRewardResponse
  */
 export interface QueryTokenizeShareRecordRewardResponseAmino {
-  /** rewards defines all the rewards accrued by a delegator. */
+  /**
+   * rewards defines all the rewards accrued by a delegator.
+   */
   rewards?: TokenizeShareRecordRewardAmino[];
-  /** total defines the sum of all the rewards. */
+  /**
+   * total defines the sum of all the rewards.
+   */
   total?: DecCoinAmino[];
 }
 export interface QueryTokenizeShareRecordRewardResponseAminoMsg {
@@ -746,6 +919,166 @@ export const QueryLiquidValidatorResponse = {
   }
 };
 GlobalDecoderRegistry.register(QueryLiquidValidatorResponse.typeUrl, QueryLiquidValidatorResponse);
+function createBaseQueryLiquidValidatorsRequest(): QueryLiquidValidatorsRequest {
+  return {
+    pagination: undefined
+  };
+}
+export const QueryLiquidValidatorsRequest = {
+  typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorsRequest",
+  is(o: any): o is QueryLiquidValidatorsRequest {
+    return o && o.$typeUrl === QueryLiquidValidatorsRequest.typeUrl;
+  },
+  isSDK(o: any): o is QueryLiquidValidatorsRequestSDKType {
+    return o && o.$typeUrl === QueryLiquidValidatorsRequest.typeUrl;
+  },
+  isAmino(o: any): o is QueryLiquidValidatorsRequestAmino {
+    return o && o.$typeUrl === QueryLiquidValidatorsRequest.typeUrl;
+  },
+  encode(message: QueryLiquidValidatorsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryLiquidValidatorsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryLiquidValidatorsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryLiquidValidatorsRequest>): QueryLiquidValidatorsRequest {
+    const message = createBaseQueryLiquidValidatorsRequest();
+    message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
+    return message;
+  },
+  fromAmino(object: QueryLiquidValidatorsRequestAmino): QueryLiquidValidatorsRequest {
+    const message = createBaseQueryLiquidValidatorsRequest();
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromAmino(object.pagination);
+    }
+    return message;
+  },
+  toAmino(message: QueryLiquidValidatorsRequest): QueryLiquidValidatorsRequestAmino {
+    const obj: any = {};
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QueryLiquidValidatorsRequestAminoMsg): QueryLiquidValidatorsRequest {
+    return QueryLiquidValidatorsRequest.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryLiquidValidatorsRequestProtoMsg): QueryLiquidValidatorsRequest {
+    return QueryLiquidValidatorsRequest.decode(message.value);
+  },
+  toProto(message: QueryLiquidValidatorsRequest): Uint8Array {
+    return QueryLiquidValidatorsRequest.encode(message).finish();
+  },
+  toProtoMsg(message: QueryLiquidValidatorsRequest): QueryLiquidValidatorsRequestProtoMsg {
+    return {
+      typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorsRequest",
+      value: QueryLiquidValidatorsRequest.encode(message).finish()
+    };
+  }
+};
+GlobalDecoderRegistry.register(QueryLiquidValidatorsRequest.typeUrl, QueryLiquidValidatorsRequest);
+function createBaseQueryLiquidValidatorsResponse(): QueryLiquidValidatorsResponse {
+  return {
+    liquidValidators: [],
+    pagination: undefined
+  };
+}
+export const QueryLiquidValidatorsResponse = {
+  typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorsResponse",
+  is(o: any): o is QueryLiquidValidatorsResponse {
+    return o && (o.$typeUrl === QueryLiquidValidatorsResponse.typeUrl || Array.isArray(o.liquidValidators) && (!o.liquidValidators.length || LiquidValidator.is(o.liquidValidators[0])));
+  },
+  isSDK(o: any): o is QueryLiquidValidatorsResponseSDKType {
+    return o && (o.$typeUrl === QueryLiquidValidatorsResponse.typeUrl || Array.isArray(o.liquid_validators) && (!o.liquid_validators.length || LiquidValidator.isSDK(o.liquid_validators[0])));
+  },
+  isAmino(o: any): o is QueryLiquidValidatorsResponseAmino {
+    return o && (o.$typeUrl === QueryLiquidValidatorsResponse.typeUrl || Array.isArray(o.liquid_validators) && (!o.liquid_validators.length || LiquidValidator.isAmino(o.liquid_validators[0])));
+  },
+  encode(message: QueryLiquidValidatorsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    for (const v of message.liquidValidators) {
+      LiquidValidator.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryLiquidValidatorsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryLiquidValidatorsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.liquidValidators.push(LiquidValidator.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromPartial(object: Partial<QueryLiquidValidatorsResponse>): QueryLiquidValidatorsResponse {
+    const message = createBaseQueryLiquidValidatorsResponse();
+    message.liquidValidators = object.liquidValidators?.map(e => LiquidValidator.fromPartial(e)) || [];
+    message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
+    return message;
+  },
+  fromAmino(object: QueryLiquidValidatorsResponseAmino): QueryLiquidValidatorsResponse {
+    const message = createBaseQueryLiquidValidatorsResponse();
+    message.liquidValidators = object.liquid_validators?.map(e => LiquidValidator.fromAmino(e)) || [];
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromAmino(object.pagination);
+    }
+    return message;
+  },
+  toAmino(message: QueryLiquidValidatorsResponse): QueryLiquidValidatorsResponseAmino {
+    const obj: any = {};
+    if (message.liquidValidators) {
+      obj.liquid_validators = message.liquidValidators.map(e => e ? LiquidValidator.toAmino(e) : undefined);
+    } else {
+      obj.liquid_validators = message.liquidValidators;
+    }
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    return obj;
+  },
+  fromAminoMsg(object: QueryLiquidValidatorsResponseAminoMsg): QueryLiquidValidatorsResponse {
+    return QueryLiquidValidatorsResponse.fromAmino(object.value);
+  },
+  fromProtoMsg(message: QueryLiquidValidatorsResponseProtoMsg): QueryLiquidValidatorsResponse {
+    return QueryLiquidValidatorsResponse.decode(message.value);
+  },
+  toProto(message: QueryLiquidValidatorsResponse): Uint8Array {
+    return QueryLiquidValidatorsResponse.encode(message).finish();
+  },
+  toProtoMsg(message: QueryLiquidValidatorsResponse): QueryLiquidValidatorsResponseProtoMsg {
+    return {
+      typeUrl: "/gaia.liquid.v1beta1.QueryLiquidValidatorsResponse",
+      value: QueryLiquidValidatorsResponse.encode(message).finish()
+    };
+  }
+};
+GlobalDecoderRegistry.register(QueryLiquidValidatorsResponse.typeUrl, QueryLiquidValidatorsResponse);
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }

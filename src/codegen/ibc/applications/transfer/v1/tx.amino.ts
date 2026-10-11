@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgTransfer, MsgUpdateParams } from "./tx";
+import { MsgTransfer, MsgUpdateParams } from "./tx.js";
 export const AminoConverter = {
   "/ibc.applications.transfer.v1.MsgTransfer": {
     aminoType: "cosmos-sdk/MsgTransfer",

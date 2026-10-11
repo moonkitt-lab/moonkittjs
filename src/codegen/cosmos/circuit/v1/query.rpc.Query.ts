@@ -1,7 +1,7 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
 import { QueryClient, createProtobufRpcClient } from "@cosmjs/stargate";
-import { QueryAccountRequest, AccountResponse, QueryAccountsRequest, AccountsResponse, QueryDisabledListRequest, DisabledListResponse } from "./query";
+import { QueryAccountRequest, AccountResponse, QueryAccountsRequest, AccountsResponse, QueryDisabledListRequest, DisabledListResponse } from "./query.js";
 /** Query defines the circuit gRPC querier service. */
 export interface Query {
   /** Account returns account permissions. */

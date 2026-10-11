@@ -1,6 +1,6 @@
-import { Rpc } from "../../../../helpers";
-import { BinaryReader } from "../../../../binary";
-import { MsgTransfer, MsgTransferResponse, MsgUpdateParams, MsgUpdateParamsResponse } from "./tx";
+import { Rpc } from "../../../../helpers.js";
+import { BinaryReader } from "../../../../binary.js";
+import { MsgTransfer, MsgTransferResponse, MsgUpdateParams, MsgUpdateParamsResponse } from "./tx.js";
 /** Msg defines the ibc/transfer Msg service. */
 export interface Msg {
   /** Transfer defines a rpc handler method for MsgTransfer. */

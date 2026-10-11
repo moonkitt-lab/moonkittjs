@@ -1,6 +1,6 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
-import { MsgCreateVestingAccount, MsgCreateVestingAccountResponse, MsgCreatePermanentLockedAccount, MsgCreatePermanentLockedAccountResponse, MsgCreatePeriodicVestingAccount, MsgCreatePeriodicVestingAccountResponse } from "./tx";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
+import { MsgCreateVestingAccount, MsgCreateVestingAccountResponse, MsgCreatePermanentLockedAccount, MsgCreatePermanentLockedAccountResponse, MsgCreatePeriodicVestingAccount, MsgCreatePeriodicVestingAccountResponse } from "./tx.js";
 /** Msg defines the bank Msg service. */
 export interface Msg {
   /**
@@ -11,15 +11,11 @@ export interface Msg {
   /**
    * CreatePermanentLockedAccount defines a method that enables creating a permanent
    * locked account.
-   * 
-   * Since: cosmos-sdk 0.46
    */
   createPermanentLockedAccount(request: MsgCreatePermanentLockedAccount): Promise<MsgCreatePermanentLockedAccountResponse>;
   /**
    * CreatePeriodicVestingAccount defines a method that enables creating a
    * periodic vesting account.
-   * 
-   * Since: cosmos-sdk 0.46
    */
   createPeriodicVestingAccount(request: MsgCreatePeriodicVestingAccount): Promise<MsgCreatePeriodicVestingAccountResponse>;
 }

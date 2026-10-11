@@ -1,7 +1,7 @@
-import { Any, AnyAmino, AnySDKType } from "../../../../google/protobuf/any";
-import { isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
+import { Any, AnyAmino, AnySDKType } from "../../../../google/protobuf/any.js";
+import { isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
 /**
  * Type defines a classification of message issued from a controller chain to its associated interchain accounts
  * host
@@ -50,7 +50,12 @@ export interface InterchainAccountPacketDataProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.v1.InterchainAccountPacketData";
   value: Uint8Array;
 }
-/** InterchainAccountPacketData is comprised of a raw transaction, type of transaction and optional memo field. */
+/**
+ * InterchainAccountPacketData is comprised of a raw transaction, type of transaction and optional memo field.
+ * @name InterchainAccountPacketDataAmino
+ * @package ibc.applications.interchain_accounts.v1
+ * @see proto type: ibc.applications.interchain_accounts.v1.InterchainAccountPacketData
+ */
 export interface InterchainAccountPacketDataAmino {
   type?: Type;
   data?: string;
@@ -74,7 +79,12 @@ export interface CosmosTxProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.v1.CosmosTx";
   value: Uint8Array;
 }
-/** CosmosTx contains a list of sdk.Msg's. It should be used when sending transactions to an SDK host chain. */
+/**
+ * CosmosTx contains a list of sdk.Msg's. It should be used when sending transactions to an SDK host chain.
+ * @name CosmosTxAmino
+ * @package ibc.applications.interchain_accounts.v1
+ * @see proto type: ibc.applications.interchain_accounts.v1.CosmosTx
+ */
 export interface CosmosTxAmino {
   messages?: AnyAmino[];
 }

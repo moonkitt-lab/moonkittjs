@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgRegisterInterchainAccount, MsgSendTx, MsgUpdateParams } from "./tx";
+import { MsgRegisterInterchainAccount, MsgSendTx, MsgUpdateParams } from "./tx.js";
 export const AminoConverter = {
   "/ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccount": {
     aminoType: "cosmos-sdk/MsgRegisterInterchainAccount",

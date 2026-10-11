@@ -1,6 +1,6 @@
-import { Rpc } from "../../../../helpers";
-import { BinaryReader } from "../../../../binary";
-import { MsgStoreCode, MsgStoreCodeResponse, MsgRemoveChecksum, MsgRemoveChecksumResponse, MsgMigrateContract, MsgMigrateContractResponse } from "./tx";
+import { Rpc } from "../../../../helpers.js";
+import { BinaryReader } from "../../../../binary.js";
+import { MsgStoreCode, MsgStoreCodeResponse, MsgRemoveChecksum, MsgRemoveChecksumResponse, MsgMigrateContract, MsgMigrateContractResponse } from "./tx.js";
 /** Msg defines the ibc/08-wasm Msg service. */
 export interface Msg {
   /** StoreCode defines a rpc handler method for MsgStoreCode. */

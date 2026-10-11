@@ -1,42 +1,38 @@
-import * as _182 from "./liquid/module/v1/module";
-import * as _183 from "./liquid/v1beta1/genesis";
-import * as _184 from "./liquid/v1beta1/liquid";
-import * as _185 from "./liquid/v1beta1/query";
-import * as _186 from "./liquid/v1beta1/tx";
-import * as _187 from "./metaprotocols/extensions";
-import * as _318 from "./liquid/v1beta1/tx.amino";
-import * as _319 from "./liquid/v1beta1/tx.registry";
-import * as _320 from "./liquid/v1beta1/query.lcd";
-import * as _321 from "./liquid/v1beta1/query.rpc.Query";
-import * as _322 from "./liquid/v1beta1/tx.rpc.msg";
-import * as _335 from "./lcd";
-import * as _336 from "./rpc.query";
-import * as _337 from "./rpc.tx";
+import * as _190 from "./liquid/module/v1/module.js";
+import * as _191 from "./liquid/v1beta1/genesis.js";
+import * as _192 from "./liquid/v1beta1/liquid.js";
+import * as _193 from "./liquid/v1beta1/query.js";
+import * as _194 from "./liquid/v1beta1/tx.js";
+import * as _195 from "./metaprotocols/extensions.js";
+import * as _304 from "./liquid/v1beta1/tx.amino.js";
+import * as _305 from "./liquid/v1beta1/tx.registry.js";
+import * as _306 from "./liquid/v1beta1/query.rpc.Query.js";
+import * as _307 from "./liquid/v1beta1/tx.rpc.msg.js";
+import * as _314 from "./rpc.query.js";
+import * as _315 from "./rpc.tx.js";
 export namespace gaia {
   export namespace liquid {
     export namespace module {
       export const v1 = {
-        ..._182
+        ..._190
       };
     }
     export const v1beta1 = {
-      ..._183,
-      ..._184,
-      ..._185,
-      ..._186,
-      ..._318,
-      ..._319,
-      ..._320,
-      ..._321,
-      ..._322
+      ..._191,
+      ..._192,
+      ..._193,
+      ..._194,
+      ..._304,
+      ..._305,
+      ..._306,
+      ..._307
     };
   }
   export const metaprotocols = {
-    ..._187
+    ..._195
   };
   export const ClientFactory = {
-    ..._335,
-    ..._336,
-    ..._337
+    ..._314,
+    ..._315
   };
 }

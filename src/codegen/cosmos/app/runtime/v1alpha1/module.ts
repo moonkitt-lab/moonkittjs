@@ -1,5 +1,5 @@
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
 /** Module is the config object for the runtime module. */
 export interface Module {
   /** app_name is the name of the app. */
@@ -34,9 +34,15 @@ export interface Module {
    */
   overrideStoreKeys: StoreKeyConfig[];
   /**
+   * skip_store_keys is an optional list of store keys to skip when constructing the
+   * module's keeper. This is useful when a module does not have a store key.
+   * NOTE: the provided environment variable will have a fake store service.
+   */
+  skipStoreKeys: string[];
+  /**
    * order_migrations defines the order in which module migrations are performed.
    * If this is left empty, it uses the default migration order.
-   * https://pkg.go.dev/github.com/cosmos/cosmos-sdk@v0.47.0-alpha2/types/module#DefaultMigrationsOrder
+   * https://pkg.go.dev/github.com/cosmos/cosmos-sdk/types/module#DefaultMigrationsOrder
    */
   orderMigrations: string[];
   /**
@@ -51,14 +57,27 @@ export interface Module {
    * no preparecheckstate function will be registered.
    */
   prepareCheckStaters: string[];
+  /**
+   * pre_blockers specifies the module names of pre blockers
+   * to call in the order in which they should be called. If this is left empty
+   * no pre blocker will be registered.
+   */
+  preBlockers: string[];
 }
 export interface ModuleProtoMsg {
   typeUrl: "/cosmos.app.runtime.v1alpha1.Module";
   value: Uint8Array;
 }
-/** Module is the config object for the runtime module. */
+/**
+ * Module is the config object for the runtime module.
+ * @name ModuleAmino
+ * @package cosmos.app.runtime.v1alpha1
+ * @see proto type: cosmos.app.runtime.v1alpha1.Module
+ */
 export interface ModuleAmino {
-  /** app_name is the name of the app. */
+  /**
+   * app_name is the name of the app.
+   */
   app_name?: string;
   /**
    * begin_blockers specifies the module names of begin blockers
@@ -90,9 +109,15 @@ export interface ModuleAmino {
    */
   override_store_keys?: StoreKeyConfigAmino[];
   /**
+   * skip_store_keys is an optional list of store keys to skip when constructing the
+   * module's keeper. This is useful when a module does not have a store key.
+   * NOTE: the provided environment variable will have a fake store service.
+   */
+  skip_store_keys?: string[];
+  /**
    * order_migrations defines the order in which module migrations are performed.
    * If this is left empty, it uses the default migration order.
-   * https://pkg.go.dev/github.com/cosmos/cosmos-sdk@v0.47.0-alpha2/types/module#DefaultMigrationsOrder
+   * https://pkg.go.dev/github.com/cosmos/cosmos-sdk/types/module#DefaultMigrationsOrder
    */
   order_migrations?: string[];
   /**
@@ -107,6 +132,12 @@ export interface ModuleAmino {
    * no preparecheckstate function will be registered.
    */
   prepare_check_staters?: string[];
+  /**
+   * pre_blockers specifies the module names of pre blockers
+   * to call in the order in which they should be called. If this is left empty
+   * no pre blocker will be registered.
+   */
+  pre_blockers?: string[];
 }
 export interface ModuleAminoMsg {
   type: "cosmos-sdk/Module";
@@ -120,9 +151,11 @@ export interface ModuleSDKType {
   init_genesis: string[];
   export_genesis: string[];
   override_store_keys: StoreKeyConfigSDKType[];
+  skip_store_keys: string[];
   order_migrations: string[];
   precommiters: string[];
   prepare_check_staters: string[];
+  pre_blockers: string[];
 }
 /**
  * StoreKeyConfig may be supplied to override the default module store key, which
@@ -141,11 +174,18 @@ export interface StoreKeyConfigProtoMsg {
 /**
  * StoreKeyConfig may be supplied to override the default module store key, which
  * is the module name.
+ * @name StoreKeyConfigAmino
+ * @package cosmos.app.runtime.v1alpha1
+ * @see proto type: cosmos.app.runtime.v1alpha1.StoreKeyConfig
  */
 export interface StoreKeyConfigAmino {
-  /** name of the module to override the store key of */
+  /**
+   * name of the module to override the store key of
+   */
   module_name?: string;
-  /** the kv store key to use instead of the module name. */
+  /**
+   * the kv store key to use instead of the module name.
+   */
   kv_store_key?: string;
 }
 export interface StoreKeyConfigAminoMsg {
@@ -168,22 +208,24 @@ function createBaseModule(): Module {
     initGenesis: [],
     exportGenesis: [],
     overrideStoreKeys: [],
+    skipStoreKeys: [],
     orderMigrations: [],
     precommiters: [],
-    prepareCheckStaters: []
+    prepareCheckStaters: [],
+    preBlockers: []
   };
 }
 export const Module = {
   typeUrl: "/cosmos.app.runtime.v1alpha1.Module",
   aminoType: "cosmos-sdk/Module",
   is(o: any): o is Module {
-    return o && (o.$typeUrl === Module.typeUrl || typeof o.appName === "string" && Array.isArray(o.beginBlockers) && (!o.beginBlockers.length || typeof o.beginBlockers[0] === "string") && Array.isArray(o.endBlockers) && (!o.endBlockers.length || typeof o.endBlockers[0] === "string") && Array.isArray(o.initGenesis) && (!o.initGenesis.length || typeof o.initGenesis[0] === "string") && Array.isArray(o.exportGenesis) && (!o.exportGenesis.length || typeof o.exportGenesis[0] === "string") && Array.isArray(o.overrideStoreKeys) && (!o.overrideStoreKeys.length || StoreKeyConfig.is(o.overrideStoreKeys[0])) && Array.isArray(o.orderMigrations) && (!o.orderMigrations.length || typeof o.orderMigrations[0] === "string") && Array.isArray(o.precommiters) && (!o.precommiters.length || typeof o.precommiters[0] === "string") && Array.isArray(o.prepareCheckStaters) && (!o.prepareCheckStaters.length || typeof o.prepareCheckStaters[0] === "string"));
+    return o && (o.$typeUrl === Module.typeUrl || typeof o.appName === "string" && Array.isArray(o.beginBlockers) && (!o.beginBlockers.length || typeof o.beginBlockers[0] === "string") && Array.isArray(o.endBlockers) && (!o.endBlockers.length || typeof o.endBlockers[0] === "string") && Array.isArray(o.initGenesis) && (!o.initGenesis.length || typeof o.initGenesis[0] === "string") && Array.isArray(o.exportGenesis) && (!o.exportGenesis.length || typeof o.exportGenesis[0] === "string") && Array.isArray(o.overrideStoreKeys) && (!o.overrideStoreKeys.length || StoreKeyConfig.is(o.overrideStoreKeys[0])) && Array.isArray(o.skipStoreKeys) && (!o.skipStoreKeys.length || typeof o.skipStoreKeys[0] === "string") && Array.isArray(o.orderMigrations) && (!o.orderMigrations.length || typeof o.orderMigrations[0] === "string") && Array.isArray(o.precommiters) && (!o.precommiters.length || typeof o.precommiters[0] === "string") && Array.isArray(o.prepareCheckStaters) && (!o.prepareCheckStaters.length || typeof o.prepareCheckStaters[0] === "string") && Array.isArray(o.preBlockers) && (!o.preBlockers.length || typeof o.preBlockers[0] === "string"));
   },
   isSDK(o: any): o is ModuleSDKType {
-    return o && (o.$typeUrl === Module.typeUrl || typeof o.app_name === "string" && Array.isArray(o.begin_blockers) && (!o.begin_blockers.length || typeof o.begin_blockers[0] === "string") && Array.isArray(o.end_blockers) && (!o.end_blockers.length || typeof o.end_blockers[0] === "string") && Array.isArray(o.init_genesis) && (!o.init_genesis.length || typeof o.init_genesis[0] === "string") && Array.isArray(o.export_genesis) && (!o.export_genesis.length || typeof o.export_genesis[0] === "string") && Array.isArray(o.override_store_keys) && (!o.override_store_keys.length || StoreKeyConfig.isSDK(o.override_store_keys[0])) && Array.isArray(o.order_migrations) && (!o.order_migrations.length || typeof o.order_migrations[0] === "string") && Array.isArray(o.precommiters) && (!o.precommiters.length || typeof o.precommiters[0] === "string") && Array.isArray(o.prepare_check_staters) && (!o.prepare_check_staters.length || typeof o.prepare_check_staters[0] === "string"));
+    return o && (o.$typeUrl === Module.typeUrl || typeof o.app_name === "string" && Array.isArray(o.begin_blockers) && (!o.begin_blockers.length || typeof o.begin_blockers[0] === "string") && Array.isArray(o.end_blockers) && (!o.end_blockers.length || typeof o.end_blockers[0] === "string") && Array.isArray(o.init_genesis) && (!o.init_genesis.length || typeof o.init_genesis[0] === "string") && Array.isArray(o.export_genesis) && (!o.export_genesis.length || typeof o.export_genesis[0] === "string") && Array.isArray(o.override_store_keys) && (!o.override_store_keys.length || StoreKeyConfig.isSDK(o.override_store_keys[0])) && Array.isArray(o.skip_store_keys) && (!o.skip_store_keys.length || typeof o.skip_store_keys[0] === "string") && Array.isArray(o.order_migrations) && (!o.order_migrations.length || typeof o.order_migrations[0] === "string") && Array.isArray(o.precommiters) && (!o.precommiters.length || typeof o.precommiters[0] === "string") && Array.isArray(o.prepare_check_staters) && (!o.prepare_check_staters.length || typeof o.prepare_check_staters[0] === "string") && Array.isArray(o.pre_blockers) && (!o.pre_blockers.length || typeof o.pre_blockers[0] === "string"));
   },
   isAmino(o: any): o is ModuleAmino {
-    return o && (o.$typeUrl === Module.typeUrl || typeof o.app_name === "string" && Array.isArray(o.begin_blockers) && (!o.begin_blockers.length || typeof o.begin_blockers[0] === "string") && Array.isArray(o.end_blockers) && (!o.end_blockers.length || typeof o.end_blockers[0] === "string") && Array.isArray(o.init_genesis) && (!o.init_genesis.length || typeof o.init_genesis[0] === "string") && Array.isArray(o.export_genesis) && (!o.export_genesis.length || typeof o.export_genesis[0] === "string") && Array.isArray(o.override_store_keys) && (!o.override_store_keys.length || StoreKeyConfig.isAmino(o.override_store_keys[0])) && Array.isArray(o.order_migrations) && (!o.order_migrations.length || typeof o.order_migrations[0] === "string") && Array.isArray(o.precommiters) && (!o.precommiters.length || typeof o.precommiters[0] === "string") && Array.isArray(o.prepare_check_staters) && (!o.prepare_check_staters.length || typeof o.prepare_check_staters[0] === "string"));
+    return o && (o.$typeUrl === Module.typeUrl || typeof o.app_name === "string" && Array.isArray(o.begin_blockers) && (!o.begin_blockers.length || typeof o.begin_blockers[0] === "string") && Array.isArray(o.end_blockers) && (!o.end_blockers.length || typeof o.end_blockers[0] === "string") && Array.isArray(o.init_genesis) && (!o.init_genesis.length || typeof o.init_genesis[0] === "string") && Array.isArray(o.export_genesis) && (!o.export_genesis.length || typeof o.export_genesis[0] === "string") && Array.isArray(o.override_store_keys) && (!o.override_store_keys.length || StoreKeyConfig.isAmino(o.override_store_keys[0])) && Array.isArray(o.skip_store_keys) && (!o.skip_store_keys.length || typeof o.skip_store_keys[0] === "string") && Array.isArray(o.order_migrations) && (!o.order_migrations.length || typeof o.order_migrations[0] === "string") && Array.isArray(o.precommiters) && (!o.precommiters.length || typeof o.precommiters[0] === "string") && Array.isArray(o.prepare_check_staters) && (!o.prepare_check_staters.length || typeof o.prepare_check_staters[0] === "string") && Array.isArray(o.pre_blockers) && (!o.pre_blockers.length || typeof o.pre_blockers[0] === "string"));
   },
   encode(message: Module, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.appName !== "") {
@@ -204,6 +246,9 @@ export const Module = {
     for (const v of message.overrideStoreKeys) {
       StoreKeyConfig.encode(v!, writer.uint32(50).fork()).ldelim();
     }
+    for (const v of message.skipStoreKeys) {
+      writer.uint32(90).string(v!);
+    }
     for (const v of message.orderMigrations) {
       writer.uint32(58).string(v!);
     }
@@ -212,6 +257,9 @@ export const Module = {
     }
     for (const v of message.prepareCheckStaters) {
       writer.uint32(74).string(v!);
+    }
+    for (const v of message.preBlockers) {
+      writer.uint32(82).string(v!);
     }
     return writer;
   },
@@ -240,6 +288,9 @@ export const Module = {
         case 6:
           message.overrideStoreKeys.push(StoreKeyConfig.decode(reader, reader.uint32()));
           break;
+        case 11:
+          message.skipStoreKeys.push(reader.string());
+          break;
         case 7:
           message.orderMigrations.push(reader.string());
           break;
@@ -248,6 +299,9 @@ export const Module = {
           break;
         case 9:
           message.prepareCheckStaters.push(reader.string());
+          break;
+        case 10:
+          message.preBlockers.push(reader.string());
           break;
         default:
           reader.skipType(tag & 7);
@@ -264,9 +318,11 @@ export const Module = {
     message.initGenesis = object.initGenesis?.map(e => e) || [];
     message.exportGenesis = object.exportGenesis?.map(e => e) || [];
     message.overrideStoreKeys = object.overrideStoreKeys?.map(e => StoreKeyConfig.fromPartial(e)) || [];
+    message.skipStoreKeys = object.skipStoreKeys?.map(e => e) || [];
     message.orderMigrations = object.orderMigrations?.map(e => e) || [];
     message.precommiters = object.precommiters?.map(e => e) || [];
     message.prepareCheckStaters = object.prepareCheckStaters?.map(e => e) || [];
+    message.preBlockers = object.preBlockers?.map(e => e) || [];
     return message;
   },
   fromAmino(object: ModuleAmino): Module {
@@ -279,9 +335,11 @@ export const Module = {
     message.initGenesis = object.init_genesis?.map(e => e) || [];
     message.exportGenesis = object.export_genesis?.map(e => e) || [];
     message.overrideStoreKeys = object.override_store_keys?.map(e => StoreKeyConfig.fromAmino(e)) || [];
+    message.skipStoreKeys = object.skip_store_keys?.map(e => e) || [];
     message.orderMigrations = object.order_migrations?.map(e => e) || [];
     message.precommiters = object.precommiters?.map(e => e) || [];
     message.prepareCheckStaters = object.prepare_check_staters?.map(e => e) || [];
+    message.preBlockers = object.pre_blockers?.map(e => e) || [];
     return message;
   },
   toAmino(message: Module): ModuleAmino {
@@ -312,6 +370,11 @@ export const Module = {
     } else {
       obj.override_store_keys = message.overrideStoreKeys;
     }
+    if (message.skipStoreKeys) {
+      obj.skip_store_keys = message.skipStoreKeys.map(e => e);
+    } else {
+      obj.skip_store_keys = message.skipStoreKeys;
+    }
     if (message.orderMigrations) {
       obj.order_migrations = message.orderMigrations.map(e => e);
     } else {
@@ -326,6 +389,11 @@ export const Module = {
       obj.prepare_check_staters = message.prepareCheckStaters.map(e => e);
     } else {
       obj.prepare_check_staters = message.prepareCheckStaters;
+    }
+    if (message.preBlockers) {
+      obj.pre_blockers = message.preBlockers.map(e => e);
+    } else {
+      obj.pre_blockers = message.preBlockers;
     }
     return obj;
   },

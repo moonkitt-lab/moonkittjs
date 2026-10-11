@@ -1,9 +1,9 @@
-import { Any, AnyAmino, AnySDKType } from "../../../../google/protobuf/any";
-import { Event, EventAmino, EventSDKType } from "../../../../tendermint/abci/types";
-import { Block, BlockAmino, BlockSDKType } from "../../../../tendermint/types/block";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
-import { bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { Any, AnyAmino, AnySDKType } from "../../../../google/protobuf/any.js";
+import { Event, EventAmino, EventSDKType } from "../../../../tendermint/abci/types.js";
+import { Block, BlockAmino, BlockSDKType } from "../../../../tendermint/types/block.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
+import { bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
 /**
  * TxResponse defines a structure containing relevant tx data and metadata. The
  * tags are stringified and the log is JSON decoded.
@@ -45,8 +45,6 @@ export interface TxResponse {
    * these events include those emitted by processing all the messages and those
    * emitted from the ante. Whereas Logs contains the events, with
    * additional metadata, emitted only by processing the messages.
-   * 
-   * Since: cosmos-sdk 0.42.11, 0.44.5, 0.45
    */
   events: Event[];
 }
@@ -57,32 +55,55 @@ export interface TxResponseProtoMsg {
 /**
  * TxResponse defines a structure containing relevant tx data and metadata. The
  * tags are stringified and the log is JSON decoded.
+ * @name TxResponseAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.TxResponse
  */
 export interface TxResponseAmino {
-  /** The block height */
+  /**
+   * The block height
+   */
   height?: string;
-  /** The transaction hash. */
+  /**
+   * The transaction hash.
+   */
   txhash?: string;
-  /** Namespace for the Code */
+  /**
+   * Namespace for the Code
+   */
   codespace?: string;
-  /** Response code. */
+  /**
+   * Response code.
+   */
   code?: number;
-  /** Result bytes, if any. */
+  /**
+   * Result bytes, if any.
+   */
   data?: string;
   /**
    * The output of the application's logger (raw string). May be
    * non-deterministic.
    */
   raw_log?: string;
-  /** The output of the application's logger (typed). May be non-deterministic. */
+  /**
+   * The output of the application's logger (typed). May be non-deterministic.
+   */
   logs?: ABCIMessageLogAmino[];
-  /** Additional information. May be non-deterministic. */
+  /**
+   * Additional information. May be non-deterministic.
+   */
   info?: string;
-  /** Amount of gas requested for transaction. */
+  /**
+   * Amount of gas requested for transaction.
+   */
   gas_wanted?: string;
-  /** Amount of gas consumed by transaction. */
+  /**
+   * Amount of gas consumed by transaction.
+   */
   gas_used?: string;
-  /** The request transaction bytes. */
+  /**
+   * The request transaction bytes.
+   */
   tx?: AnyAmino;
   /**
    * Time of the previous block. For heights > 1, it's the weighted median of
@@ -95,8 +116,6 @@ export interface TxResponseAmino {
    * these events include those emitted by processing all the messages and those
    * emitted from the ante. Whereas Logs contains the events, with
    * additional metadata, emitted only by processing the messages.
-   * 
-   * Since: cosmos-sdk 0.42.11, 0.44.5, 0.45
    */
   events?: EventAmino[];
 }
@@ -137,7 +156,12 @@ export interface ABCIMessageLogProtoMsg {
   typeUrl: "/cosmos.base.abci.v1beta1.ABCIMessageLog";
   value: Uint8Array;
 }
-/** ABCIMessageLog defines a structure containing an indexed tx ABCI message log. */
+/**
+ * ABCIMessageLog defines a structure containing an indexed tx ABCI message log.
+ * @name ABCIMessageLogAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.ABCIMessageLog
+ */
 export interface ABCIMessageLogAmino {
   msg_index: number;
   log?: string;
@@ -172,6 +196,9 @@ export interface StringEventProtoMsg {
 /**
  * StringEvent defines en Event object wrapper where all the attributes
  * contain key/value pairs that are strings instead of raw bytes.
+ * @name StringEventAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.StringEvent
  */
 export interface StringEventAmino {
   type?: string;
@@ -204,6 +231,9 @@ export interface AttributeProtoMsg {
 /**
  * Attribute defines an attribute wrapper where the key and value are
  * strings instead of raw bytes.
+ * @name AttributeAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.Attribute
  */
 export interface AttributeAmino {
   key?: string;
@@ -232,11 +262,20 @@ export interface GasInfoProtoMsg {
   typeUrl: "/cosmos.base.abci.v1beta1.GasInfo";
   value: Uint8Array;
 }
-/** GasInfo defines tx execution gas context. */
+/**
+ * GasInfo defines tx execution gas context.
+ * @name GasInfoAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.GasInfo
+ */
 export interface GasInfoAmino {
-  /** GasWanted is the maximum units of work we allow this tx to perform. */
+  /**
+   * GasWanted is the maximum units of work we allow this tx to perform.
+   */
   gas_wanted?: string;
-  /** GasUsed is the amount of gas actually consumed. */
+  /**
+   * GasUsed is the amount of gas actually consumed.
+   */
   gas_used?: string;
 }
 export interface GasInfoAminoMsg {
@@ -265,28 +304,31 @@ export interface Result {
    * or handler execution.
    */
   events: Event[];
-  /**
-   * msg_responses contains the Msg handler responses type packed in Anys.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
+  /** msg_responses contains the Msg handler responses type packed in Anys. */
   msgResponses: Any[];
 }
 export interface ResultProtoMsg {
   typeUrl: "/cosmos.base.abci.v1beta1.Result";
   value: Uint8Array;
 }
-/** Result is the union of ResponseFormat and ResponseCheckTx. */
+/**
+ * Result is the union of ResponseFormat and ResponseCheckTx.
+ * @name ResultAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.Result
+ */
 export interface ResultAmino {
   /**
    * Data is any data returned from message or handler execution. It MUST be
    * length prefixed in order to separate data from multiple message executions.
    * Deprecated. This field is still populated, but prefer msg_response instead
    * because it also contains the Msg response typeURL.
+   * @deprecated
    */
-  /** @deprecated */
   data?: string;
-  /** Log contains the log information from message or handler execution. */
+  /**
+   * Log contains the log information from message or handler execution.
+   */
   log?: string;
   /**
    * Events contains a slice of Event objects that were emitted during message
@@ -295,8 +337,6 @@ export interface ResultAmino {
   events?: EventAmino[];
   /**
    * msg_responses contains the Msg handler responses type packed in Anys.
-   * 
-   * Since: cosmos-sdk 0.46
    */
   msg_responses?: AnyAmino[];
 }
@@ -327,6 +367,9 @@ export interface SimulationResponseProtoMsg {
 /**
  * SimulationResponse defines the response generated when a transaction is
  * successfully simulated.
+ * @name SimulationResponseAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.SimulationResponse
  */
 export interface SimulationResponseAmino {
   gas_info?: GasInfoAmino;
@@ -360,8 +403,11 @@ export interface MsgDataProtoMsg {
 /**
  * MsgData defines the data returned in a Result object during message
  * execution.
+ * @name MsgDataAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.MsgData
+ * @deprecated
  */
-/** @deprecated */
 export interface MsgDataAmino {
   msg_type?: string;
   data?: string;
@@ -387,11 +433,7 @@ export interface TxMsgData {
   /** data field is deprecated and not populated. */
   /** @deprecated */
   data: MsgData[];
-  /**
-   * msg_responses contains the Msg handler responses packed into Anys.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
+  /** msg_responses contains the Msg handler responses packed into Anys. */
   msgResponses: Any[];
 }
 export interface TxMsgDataProtoMsg {
@@ -401,15 +443,18 @@ export interface TxMsgDataProtoMsg {
 /**
  * TxMsgData defines a list of MsgData. A transaction will have a MsgData object
  * for each message.
+ * @name TxMsgDataAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.TxMsgData
  */
 export interface TxMsgDataAmino {
-  /** data field is deprecated and not populated. */
-  /** @deprecated */
+  /**
+   * data field is deprecated and not populated.
+   * @deprecated
+   */
   data?: MsgDataAmino[];
   /**
    * msg_responses contains the Msg handler responses packed into Anys.
-   * 
-   * Since: cosmos-sdk 0.46
    */
   msg_responses?: AnyAmino[];
 }
@@ -445,19 +490,36 @@ export interface SearchTxsResultProtoMsg {
   typeUrl: "/cosmos.base.abci.v1beta1.SearchTxsResult";
   value: Uint8Array;
 }
-/** SearchTxsResult defines a structure for querying txs pageable */
+/**
+ * SearchTxsResult defines a structure for querying txs pageable
+ * @name SearchTxsResultAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.SearchTxsResult
+ */
 export interface SearchTxsResultAmino {
-  /** Count of all txs */
+  /**
+   * Count of all txs
+   */
   total_count?: string;
-  /** Count of txs in current page */
+  /**
+   * Count of txs in current page
+   */
   count?: string;
-  /** Index of current page, start from 1 */
+  /**
+   * Index of current page, start from 1
+   */
   page_number?: string;
-  /** Count of total pages */
+  /**
+   * Count of total pages
+   */
   page_total?: string;
-  /** Max count txs per page */
+  /**
+   * Max count txs per page
+   */
   limit?: string;
-  /** List of txs in current page */
+  /**
+   * List of txs in current page
+   */
   txs?: TxResponseAmino[];
 }
 export interface SearchTxsResultAminoMsg {
@@ -492,19 +554,36 @@ export interface SearchBlocksResultProtoMsg {
   typeUrl: "/cosmos.base.abci.v1beta1.SearchBlocksResult";
   value: Uint8Array;
 }
-/** SearchBlocksResult defines a structure for querying blocks pageable */
+/**
+ * SearchBlocksResult defines a structure for querying blocks pageable
+ * @name SearchBlocksResultAmino
+ * @package cosmos.base.abci.v1beta1
+ * @see proto type: cosmos.base.abci.v1beta1.SearchBlocksResult
+ */
 export interface SearchBlocksResultAmino {
-  /** Count of all blocks */
+  /**
+   * Count of all blocks
+   */
   total_count?: string;
-  /** Count of blocks in current page */
+  /**
+   * Count of blocks in current page
+   */
   count?: string;
-  /** Index of current page, start from 1 */
+  /**
+   * Index of current page, start from 1
+   */
   page_number?: string;
-  /** Count of total pages */
+  /**
+   * Count of total pages
+   */
   page_total?: string;
-  /** Max count blocks per page */
+  /**
+   * Max count blocks per page
+   */
   limit?: string;
-  /** List of blocks in current page */
+  /**
+   * List of blocks in current page
+   */
   blocks?: BlockAmino[];
 }
 export interface SearchBlocksResultAminoMsg {

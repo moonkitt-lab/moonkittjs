@@ -1,7 +1,7 @@
-import { Coin, CoinAmino, CoinSDKType } from "../../../../cosmos/base/v1beta1/coin";
-import { Height, HeightAmino, HeightSDKType, Params, ParamsAmino, ParamsSDKType } from "../../../core/client/v1/client";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
+import { Coin, CoinAmino, CoinSDKType } from "../../../../cosmos/base/v1beta1/coin.js";
+import { Height, HeightAmino, HeightSDKType, Params, ParamsAmino, ParamsSDKType } from "../../../core/client/v1/client.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
 /**
  * MsgTransfer defines a msg to transfer fungible tokens (i.e Coins) between
  * ICS20 enabled chains. See ICS Spec here:
@@ -12,7 +12,7 @@ export interface MsgTransfer {
   sourcePort: string;
   /** the channel by which the packet will be sent */
   sourceChannel: string;
-  /** the tokens to be transferred */
+  /** token to be transferred */
   token: Coin;
   /** the sender address */
   sender: string;
@@ -20,16 +20,20 @@ export interface MsgTransfer {
   receiver: string;
   /**
    * Timeout height relative to the current block height.
-   * The timeout is disabled when set to 0.
+   * If you are sending with IBC v1 protocol, either timeout_height or timeout_timestamp must be set.
+   * If you are sending with IBC v2 protocol, timeout_timestamp must be set, and timeout_height must be omitted.
    */
   timeoutHeight: Height;
   /**
    * Timeout timestamp in absolute nanoseconds since unix epoch.
-   * The timeout is disabled when set to 0.
+   * If you are sending with IBC v1 protocol, either timeout_height or timeout_timestamp must be set.
+   * If you are sending with IBC v2 protocol, timeout_timestamp must be set.
    */
   timeoutTimestamp: bigint;
   /** optional memo */
   memo: string;
+  /** optional encoding */
+  encoding: string;
 }
 export interface MsgTransferProtoMsg {
   typeUrl: "/ibc.applications.transfer.v1.MsgTransfer";
@@ -39,30 +43,51 @@ export interface MsgTransferProtoMsg {
  * MsgTransfer defines a msg to transfer fungible tokens (i.e Coins) between
  * ICS20 enabled chains. See ICS Spec here:
  * https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer#data-structures
+ * @name MsgTransferAmino
+ * @package ibc.applications.transfer.v1
+ * @see proto type: ibc.applications.transfer.v1.MsgTransfer
  */
 export interface MsgTransferAmino {
-  /** the port on which the packet will be sent */
+  /**
+   * the port on which the packet will be sent
+   */
   source_port?: string;
-  /** the channel by which the packet will be sent */
+  /**
+   * the channel by which the packet will be sent
+   */
   source_channel?: string;
-  /** the tokens to be transferred */
+  /**
+   * token to be transferred
+   */
   token: CoinAmino;
-  /** the sender address */
+  /**
+   * the sender address
+   */
   sender?: string;
-  /** the recipient address on the destination chain */
+  /**
+   * the recipient address on the destination chain
+   */
   receiver?: string;
   /**
    * Timeout height relative to the current block height.
-   * The timeout is disabled when set to 0.
+   * If you are sending with IBC v1 protocol, either timeout_height or timeout_timestamp must be set.
+   * If you are sending with IBC v2 protocol, timeout_timestamp must be set, and timeout_height must be omitted.
    */
   timeout_height: HeightAmino;
   /**
    * Timeout timestamp in absolute nanoseconds since unix epoch.
-   * The timeout is disabled when set to 0.
+   * If you are sending with IBC v1 protocol, either timeout_height or timeout_timestamp must be set.
+   * If you are sending with IBC v2 protocol, timeout_timestamp must be set.
    */
   timeout_timestamp?: string;
-  /** optional memo */
+  /**
+   * optional memo
+   */
   memo?: string;
+  /**
+   * optional encoding
+   */
+  encoding?: string;
 }
 export interface MsgTransferAminoMsg {
   type: "cosmos-sdk/MsgTransfer";
@@ -82,6 +107,7 @@ export interface MsgTransferSDKType {
   timeout_height: HeightSDKType;
   timeout_timestamp: bigint;
   memo: string;
+  encoding: string;
 }
 /** MsgTransferResponse defines the Msg/Transfer response type. */
 export interface MsgTransferResponse {
@@ -92,9 +118,16 @@ export interface MsgTransferResponseProtoMsg {
   typeUrl: "/ibc.applications.transfer.v1.MsgTransferResponse";
   value: Uint8Array;
 }
-/** MsgTransferResponse defines the Msg/Transfer response type. */
+/**
+ * MsgTransferResponse defines the Msg/Transfer response type.
+ * @name MsgTransferResponseAmino
+ * @package ibc.applications.transfer.v1
+ * @see proto type: ibc.applications.transfer.v1.MsgTransferResponse
+ */
 export interface MsgTransferResponseAmino {
-  /** sequence number of the transfer packet sent */
+  /**
+   * sequence number of the transfer packet sent
+   */
   sequence?: string;
 }
 export interface MsgTransferResponseAminoMsg {
@@ -120,9 +153,16 @@ export interface MsgUpdateParamsProtoMsg {
   typeUrl: "/ibc.applications.transfer.v1.MsgUpdateParams";
   value: Uint8Array;
 }
-/** MsgUpdateParams is the Msg/UpdateParams request type. */
+/**
+ * MsgUpdateParams is the Msg/UpdateParams request type.
+ * @name MsgUpdateParamsAmino
+ * @package ibc.applications.transfer.v1
+ * @see proto type: ibc.applications.transfer.v1.MsgUpdateParams
+ */
 export interface MsgUpdateParamsAmino {
-  /** signer address */
+  /**
+   * signer address
+   */
   signer?: string;
   /**
    * params defines the transfer parameters to update.
@@ -152,6 +192,9 @@ export interface MsgUpdateParamsResponseProtoMsg {
 /**
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
+ * @name MsgUpdateParamsResponseAmino
+ * @package ibc.applications.transfer.v1
+ * @see proto type: ibc.applications.transfer.v1.MsgUpdateParamsResponse
  */
 export interface MsgUpdateParamsResponseAmino {}
 export interface MsgUpdateParamsResponseAminoMsg {
@@ -172,20 +215,21 @@ function createBaseMsgTransfer(): MsgTransfer {
     receiver: "",
     timeoutHeight: Height.fromPartial({}),
     timeoutTimestamp: BigInt(0),
-    memo: ""
+    memo: "",
+    encoding: ""
   };
 }
 export const MsgTransfer = {
   typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
   aminoType: "cosmos-sdk/MsgTransfer",
   is(o: any): o is MsgTransfer {
-    return o && (o.$typeUrl === MsgTransfer.typeUrl || typeof o.sourcePort === "string" && typeof o.sourceChannel === "string" && Coin.is(o.token) && typeof o.sender === "string" && typeof o.receiver === "string" && Height.is(o.timeoutHeight) && typeof o.timeoutTimestamp === "bigint" && typeof o.memo === "string");
+    return o && (o.$typeUrl === MsgTransfer.typeUrl || typeof o.sourcePort === "string" && typeof o.sourceChannel === "string" && Coin.is(o.token) && typeof o.sender === "string" && typeof o.receiver === "string" && Height.is(o.timeoutHeight) && typeof o.timeoutTimestamp === "bigint" && typeof o.memo === "string" && typeof o.encoding === "string");
   },
   isSDK(o: any): o is MsgTransferSDKType {
-    return o && (o.$typeUrl === MsgTransfer.typeUrl || typeof o.source_port === "string" && typeof o.source_channel === "string" && Coin.isSDK(o.token) && typeof o.sender === "string" && typeof o.receiver === "string" && Height.isSDK(o.timeout_height) && typeof o.timeout_timestamp === "bigint" && typeof o.memo === "string");
+    return o && (o.$typeUrl === MsgTransfer.typeUrl || typeof o.source_port === "string" && typeof o.source_channel === "string" && Coin.isSDK(o.token) && typeof o.sender === "string" && typeof o.receiver === "string" && Height.isSDK(o.timeout_height) && typeof o.timeout_timestamp === "bigint" && typeof o.memo === "string" && typeof o.encoding === "string");
   },
   isAmino(o: any): o is MsgTransferAmino {
-    return o && (o.$typeUrl === MsgTransfer.typeUrl || typeof o.source_port === "string" && typeof o.source_channel === "string" && Coin.isAmino(o.token) && typeof o.sender === "string" && typeof o.receiver === "string" && Height.isAmino(o.timeout_height) && typeof o.timeout_timestamp === "bigint" && typeof o.memo === "string");
+    return o && (o.$typeUrl === MsgTransfer.typeUrl || typeof o.source_port === "string" && typeof o.source_channel === "string" && Coin.isAmino(o.token) && typeof o.sender === "string" && typeof o.receiver === "string" && Height.isAmino(o.timeout_height) && typeof o.timeout_timestamp === "bigint" && typeof o.memo === "string" && typeof o.encoding === "string");
   },
   encode(message: MsgTransfer, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.sourcePort !== "") {
@@ -211,6 +255,9 @@ export const MsgTransfer = {
     }
     if (message.memo !== "") {
       writer.uint32(66).string(message.memo);
+    }
+    if (message.encoding !== "") {
+      writer.uint32(74).string(message.encoding);
     }
     return writer;
   },
@@ -245,6 +292,9 @@ export const MsgTransfer = {
         case 8:
           message.memo = reader.string();
           break;
+        case 9:
+          message.encoding = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -262,6 +312,7 @@ export const MsgTransfer = {
     message.timeoutHeight = object.timeoutHeight !== undefined && object.timeoutHeight !== null ? Height.fromPartial(object.timeoutHeight) : undefined;
     message.timeoutTimestamp = object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null ? BigInt(object.timeoutTimestamp.toString()) : BigInt(0);
     message.memo = object.memo ?? "";
+    message.encoding = object.encoding ?? "";
     return message;
   },
   fromAmino(object: MsgTransferAmino): MsgTransfer {
@@ -290,6 +341,9 @@ export const MsgTransfer = {
     if (object.memo !== undefined && object.memo !== null) {
       message.memo = object.memo;
     }
+    if (object.encoding !== undefined && object.encoding !== null) {
+      message.encoding = object.encoding;
+    }
     return message;
   },
   toAmino(message: MsgTransfer): MsgTransferAmino {
@@ -302,6 +356,7 @@ export const MsgTransfer = {
     obj.timeout_height = message.timeoutHeight ? Height.toAmino(message.timeoutHeight) : {};
     obj.timeout_timestamp = message.timeoutTimestamp !== BigInt(0) ? message.timeoutTimestamp?.toString() : undefined;
     obj.memo = message.memo === "" ? undefined : message.memo;
+    obj.encoding = message.encoding === "" ? undefined : message.encoding;
     return obj;
   },
   fromAminoMsg(object: MsgTransferAminoMsg): MsgTransfer {

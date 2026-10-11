@@ -1,19 +1,13 @@
-import { Rpc } from "../../../helpers";
-import { BinaryReader } from "../../../binary";
-import { MsgSoftwareUpgrade, MsgSoftwareUpgradeResponse, MsgCancelUpgrade, MsgCancelUpgradeResponse } from "./tx";
+import { Rpc } from "../../../helpers.js";
+import { BinaryReader } from "../../../binary.js";
+import { MsgSoftwareUpgrade, MsgSoftwareUpgradeResponse, MsgCancelUpgrade, MsgCancelUpgradeResponse } from "./tx.js";
 /** Msg defines the upgrade Msg service. */
 export interface Msg {
-  /**
-   * SoftwareUpgrade is a governance operation for initiating a software upgrade.
-   * 
-   * Since: cosmos-sdk 0.46
-   */
+  /** SoftwareUpgrade is a governance operation for initiating a software upgrade. */
   softwareUpgrade(request: MsgSoftwareUpgrade): Promise<MsgSoftwareUpgradeResponse>;
   /**
    * CancelUpgrade is a governance operation for cancelling a previously
    * approved software upgrade.
-   * 
-   * Since: cosmos-sdk 0.46
    */
   cancelUpgrade(request: MsgCancelUpgrade): Promise<MsgCancelUpgradeResponse>;
 }

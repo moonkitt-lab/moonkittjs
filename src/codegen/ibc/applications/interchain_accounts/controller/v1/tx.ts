@@ -1,9 +1,9 @@
-import { Order } from "../../../../core/channel/v1/channel";
-import { InterchainAccountPacketData, InterchainAccountPacketDataAmino, InterchainAccountPacketDataSDKType } from "../../v1/packet";
-import { Params, ParamsAmino, ParamsSDKType } from "./controller";
-import { isSet } from "../../../../../helpers";
-import { BinaryReader, BinaryWriter } from "../../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../../registry";
+import { Order } from "../../../../core/channel/v1/channel.js";
+import { InterchainAccountPacketData, InterchainAccountPacketDataAmino, InterchainAccountPacketDataSDKType } from "../../v1/packet.js";
+import { Params, ParamsAmino, ParamsSDKType } from "./controller.js";
+import { isSet } from "../../../../../helpers.js";
+import { BinaryReader, BinaryWriter } from "../../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../../registry.js";
 /** MsgRegisterInterchainAccount defines the payload for Msg/RegisterAccount */
 export interface MsgRegisterInterchainAccount {
   owner: string;
@@ -15,7 +15,12 @@ export interface MsgRegisterInterchainAccountProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccount";
   value: Uint8Array;
 }
-/** MsgRegisterInterchainAccount defines the payload for Msg/RegisterAccount */
+/**
+ * MsgRegisterInterchainAccount defines the payload for Msg/RegisterAccount
+ * @name MsgRegisterInterchainAccountAmino
+ * @package ibc.applications.interchain_accounts.controller.v1
+ * @see proto type: ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccount
+ */
 export interface MsgRegisterInterchainAccountAmino {
   owner?: string;
   connection_id?: string;
@@ -42,7 +47,12 @@ export interface MsgRegisterInterchainAccountResponseProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccountResponse";
   value: Uint8Array;
 }
-/** MsgRegisterInterchainAccountResponse defines the response for Msg/RegisterAccount */
+/**
+ * MsgRegisterInterchainAccountResponse defines the response for Msg/RegisterAccount
+ * @name MsgRegisterInterchainAccountResponseAmino
+ * @package ibc.applications.interchain_accounts.controller.v1
+ * @see proto type: ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccountResponse
+ */
 export interface MsgRegisterInterchainAccountResponseAmino {
   channel_id?: string;
   port_id?: string;
@@ -71,7 +81,12 @@ export interface MsgSendTxProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.controller.v1.MsgSendTx";
   value: Uint8Array;
 }
-/** MsgSendTx defines the payload for Msg/SendTx */
+/**
+ * MsgSendTx defines the payload for Msg/SendTx
+ * @name MsgSendTxAmino
+ * @package ibc.applications.interchain_accounts.controller.v1
+ * @see proto type: ibc.applications.interchain_accounts.controller.v1.MsgSendTx
+ */
 export interface MsgSendTxAmino {
   owner?: string;
   connection_id?: string;
@@ -101,7 +116,12 @@ export interface MsgSendTxResponseProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.controller.v1.MsgSendTxResponse";
   value: Uint8Array;
 }
-/** MsgSendTxResponse defines the response for MsgSendTx */
+/**
+ * MsgSendTxResponse defines the response for MsgSendTx
+ * @name MsgSendTxResponseAmino
+ * @package ibc.applications.interchain_accounts.controller.v1
+ * @see proto type: ibc.applications.interchain_accounts.controller.v1.MsgSendTxResponse
+ */
 export interface MsgSendTxResponseAmino {
   sequence?: string;
 }
@@ -128,9 +148,16 @@ export interface MsgUpdateParamsProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams";
   value: Uint8Array;
 }
-/** MsgUpdateParams defines the payload for Msg/UpdateParams */
+/**
+ * MsgUpdateParams defines the payload for Msg/UpdateParams
+ * @name MsgUpdateParamsAmino
+ * @package ibc.applications.interchain_accounts.controller.v1
+ * @see proto type: ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams
+ */
 export interface MsgUpdateParamsAmino {
-  /** signer address */
+  /**
+   * signer address
+   */
   signer?: string;
   /**
    * params defines the 27-interchain-accounts/controller parameters to update.
@@ -154,7 +181,12 @@ export interface MsgUpdateParamsResponseProtoMsg {
   typeUrl: "/ibc.applications.interchain_accounts.controller.v1.MsgUpdateParamsResponse";
   value: Uint8Array;
 }
-/** MsgUpdateParamsResponse defines the response for Msg/UpdateParams */
+/**
+ * MsgUpdateParamsResponse defines the response for Msg/UpdateParams
+ * @name MsgUpdateParamsResponseAmino
+ * @package ibc.applications.interchain_accounts.controller.v1
+ * @see proto type: ibc.applications.interchain_accounts.controller.v1.MsgUpdateParamsResponse
+ */
 export interface MsgUpdateParamsResponseAmino {}
 export interface MsgUpdateParamsResponseAminoMsg {
   type: "cosmos-sdk/MsgUpdateParamsResponse";

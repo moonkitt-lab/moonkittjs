@@ -1,7 +1,7 @@
-import { Params, ParamsAmino, ParamsSDKType } from "./auth";
-import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Params, ParamsAmino, ParamsSDKType } from "./auth.js";
+import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** GenesisState defines the auth module's genesis state. */
 export interface GenesisState {
   /** params defines all the parameters of the module. */
@@ -13,11 +13,20 @@ export interface GenesisStateProtoMsg {
   typeUrl: "/cosmos.auth.v1beta1.GenesisState";
   value: Uint8Array;
 }
-/** GenesisState defines the auth module's genesis state. */
+/**
+ * GenesisState defines the auth module's genesis state.
+ * @name GenesisStateAmino
+ * @package cosmos.auth.v1beta1
+ * @see proto type: cosmos.auth.v1beta1.GenesisState
+ */
 export interface GenesisStateAmino {
-  /** params defines all the parameters of the module. */
+  /**
+   * params defines all the parameters of the module.
+   */
   params: ParamsAmino;
-  /** accounts are the accounts present at genesis. */
+  /**
+   * accounts are the accounts present at genesis.
+   */
   accounts?: AnyAmino[];
 }
 export interface GenesisStateAminoMsg {

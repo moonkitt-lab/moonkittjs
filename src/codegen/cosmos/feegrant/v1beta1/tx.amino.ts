@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MsgGrantAllowance, MsgRevokeAllowance, MsgPruneAllowances } from "./tx";
+import { MsgGrantAllowance, MsgRevokeAllowance, MsgPruneAllowances } from "./tx.js";
 export const AminoConverter = {
   "/cosmos.feegrant.v1beta1.MsgGrantAllowance": {
     aminoType: "cosmos-sdk/MsgGrantAllowance",

@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { bytesFromBase64, base64FromBytes } from "../../../../helpers";
-import { GlobalDecoderRegistry } from "../../../../registry";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
 /**
  * PageRequest is to be embedded in gRPC request messages for efficient
  * pagination. Ex:
@@ -35,11 +35,7 @@ export interface PageRequest {
    * is set.
    */
   countTotal: boolean;
-  /**
-   * reverse is set to true if results are to be returned in the descending order.
-   * 
-   * Since: cosmos-sdk 0.43
-   */
+  /** reverse is set to true if results are to be returned in the descending order. */
   reverse: boolean;
 }
 export interface PageRequestProtoMsg {
@@ -54,6 +50,9 @@ export interface PageRequestProtoMsg {
  *          Foo some_parameter = 1;
  *          PageRequest pagination = 2;
  *  }
+ * @name PageRequestAmino
+ * @package cosmos.base.query.v1beta1
+ * @see proto type: cosmos.base.query.v1beta1.PageRequest
  */
 export interface PageRequestAmino {
   /**
@@ -82,8 +81,6 @@ export interface PageRequestAmino {
   count_total?: boolean;
   /**
    * reverse is set to true if results are to be returned in the descending order.
-   * 
-   * Since: cosmos-sdk 0.43
    */
   reverse?: boolean;
 }
@@ -141,6 +138,9 @@ export interface PageResponseProtoMsg {
  *          repeated Bar results = 1;
  *          PageResponse page = 2;
  *  }
+ * @name PageResponseAmino
+ * @package cosmos.base.query.v1beta1
+ * @see proto type: cosmos.base.query.v1beta1.PageResponse
  */
 export interface PageResponseAmino {
   /**

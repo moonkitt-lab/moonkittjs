@@ -1,6 +1,6 @@
-import { Permissions, PermissionsAmino, PermissionsSDKType } from "./types";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Permissions, PermissionsAmino, PermissionsSDKType } from "./types.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /** MsgAuthorizeCircuitBreaker defines the Msg/AuthorizeCircuitBreaker request type. */
 export interface MsgAuthorizeCircuitBreaker {
   /**
@@ -21,14 +21,21 @@ export interface MsgAuthorizeCircuitBreakerProtoMsg {
   typeUrl: "/cosmos.circuit.v1.MsgAuthorizeCircuitBreaker";
   value: Uint8Array;
 }
-/** MsgAuthorizeCircuitBreaker defines the Msg/AuthorizeCircuitBreaker request type. */
+/**
+ * MsgAuthorizeCircuitBreaker defines the Msg/AuthorizeCircuitBreaker request type.
+ * @name MsgAuthorizeCircuitBreakerAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.MsgAuthorizeCircuitBreaker
+ */
 export interface MsgAuthorizeCircuitBreakerAmino {
   /**
    * granter is the granter of the circuit breaker permissions and must have
    * LEVEL_SUPER_ADMIN.
    */
   granter?: string;
-  /** grantee is the account authorized with the provided permissions. */
+  /**
+   * grantee is the account authorized with the provided permissions.
+   */
   grantee?: string;
   /**
    * permissions are the circuit breaker permissions that the grantee receives.
@@ -55,7 +62,12 @@ export interface MsgAuthorizeCircuitBreakerResponseProtoMsg {
   typeUrl: "/cosmos.circuit.v1.MsgAuthorizeCircuitBreakerResponse";
   value: Uint8Array;
 }
-/** MsgAuthorizeCircuitBreakerResponse defines the Msg/AuthorizeCircuitBreaker response type. */
+/**
+ * MsgAuthorizeCircuitBreakerResponse defines the Msg/AuthorizeCircuitBreaker response type.
+ * @name MsgAuthorizeCircuitBreakerResponseAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.MsgAuthorizeCircuitBreakerResponse
+ */
 export interface MsgAuthorizeCircuitBreakerResponseAmino {
   success?: boolean;
 }
@@ -84,9 +96,16 @@ export interface MsgTripCircuitBreakerProtoMsg {
   typeUrl: "/cosmos.circuit.v1.MsgTripCircuitBreaker";
   value: Uint8Array;
 }
-/** MsgTripCircuitBreaker defines the Msg/TripCircuitBreaker request type. */
+/**
+ * MsgTripCircuitBreaker defines the Msg/TripCircuitBreaker request type.
+ * @name MsgTripCircuitBreakerAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.MsgTripCircuitBreaker
+ */
 export interface MsgTripCircuitBreakerAmino {
-  /** authority is the account authorized to trip the circuit breaker. */
+  /**
+   * authority is the account authorized to trip the circuit breaker.
+   */
   authority?: string;
   /**
    * msg_type_urls specifies a list of type URLs to immediately stop processing.
@@ -114,7 +133,12 @@ export interface MsgTripCircuitBreakerResponseProtoMsg {
   typeUrl: "/cosmos.circuit.v1.MsgTripCircuitBreakerResponse";
   value: Uint8Array;
 }
-/** MsgTripCircuitBreakerResponse defines the Msg/TripCircuitBreaker response type. */
+/**
+ * MsgTripCircuitBreakerResponse defines the Msg/TripCircuitBreaker response type.
+ * @name MsgTripCircuitBreakerResponseAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.MsgTripCircuitBreakerResponse
+ */
 export interface MsgTripCircuitBreakerResponseAmino {
   success?: boolean;
 }
@@ -141,9 +165,16 @@ export interface MsgResetCircuitBreakerProtoMsg {
   typeUrl: "/cosmos.circuit.v1.MsgResetCircuitBreaker";
   value: Uint8Array;
 }
-/** MsgResetCircuitBreaker defines the Msg/ResetCircuitBreaker request type. */
+/**
+ * MsgResetCircuitBreaker defines the Msg/ResetCircuitBreaker request type.
+ * @name MsgResetCircuitBreakerAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.MsgResetCircuitBreaker
+ */
 export interface MsgResetCircuitBreakerAmino {
-  /** authority is the account authorized to trip or reset the circuit breaker. */
+  /**
+   * authority is the account authorized to trip or reset the circuit breaker.
+   */
   authority?: string;
   /**
    * msg_type_urls specifies a list of Msg type URLs to resume processing. If
@@ -169,7 +200,12 @@ export interface MsgResetCircuitBreakerResponseProtoMsg {
   typeUrl: "/cosmos.circuit.v1.MsgResetCircuitBreakerResponse";
   value: Uint8Array;
 }
-/** MsgResetCircuitBreakerResponse defines the Msg/ResetCircuitBreaker response type. */
+/**
+ * MsgResetCircuitBreakerResponse defines the Msg/ResetCircuitBreaker response type.
+ * @name MsgResetCircuitBreakerResponseAmino
+ * @package cosmos.circuit.v1
+ * @see proto type: cosmos.circuit.v1.MsgResetCircuitBreakerResponse
+ */
 export interface MsgResetCircuitBreakerResponseAmino {
   success?: boolean;
 }

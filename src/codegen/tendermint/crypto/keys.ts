@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from "../../binary";
-import { bytesFromBase64, base64FromBytes } from "../../helpers";
-import { GlobalDecoderRegistry } from "../../registry";
+import { BinaryReader, BinaryWriter } from "../../binary.js";
+import { bytesFromBase64, base64FromBytes } from "../../helpers.js";
+import { GlobalDecoderRegistry } from "../../registry.js";
 /** PublicKey defines the keys available for use with Validators */
 export interface PublicKey {
   ed25519?: Uint8Array;
@@ -10,7 +10,12 @@ export interface PublicKeyProtoMsg {
   typeUrl: "/tendermint.crypto.PublicKey";
   value: Uint8Array;
 }
-/** PublicKey defines the keys available for use with Validators */
+/**
+ * PublicKey defines the keys available for use with Validators
+ * @name PublicKeyAmino
+ * @package tendermint.crypto
+ * @see proto type: tendermint.crypto.PublicKey
+ */
 export interface PublicKeyAmino {
   ed25519?: string;
   secp256k1?: string;

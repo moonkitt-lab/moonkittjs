@@ -1,9 +1,9 @@
-import { Params, ParamsAmino, ParamsSDKType } from "./liquid";
-import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { Timestamp } from "../../../google/protobuf/timestamp";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { GlobalDecoderRegistry } from "../../../registry";
-import { toTimestamp, fromTimestamp } from "../../../helpers";
+import { Params, ParamsAmino, ParamsSDKType } from "./liquid.js";
+import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin.js";
+import { Timestamp } from "../../../google/protobuf/timestamp.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
+import { toTimestamp, fromTimestamp } from "../../../helpers.js";
 /** MsgUpdateParams is the Msg/UpdateParams request type. */
 export interface MsgUpdateParams {
   /**
@@ -22,7 +22,12 @@ export interface MsgUpdateParamsProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.MsgUpdateParams";
   value: Uint8Array;
 }
-/** MsgUpdateParams is the Msg/UpdateParams request type. */
+/**
+ * MsgUpdateParams is the Msg/UpdateParams request type.
+ * @name MsgUpdateParamsAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgUpdateParams
+ */
 export interface MsgUpdateParamsAmino {
   /**
    * authority is the address that controls the module (defaults to x/gov unless
@@ -57,6 +62,9 @@ export interface MsgUpdateParamsResponseProtoMsg {
 /**
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
+ * @name MsgUpdateParamsResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgUpdateParamsResponse
  */
 export interface MsgUpdateParamsResponseAmino {}
 export interface MsgUpdateParamsResponseAminoMsg {
@@ -79,7 +87,12 @@ export interface MsgTokenizeSharesProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.MsgTokenizeShares";
   value: Uint8Array;
 }
-/** MsgTokenizeShares tokenizes a delegation */
+/**
+ * MsgTokenizeShares tokenizes a delegation
+ * @name MsgTokenizeSharesAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgTokenizeShares
+ */
 export interface MsgTokenizeSharesAmino {
   delegator_address?: string;
   validator_address?: string;
@@ -105,7 +118,12 @@ export interface MsgTokenizeSharesResponseProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.MsgTokenizeSharesResponse";
   value: Uint8Array;
 }
-/** MsgTokenizeSharesResponse defines the Msg/MsgTokenizeShares response type. */
+/**
+ * MsgTokenizeSharesResponse defines the Msg/MsgTokenizeShares response type.
+ * @name MsgTokenizeSharesResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgTokenizeSharesResponse
+ */
 export interface MsgTokenizeSharesResponseAmino {
   amount?: CoinAmino;
 }
@@ -132,6 +150,9 @@ export interface MsgRedeemTokensForSharesProtoMsg {
 /**
  * MsgRedeemTokensForShares redeems a tokenized share back into a native
  * delegation
+ * @name MsgRedeemTokensForSharesAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgRedeemTokensForShares
  */
 export interface MsgRedeemTokensForSharesAmino {
   delegator_address?: string;
@@ -163,6 +184,9 @@ export interface MsgRedeemTokensForSharesResponseProtoMsg {
 /**
  * MsgRedeemTokensForSharesResponse defines the Msg/MsgRedeemTokensForShares
  * response type.
+ * @name MsgRedeemTokensForSharesResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgRedeemTokensForSharesResponse
  */
 export interface MsgRedeemTokensForSharesResponseAmino {
   amount?: CoinAmino;
@@ -188,7 +212,12 @@ export interface MsgTransferTokenizeShareRecordProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.MsgTransferTokenizeShareRecord";
   value: Uint8Array;
 }
-/** MsgTransferTokenizeShareRecord transfer a tokenize share record */
+/**
+ * MsgTransferTokenizeShareRecord transfer a tokenize share record
+ * @name MsgTransferTokenizeShareRecordAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgTransferTokenizeShareRecord
+ */
 export interface MsgTransferTokenizeShareRecordAmino {
   tokenize_share_record_id?: string;
   sender?: string;
@@ -216,6 +245,9 @@ export interface MsgTransferTokenizeShareRecordResponseProtoMsg {
 /**
  * MsgTransferTokenizeShareRecordResponse defines the
  * Msg/MsgTransferTokenizeShareRecord response type.
+ * @name MsgTransferTokenizeShareRecordResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgTransferTokenizeShareRecordResponse
  */
 export interface MsgTransferTokenizeShareRecordResponseAmino {}
 export interface MsgTransferTokenizeShareRecordResponseAminoMsg {
@@ -241,6 +273,9 @@ export interface MsgDisableTokenizeSharesProtoMsg {
 /**
  * MsgDisableTokenizeShares prevents the tokenization of shares for a given
  * address
+ * @name MsgDisableTokenizeSharesAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgDisableTokenizeShares
  */
 export interface MsgDisableTokenizeSharesAmino {
   delegator_address?: string;
@@ -268,6 +303,9 @@ export interface MsgDisableTokenizeSharesResponseProtoMsg {
 /**
  * MsgDisableTokenizeSharesResponse defines the Msg/DisableTokenizeShares
  * response type.
+ * @name MsgDisableTokenizeSharesResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgDisableTokenizeSharesResponse
  */
 export interface MsgDisableTokenizeSharesResponseAmino {}
 export interface MsgDisableTokenizeSharesResponseAminoMsg {
@@ -287,7 +325,12 @@ export interface MsgEnableTokenizeSharesProtoMsg {
   typeUrl: "/gaia.liquid.v1beta1.MsgEnableTokenizeShares";
   value: Uint8Array;
 }
-/** MsgEnableTokenizeShares re-enables tokenization of shares for a given address */
+/**
+ * MsgEnableTokenizeShares re-enables tokenization of shares for a given address
+ * @name MsgEnableTokenizeSharesAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgEnableTokenizeShares
+ */
 export interface MsgEnableTokenizeSharesAmino {
   delegator_address?: string;
 }
@@ -313,6 +356,9 @@ export interface MsgEnableTokenizeSharesResponseProtoMsg {
 /**
  * MsgEnableTokenizeSharesResponse defines the Msg/EnableTokenizeShares response
  * type.
+ * @name MsgEnableTokenizeSharesResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgEnableTokenizeSharesResponse
  */
 export interface MsgEnableTokenizeSharesResponseAmino {
   completion_time?: string;
@@ -343,6 +389,9 @@ export interface MsgWithdrawTokenizeShareRecordRewardProtoMsg {
 /**
  * MsgWithdrawTokenizeShareRecordReward withdraws tokenize share rewards for a
  * specific record
+ * @name MsgWithdrawTokenizeShareRecordRewardAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgWithdrawTokenizeShareRecordReward
  */
 export interface MsgWithdrawTokenizeShareRecordRewardAmino {
   owner_address?: string;
@@ -372,6 +421,9 @@ export interface MsgWithdrawTokenizeShareRecordRewardResponseProtoMsg {
 /**
  * MsgWithdrawTokenizeShareRecordReward defines the
  * Msg/WithdrawTokenizeShareRecordReward response type.
+ * @name MsgWithdrawTokenizeShareRecordRewardResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgWithdrawTokenizeShareRecordRewardResponse
  */
 export interface MsgWithdrawTokenizeShareRecordRewardResponseAmino {}
 export interface MsgWithdrawTokenizeShareRecordRewardResponseAminoMsg {
@@ -397,6 +449,9 @@ export interface MsgWithdrawAllTokenizeShareRecordRewardProtoMsg {
 /**
  * MsgWithdrawAllTokenizeShareRecordReward withdraws tokenize share rewards or
  * all records owned by the designated owner
+ * @name MsgWithdrawAllTokenizeShareRecordRewardAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgWithdrawAllTokenizeShareRecordReward
  */
 export interface MsgWithdrawAllTokenizeShareRecordRewardAmino {
   owner_address?: string;
@@ -424,6 +479,9 @@ export interface MsgWithdrawAllTokenizeShareRecordRewardResponseProtoMsg {
 /**
  * MsgWithdrawAllTokenizeShareRecordRewardResponse defines the
  * Msg/WithdrawTokenizeShareRecordReward response type.
+ * @name MsgWithdrawAllTokenizeShareRecordRewardResponseAmino
+ * @package gaia.liquid.v1beta1
+ * @see proto type: gaia.liquid.v1beta1.MsgWithdrawAllTokenizeShareRecordRewardResponse
  */
 export interface MsgWithdrawAllTokenizeShareRecordRewardResponseAmino {}
 export interface MsgWithdrawAllTokenizeShareRecordRewardResponseAminoMsg {

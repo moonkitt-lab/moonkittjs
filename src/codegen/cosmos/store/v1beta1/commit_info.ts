@@ -1,7 +1,7 @@
-import { Timestamp } from "../../../google/protobuf/timestamp";
-import { BinaryReader, BinaryWriter } from "../../../binary";
-import { toTimestamp, fromTimestamp, bytesFromBase64, base64FromBytes } from "../../../helpers";
-import { GlobalDecoderRegistry } from "../../../registry";
+import { Timestamp } from "../../../google/protobuf/timestamp.js";
+import { BinaryReader, BinaryWriter } from "../../../binary.js";
+import { toTimestamp, fromTimestamp, bytesFromBase64, base64FromBytes } from "../../../helpers.js";
+import { GlobalDecoderRegistry } from "../../../registry.js";
 /**
  * CommitInfo defines commit information used by the multi-store when committing
  * a version/height.
@@ -18,6 +18,9 @@ export interface CommitInfoProtoMsg {
 /**
  * CommitInfo defines commit information used by the multi-store when committing
  * a version/height.
+ * @name CommitInfoAmino
+ * @package cosmos.store.v1beta1
+ * @see proto type: cosmos.store.v1beta1.CommitInfo
  */
 export interface CommitInfoAmino {
   version?: string;
@@ -52,6 +55,9 @@ export interface StoreInfoProtoMsg {
 /**
  * StoreInfo defines store-specific commit information. It contains a reference
  * between a store name and the commit ID.
+ * @name StoreInfoAmino
+ * @package cosmos.store.v1beta1
+ * @see proto type: cosmos.store.v1beta1.StoreInfo
  */
 export interface StoreInfoAmino {
   name?: string;
@@ -84,6 +90,9 @@ export interface CommitIDProtoMsg {
 /**
  * CommitID defines the commitment information when a specific store is
  * committed.
+ * @name CommitIDAmino
+ * @package cosmos.store.v1beta1
+ * @see proto type: cosmos.store.v1beta1.CommitID
  */
 export interface CommitIDAmino {
   version?: string;

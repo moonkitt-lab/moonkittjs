@@ -1,14 +1,19 @@
-import { Timestamp } from "../../../../google/protobuf/timestamp";
-import { BinaryReader, BinaryWriter } from "../../../../binary";
-import { GlobalDecoderRegistry } from "../../../../registry";
-import { toTimestamp, fromTimestamp, bytesFromBase64, base64FromBytes } from "../../../../helpers";
+import { Timestamp } from "../../../../google/protobuf/timestamp.js";
+import { BinaryReader, BinaryWriter } from "../../../../binary.js";
+import { GlobalDecoderRegistry } from "../../../../registry.js";
+import { toTimestamp, fromTimestamp, bytesFromBase64, base64FromBytes } from "../../../../helpers.js";
 /** ConfigRequest defines the request structure for the Config gRPC query. */
 export interface ConfigRequest {}
 export interface ConfigRequestProtoMsg {
   typeUrl: "/cosmos.base.node.v1beta1.ConfigRequest";
   value: Uint8Array;
 }
-/** ConfigRequest defines the request structure for the Config gRPC query. */
+/**
+ * ConfigRequest defines the request structure for the Config gRPC query.
+ * @name ConfigRequestAmino
+ * @package cosmos.base.node.v1beta1
+ * @see proto type: cosmos.base.node.v1beta1.ConfigRequest
+ */
 export interface ConfigRequestAmino {}
 export interface ConfigRequestAminoMsg {
   type: "cosmos-sdk/ConfigRequest";
@@ -27,7 +32,12 @@ export interface ConfigResponseProtoMsg {
   typeUrl: "/cosmos.base.node.v1beta1.ConfigResponse";
   value: Uint8Array;
 }
-/** ConfigResponse defines the response structure for the Config gRPC query. */
+/**
+ * ConfigResponse defines the response structure for the Config gRPC query.
+ * @name ConfigResponseAmino
+ * @package cosmos.base.node.v1beta1
+ * @see proto type: cosmos.base.node.v1beta1.ConfigResponse
+ */
 export interface ConfigResponseAmino {
   minimum_gas_price?: string;
   pruning_keep_recent?: string;
@@ -51,7 +61,12 @@ export interface StatusRequestProtoMsg {
   typeUrl: "/cosmos.base.node.v1beta1.StatusRequest";
   value: Uint8Array;
 }
-/** StateRequest defines the request structure for the status of a node. */
+/**
+ * StateRequest defines the request structure for the status of a node.
+ * @name StatusRequestAmino
+ * @package cosmos.base.node.v1beta1
+ * @see proto type: cosmos.base.node.v1beta1.StatusRequest
+ */
 export interface StatusRequestAmino {}
 export interface StatusRequestAminoMsg {
   type: "cosmos-sdk/StatusRequest";
@@ -76,17 +91,32 @@ export interface StatusResponseProtoMsg {
   typeUrl: "/cosmos.base.node.v1beta1.StatusResponse";
   value: Uint8Array;
 }
-/** StateResponse defines the response structure for the status of a node. */
+/**
+ * StateResponse defines the response structure for the status of a node.
+ * @name StatusResponseAmino
+ * @package cosmos.base.node.v1beta1
+ * @see proto type: cosmos.base.node.v1beta1.StatusResponse
+ */
 export interface StatusResponseAmino {
-  /** earliest block height available in the store */
+  /**
+   * earliest block height available in the store
+   */
   earliest_store_height?: string;
-  /** current block height */
+  /**
+   * current block height
+   */
   height?: string;
-  /** block height timestamp */
+  /**
+   * block height timestamp
+   */
   timestamp?: string;
-  /** app hash of the current block */
+  /**
+   * app hash of the current block
+   */
   app_hash?: string;
-  /** validator hash provided by the consensus header */
+  /**
+   * validator hash provided by the consensus header
+   */
   validator_hash?: string;
 }
 export interface StatusResponseAminoMsg {
