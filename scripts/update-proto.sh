@@ -2,7 +2,10 @@
 
 # This script needs to be run when we want to update the proto folders.
 # Note: It needs to be run from the root of the repo
-# Usage: ./scripts/setup-proto.sh
+# Usage: ./scripts/update-proto.sh
+#
+# proto/cosmwasm is vendored from https://github.com/CosmWasm/wasmd (proto/cosmwasm),
+# at the wasmd version of the same gaia go.mod (gaia v28.3.1: wasmd v0.60.9).
 
 # Make sure all submodules are initialized
 git submodule update --init --recursive
@@ -13,15 +16,17 @@ for submodule in cosmos ics23 ibc-go atomone gaia; do
   (
     cd $submodule &&
 
-    # Use correct branch for each submodule
-    branch="main"
-    [ "$submodule" = "cosmos" ] && branch="v0.50.13"
-    [ "$submodule" = "ibc-go" ] && branch="v8.7.0"
-    [ "$submodule" = "ics23" ] && branch="master"
+    # Use the versions pinned by the gaia release in its go.mod
+    # (gaia v28.3.1: cosmos-sdk v0.53.4 through its replace directive, ibc-go v10.7.0)
+    ref="main"
+    [ "$submodule" = "gaia" ] && ref="v28.3.1"
+    [ "$submodule" = "cosmos" ] && ref="v0.53.4"
+    [ "$submodule" = "ibc-go" ] && ref="v10.7.0"
+    [ "$submodule" = "ics23" ] && ref="a324422529b8c00ead00b4dcee825867c494cddd"
+    [ "$submodule" = "atomone" ] && ref="bcd87ecbb9f28654185d118af44b39a5454937e7"
 
-    git fetch origin &&
-    git checkout $branch &&
-    git pull origin $branch &&
+    git fetch origin --tags &&
+    git checkout $ref &&
 
     # only include proto/
     git sparse-checkout init &&

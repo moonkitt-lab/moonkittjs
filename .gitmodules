@@ -1,11 +1,11 @@
 [submodule "cosmos-sdk"]
 	path = cosmos
 	url = git@github.com:cosmos/cosmos-sdk.git
-	branch = v0.50.11-lsm
+	branch = v0.53.4
 [submodule "ibc-go"]
 	path = ibc-go
 	url = git@github.com:cosmos/ibc-go.git
-	branch = v8.5.1
+	branch = v10.7.0
 [submodule "ics23"]
 	path = ics23
 	url = git@github.com:cosmos/ics23.git
@@ -16,3 +16,4 @@
 [submodule "gaia"]
 	path = gaia
 	url = git@github.com:cosmos/gaia.git
+	branch = v28.3.1
